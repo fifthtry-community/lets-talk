@@ -34,7 +34,7 @@ const DYTE_API_KEY: &str = env!("DYTE_API_KEY");
 /// Call the Dyte API
 /// `path` is prefixed with the base dyte api URL
 /// This is generic over the Dyte `data` response
-fn call_dyte<D: DyteData + serde::de::DeserializeOwned>(
+fn call_dyte<D: DyteData>(
     path: &str,
     method: http::Method,
     body: &impl serde::Serialize,
@@ -91,11 +91,8 @@ pub struct DyteAddParticipant {
     pub token: String,
 }
 
-trait DyteData {
-    fn deserialize(str: impl AsRef<str>) -> Result<DyteResponse<Self>, ft_sdk::Error>
-    where
-        Self: serde::de::DeserializeOwned + Sized,
-    {
+trait DyteData: serde::de::DeserializeOwned {
+    fn deserialize(str: impl AsRef<str>) -> Result<DyteResponse<Self>, ft_sdk::Error> {
         serde_json::from_str(str.as_ref())
             .map_err(|e| ft_sdk::anyhow!("Failed to deserialize `data`: {:?}", e))
     }
