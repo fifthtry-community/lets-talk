@@ -12,15 +12,14 @@ fn ping() -> ft_sdk::data::Result {
 #[ft_sdk::form]
 /// Create a meeting and add the user to it as a participant
 fn create_meeting(
-    ft_sdk::Query(title): ft_sdk::Query<"title">,
+    title: ft_sdk::Required<"title">,
     user: auth::RequiredUser,
     mut conn: ft_sdk::Connection,
-    any_err: ft_sdk::Required<"any-err", bool>,
 ) -> ft_sdk::form::Result {
     let is_staff = auth::is_fifthtry_staff_org_member(&mut conn, user.user_id)?;
 
     if !is_staff {
-        return Err(any_err
+        return Err(title
             .error("You are not authorized to create a meeting")
             .into());
     }
