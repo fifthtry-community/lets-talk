@@ -1,19 +1,30 @@
 // https://dev.dyte.io/presets?orgId=f233a0a4-afa0-4afd-9969-971d77e799d8
 pub const MEETING_PRESET_HOST: &str = "group_call_host";
+pub const MEETING_PRESET_PARTICIPANT: &str = "group_call_participant";
 
 #[inline]
 pub fn add_participant(
     meeting_id: &str,
     preset_name: &str,
+    participant_name: Option<&str>,
     custom_participant_id: &str,
 ) -> Result<DyteResponse<DyteAddParticipant>, ft_sdk::Error> {
+    let body = &mut serde_json::json!({
+        "preset_name": preset_name,
+        "custom_participant_id": custom_participant_id,
+    });
+
+    // Dyte's api does not like name: null. So we have to remove the key altogether
+    if let Some(name) = participant_name {
+        body.as_object_mut()
+            .unwrap()
+            .insert("name".to_string(), serde_json::json!(name));
+    }
+
     call_dyte::<DyteAddParticipant>(
         &format!("/meetings/{}/participants", meeting_id),
         http::Method::POST,
-        &serde_json::json!({
-            "preset_name": preset_name,
-            "custom_participant_id": custom_participant_id,
-        }),
+        body,
     )
 }
 
@@ -37,9 +48,12 @@ const DYTE_API_KEY: &str = env!("DYTE_API_KEY");
 fn call_dyte<D: DyteData>(
     path: &str,
     method: http::Method,
-    body: &impl serde::Serialize,
+    body: &(impl serde::Serialize + std::fmt::Debug),
 ) -> Result<DyteResponse<D>, ft_sdk::Error> {
     use base64::Engine as _;
+
+    ft_sdk::println!("Calling with data:");
+    ft_sdk::println!("{:?}", body);
 
     let key = base64::engine::general_purpose::STANDARD
         .encode(format!("{}:{}", DYTE_ORG_ID, DYTE_API_KEY));
