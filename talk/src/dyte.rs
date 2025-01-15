@@ -39,9 +39,6 @@ pub fn create_meeting(title: &str) -> Result<DyteResponse<DyteCreateMeeting>, ft
     )
 }
 
-const DYTE_ORG_ID: &str = env!("DYTE_ORG_ID");
-const DYTE_API_KEY: &str = env!("DYTE_API_KEY");
-
 /// Call the Dyte API
 /// `path` is prefixed with the base dyte api URL
 /// This is generic over the Dyte `data` response
@@ -55,8 +52,13 @@ fn call_dyte<D: DyteData>(
     ft_sdk::println!("Calling with data:");
     ft_sdk::println!("{:?}", body);
 
+    let dyte_org_id = ft_sdk::env::var("DYTE_ORG_ID".to_string())
+        .ok_or_else(|| ft_sdk::anyhow!("DYTE_ORG_ID not set"))?;
+    let dyte_api_key = ft_sdk::env::var("DYTE_API_KEY".to_string())
+        .ok_or_else(|| ft_sdk::anyhow!("DYTE_API_KEY not set"))?;
+
     let key = base64::engine::general_purpose::STANDARD
-        .encode(format!("{}:{}", DYTE_ORG_ID, DYTE_API_KEY));
+        .encode(format!("{}:{}", dyte_org_id, dyte_api_key));
 
     let authorization_header = format!("Basic {}", key);
 

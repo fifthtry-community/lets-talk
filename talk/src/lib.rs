@@ -101,7 +101,7 @@ fn create_session_cookie(
     meeting_id: &str,
     host: ft_sdk::Host,
 ) -> Result<http::HeaderValue, ft_sdk::Error> {
-    let TALK_SECURE_SESSIONS = env!("TALK_SECURE_SESSIONS") == "true";
+    let talk_secure_sessions = ft_sdk::env::var("TALK_SECURE_SESSIONS".to_string()).is_some();
 
     let val = format!("{}:{}", meeting_id, token);
     let cookie = cookie::Cookie::build((TALK_TOKEN_COOKIE, val))
@@ -110,7 +110,7 @@ fn create_session_cookie(
         .path("/")
         .max_age(cookie::time::Duration::seconds(34560000))
         .same_site(cookie::SameSite::Strict)
-        .secure(TALK_SECURE_SESSIONS)
+        .secure(talk_secure_sessions)
         .build();
 
     Ok(http::HeaderValue::from_str(cookie.to_string().as_str())?)
