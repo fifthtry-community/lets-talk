@@ -6,7 +6,11 @@ pub const MEETING_PRESET_PARTICIPANT: &str = "group_call_participant";
 /// Latest session appears first in the list
 #[inline]
 pub fn sessions() -> Result<DyteResponse<DyteSessions>, ft_sdk::Error> {
-    call_dyte::<DyteSessions>("/sessions?sort_by=createdAt&sort_order=DESC", http::Method::GET, &None::<serde_json::Value>)
+    call_dyte::<DyteSessions>(
+        "/sessions?sort_by=createdAt&sort_order=DESC",
+        http::Method::GET,
+        &None::<serde_json::Value>,
+    )
 }
 
 /// Get all particpants of a session
@@ -66,8 +70,13 @@ fn call_dyte<D: DyteData>(
     ft_sdk::println!("Calling with data:");
     ft_sdk::println!("{:?}", body);
 
-    let dyte_org_id = env!("DYTE_ORG_ID");
-    let dyte_api_key = env!("DYTE_API_KEY");
+    let dyte_org_id = ft_sdk::env::var("DYTE_ORG_ID".to_string()).ok_or_else(|| {
+        ft_sdk::anyhow!("DYTE_ORG_ID is not set. Please set it in the environment variables")
+    })?;
+
+    let dyte_api_key = ft_sdk::env::var("DYTE_API_KEY".to_string()).ok_or_else(|| {
+        ft_sdk::anyhow!("DYTE_API_KEY is not set. Please set it in the environment variables")
+    })?;
 
     let key = base64::engine::general_purpose::STANDARD
         .encode(format!("{}:{}", dyte_org_id, dyte_api_key));
