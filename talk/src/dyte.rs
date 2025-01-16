@@ -3,9 +3,10 @@ pub const MEETING_PRESET_HOST: &str = "group_call_host";
 pub const MEETING_PRESET_PARTICIPANT: &str = "group_call_participant";
 
 /// Get all sessions of the organization
+/// Latest session appears first in the list
 #[inline]
 pub fn sessions() -> Result<DyteResponse<DyteSessions>, ft_sdk::Error> {
-    call_dyte::<DyteSessions>("/sessions", http::Method::GET, &None::<serde_json::Value>)
+    call_dyte::<DyteSessions>("/sessions?sort_by=createdAt&sort_order=DESC", http::Method::GET, &None::<serde_json::Value>)
 }
 
 /// Get all particpants of a session

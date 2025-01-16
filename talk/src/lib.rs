@@ -114,12 +114,15 @@ fn past_sessions(user: auth::RequiredUser) -> ft_sdk::data::Result {
                 return None;
             };
 
+            let joined_at = parse_timestamp_to_human_time(p.joined_at);
+            let left_at = parse_timestamp_to_human_time(p.left_at);
+
             Some(UserSession {
                 id: s.id,
                 meeting_title: s.meeting_display_name,
                 duration: p.duration,
-                joined_at: p.joined_at,
-                left_at: p.left_at,
+                joined_at,
+                left_at,
             })
         })
         .collect::<Vec<_>>();
@@ -160,4 +163,9 @@ fn create_session_cookie(
         .build();
 
     Ok(http::HeaderValue::from_str(cookie.to_string().as_str())?)
+}
+
+fn parse_timestamp_to_human_time(timestamp: String) -> String {
+    let parsed_time: chrono::DateTime<chrono::Utc> = timestamp.parse().unwrap();
+    parsed_time.format("%Y-%m-%d at %H:%M hrs").to_string()
 }
