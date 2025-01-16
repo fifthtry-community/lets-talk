@@ -2,6 +2,19 @@
 pub const MEETING_PRESET_HOST: &str = "group_call_host";
 pub const MEETING_PRESET_PARTICIPANT: &str = "group_call_participant";
 
+/// Get all sessions of the organization
+#[inline]
+pub fn sessions() -> Result<DyteResponse<DyteSessions>, ft_sdk::Error> {
+    call_dyte::<DyteSessions>("/sessions", http::Method::GET, &None::<serde_json::Value>)
+}
+
+/// Get all particpants of a session
+#[inline]
+pub fn participants(session_id: &str) -> Result<DyteResponse<DyteParticipants>, ft_sdk::Error> {
+    let url = format!("/sessions/{session_id}/participants");
+    call_dyte::<DyteParticipants>(&url, http::Method::GET, &None::<serde_json::Value>)
+}
+
 #[inline]
 pub fn add_participant(
     meeting_id: &str,
@@ -52,10 +65,8 @@ fn call_dyte<D: DyteData>(
     ft_sdk::println!("Calling with data:");
     ft_sdk::println!("{:?}", body);
 
-    let dyte_org_id = ft_sdk::env::var("DYTE_ORG_ID".to_string())
-        .ok_or_else(|| ft_sdk::anyhow!("DYTE_ORG_ID not set"))?;
-    let dyte_api_key = ft_sdk::env::var("DYTE_API_KEY".to_string())
-        .ok_or_else(|| ft_sdk::anyhow!("DYTE_API_KEY not set"))?;
+    let dyte_org_id = env!("DYTE_ORG_ID");
+    let dyte_api_key = env!("DYTE_API_KEY");
 
     let key = base64::engine::general_purpose::STANDARD
         .encode(format!("{}:{}", dyte_org_id, dyte_api_key));
@@ -107,6 +118,42 @@ pub struct DyteAddParticipant {
     pub token: String,
 }
 
+/// See [sessions] to create instance of this type
+/// https://docs.dyte.io/api#/operations/GetSessions
+#[derive(serde::Deserialize, Debug)]
+pub struct DyteSessions {
+    pub sessions: Vec<DyteSession>,
+}
+
+/// See [sessions] to create instance of this type
+/// https://docs.dyte.io/api#/operations/GetSessions
+#[derive(serde::Deserialize, serde::Serialize, Debug)]
+pub struct DyteSession {
+    pub id: String,
+    #[serde(rename = "associated_id")]
+    pub meeting_id: String,
+    pub meeting_display_name: String,
+}
+
+/// See [participants] to create instance of this type
+/// https://docs.dyte.io/api#/operations/GetSessionParticipants
+#[derive(serde::Deserialize, Debug)]
+pub struct DyteParticipants {
+    pub participants: Vec<DyteParticipant>,
+}
+
+/// See [participants] to create instance of this type
+/// https://docs.dyte.io/api#/operations/GetSessionParticipants
+#[derive(serde::Deserialize, Debug)]
+pub struct DyteParticipant {
+    pub id: String,
+    pub custom_participant_id: String,
+    pub display_name: String,
+    pub duration: f64,
+    pub joined_at: String,
+    pub left_at: String,
+}
+
 trait DyteData: serde::de::DeserializeOwned {
     fn deserialize(str: impl AsRef<str>) -> Result<DyteResponse<Self>, ft_sdk::Error> {
         serde_json::from_str(str.as_ref())
@@ -116,3 +163,5 @@ trait DyteData: serde::de::DeserializeOwned {
 
 impl DyteData for DyteCreateMeeting {}
 impl DyteData for DyteAddParticipant {}
+impl DyteData for DyteSessions {}
+impl DyteData for DyteParticipants {}
