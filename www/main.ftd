@@ -8,11 +8,6 @@ $processor$: pr.http
 url: /talk/api/session/
 meeting-id: $meeting-id
 
--- ftd.text: $session.token
-
--- ftd.text: # Talk app
-margin-vertical.px: 20
-
 ;; Initialises the DyteClient
 -- talk-app:
 if: { session.token }
