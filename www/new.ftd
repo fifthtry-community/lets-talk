@@ -1,0 +1,3 @@
+;; Visiting this url should create an instant meeting
+;; TODO: this can't work yet :(
+;; See https://github.com/fastn-stack/fastn/issues/2048 for more details
