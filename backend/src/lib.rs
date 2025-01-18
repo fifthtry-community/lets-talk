@@ -1,3 +1,5 @@
+#![deny(unused_crate_dependencies)]
+
 mod auth;
 mod dyte;
 mod uuid;

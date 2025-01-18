@@ -1,0 +1,27 @@
+[package]
+name = "talk"
+version = "0.1.0"
+edition.workspace = true
+
+
+[lib]
+crate-type = ["cdylib"]
+
+
+[dependencies]
+cookie.workspace = true
+ft-sdk.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+chrono.workspace = true
+diesel.workspace = true
+# for sending http requests:
+http.workspace = true
+bytes.workspace = true
+# dyte api asks for base64 encoded data
+base64.workspace = true
+# uuid.rs mod uses this. Ideally should use ft_sdk::WasmRng
+rand.workspace = true
+
+[dev-dependencies]
+regex.workspace = true
