@@ -11,6 +11,9 @@
 
 -- import: www.fifthtry.com/just-user-data
 
+
+
+
 ;; Sign in first!
 -- ftd.temporary-redirect: /signin/
 if: { !just-user-data.ud.is-logged-in }
@@ -125,34 +128,3 @@ inset: $ds.spaces.inset-wide.large
 -- end: ds.row
 
 -- end: session-box
-
-
--- component page:
-module site-data: site-data
-ud.user-data user-data:
-sites-records.toc-item list orgs:
-children children:
-
--- ds.page: FifthTry | Talk
-spacing: $ds.spaces.vertical-gap.small.gap
-margin: $ds.spaces.vertical-gap.zero
-
-	-- user-header.basic-header:
-	site-data: $page.site-data
-	user-data: $page.user-data
-	
-	-- child:
-	for: $child in $page.children
-	
-	-- footer.footer:
-	site-data: $page.site-data
-	
-	-- footer.basic-footer:
-	site-data: $page.site-data
-	
--- end: ds.page
-
--- end: page
-
-
-

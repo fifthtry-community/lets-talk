@@ -1,0 +1,6 @@
+-- import: fastn
+
+-- fastn.package: lets-talk.fifthtry.site
+
+-- fastn.dependency: fastn-community.github.io/design-system
+provided-via: lets-talk.fifthtry.site/ds

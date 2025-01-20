@@ -1,0 +1,33 @@
+-- string title(a):
+string a:
+
+"Let's Talk: " + a
+
+
+-- component page:
+module site-data: site-data
+ud.user-data user-data:
+sites-records.toc-item list orgs:
+children children:
+caption title: Home
+
+-- ds.page: $title(a = $page.title)
+spacing: $ds.spaces.vertical-gap.small.gap
+margin: $ds.spaces.vertical-gap.zero
+
+	-- user-header.basic-header:
+	site-data: $page.site-data
+	user-data: $page.user-data
+
+	-- child:
+	for: $child in $page.children
+
+	-- footer.footer:
+	site-data: $page.site-data
+
+	-- footer.basic-footer:
+	site-data: $page.site-data
+
+-- end: ds.page
+
+-- end: page

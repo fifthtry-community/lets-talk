@@ -1,0 +1,13 @@
+-- optional string error:
+$processor$: pr.http
+url: /app/create-preset/
+logo: https://www.fifthtry.com/-/assets/logo.svg
+accent-color: red
+
+-- ftd.text: Configuration
+
+-- ftd.text: $error
+if: $error != NULL
+
+-- ftd.text: Success
+if: $error == NULL

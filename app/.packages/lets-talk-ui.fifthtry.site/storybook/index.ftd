@@ -2,3 +2,14 @@
 ;; new project. all ui should be developed by first creating a story in the
 ;; storybook so ui can be fully tested / reviewed without having to create
 ;; the various scenarios they represent.
+
+-- import: ui.fifthtry.com/actions/storybook/navigate
+
+-- ds.page: Storybook
+fastn-badge: false
+
+-- ds.storybook:
+list-of-files: $toc
+navigate: navigate
+
+-- end: ds.page
