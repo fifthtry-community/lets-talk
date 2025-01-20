@@ -1,0 +1,4 @@
+;; we are going to call scenarios storybook in this project and in every
+;; new project. all ui should be developed by first creating a story in the
+;; storybook so ui can be fully tested / reviewed without having to create
+;; the various scenarios they represent.
