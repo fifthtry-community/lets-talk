@@ -5,6 +5,7 @@ on:
     branches: [ main ]
     paths:
       - app/**
+      - '!app/.packages/**'
       - .github/workflows/lets-talk-to-ft.yml
 
 
