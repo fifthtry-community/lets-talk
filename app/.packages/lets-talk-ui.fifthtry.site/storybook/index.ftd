@@ -3,13 +3,27 @@
 ;; storybook so ui can be fully tested / reviewed without having to create
 ;; the various scenarios they represent.
 
--- import: ui.fifthtry.com/actions/storybook/navigate
+-- import: fastn/processors as pr
+-- import: lets-talk-ui.fifthtry.site/storybook
+-- import: design-system.fifthtry.site/assets as ds-assets
+-- import: design-system.fifthtry.site/actions/navigate
+export: active-file-content, active-title, active-sub-title, submit
 
 -- ds.page: Storybook
 fastn-badge: false
 
 -- ds.storybook:
 list-of-files: $toc
-navigate: navigate
+navigate: storybook
 
 -- end: ds.page
+
+
+-- pr.toc-item list toc:
+$processor$: pr.toc
+
+- Dashboard:
+  - Logged In: /storybook/dashboard/
+
+
+-- optional string $active-file-preview-url: /storybook/dashboard/

@@ -2,6 +2,6 @@
 
 -- fastn.package: lets-talk-ui.fifthtry.site
 
--- fastn.dependency: fastn-community.github.io/design-system
+-- fastn.dependency: design-system.fifthtry.site
 
--- fastn.auto-import: fastn-community.github.io/design-system as ds
+-- fastn.auto-import: design-system.fifthtry.site as ds
