@@ -1,21 +1,21 @@
-name: Upload www to FifthTry
+name: Upload template to FifthTry
 
 on:
   push:
     branches: [ main ]
     paths:
-      - www/**
-      - .github/workflows/lets-talk-to-www.yml
+      - template/**
+      - .github/workflows/template-to-ft.yml
 
 
 jobs:
   upload-to-fifthtry:
     runs-on: ubuntu-latest
     env:
-      FIFTHTRY_SITE_WRITE_TOKEN: ${{ secrets.FT_LETS_TALK_WWW }}
+      FIFTHTRY_SITE_WRITE_TOKEN: ${{ secrets.FT_LETS_TALK_TEMPLATE }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
       - run: sh -c "$(curl -fsSL https://fastn.com/install.sh)"
       - name: Build the pages with fastn
-        run: cd www/ && fastn upload lets-talk-www
+        run: cd template/ && fastn upload lets-talk-template

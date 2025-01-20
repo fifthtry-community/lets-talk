@@ -5,7 +5,7 @@ on:
     branches: [ main ]
     paths:
       - app/.packages/lets-talk-ui.fifthtry.site/**
-      - .github/workflows/lets-talk-ui-to-ft.yml
+      - .github/workflows/ui-to-ft.yml
 
 
 jobs:
