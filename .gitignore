@@ -23,5 +23,7 @@ Cargo.lock
 #.idea/
 
 
+www/.packages/
+
 app/.packages/lets-talk-ui.fifthtry.site/.packages/
 app/.packages/lets-talk-ui.fifthtry.site/.fastn/

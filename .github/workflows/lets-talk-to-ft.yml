@@ -1,21 +1,21 @@
-name: Upload lets-talk-ui to FifthTry
+name: Upload lets-talk to FifthTry
 
 on:
   push:
     branches: [ main ]
     paths:
-      - app/.packages/lets-talk-ui.fifthtry.site/**
-      - .github/workflows/lets-talk-ui-to-ft.yml
+      - app/**
+      - .github/workflows/lets-talk-to-ft.yml
 
 
 jobs:
   upload-to-fifthtry:
     runs-on: ubuntu-latest
     env:
-      FIFTHTRY_SITE_WRITE_TOKEN: ${{ secrets.FT_LETS_TALK_UI }}
+      FIFTHTRY_SITE_WRITE_TOKEN: ${{ secrets.FT_LETS_TALK }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
       - run: sh -c "$(curl -fsSL https://fastn.com/install.sh)"
       - name: Build the pages with fastn
-        run: cd app/.packages/lets-talk-ui.fifthtry.site/ && fastn upload lets-talk-ui
+        run: cd app/ && fastn upload lets-talk
