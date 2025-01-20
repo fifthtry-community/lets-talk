@@ -1,0 +1,8 @@
+-- ftd.string-field $meeting-title: title
+value: New Meeting
+
+
+-- void new-instant():
+ftd.string-field title: $meeting-title
+
+ftd.submit_form("/talk/api/create-meeting/", title)

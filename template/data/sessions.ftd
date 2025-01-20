@@ -1,0 +1,12 @@
+-- import: fastn/processors as pr
+
+-- record session:
+string id:
+string meeting_title:
+string joined_at:
+string left_at:
+decimal duration:
+
+-- session list sessions:
+
+-- end: sessions

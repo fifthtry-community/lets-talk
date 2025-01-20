@@ -1,1 +1,99 @@
--- import: fastn-community.github.io/design-system as ds
+-- import: lets-talk-template.fifthtry.site/actions/create-meeting
+-- import: lets-talk-template.fifthtry.site/data/sessions
+
+-- import: design-system.fifthtry.site as ds
+
+
+-- component page:
+caption title:
+
+    -- ds.page: $ds.title(a = $page.title)
+
+    -- ds.column:
+
+    -- ds.heading-large: Start an instant meeting with anyone
+
+    -- ds.column:
+    width: hug-content
+
+    -- ftd.text-input:
+    placeholder: Meeting Title (optional)
+    type: text
+    $on-input$: $ftd.set-string($a = $create-meeting.meeting-title.value, v = $VALUE)
+    width: fill-container
+    height.fixed.px: 40
+    border-radius.px: 8
+    background.solid: transparent
+    border-width.px: 1
+    border-color: $inherited.colors.border
+    padding.px: 8
+    color: $inherited.colors.text-strong
+
+    -- end: ds.column
+
+    -- ds.primary-button: Start an instant meeting
+    $on-click$: $create-meeting.new-instant()
+
+    -- ds.copy-small: $create-meeting.meeting-title.error
+    if: { create-meeting.meeting-title.error }
+    color: $ds.colors.error.text
+
+    -- past-sessions:
+
+    -- end: ds.column
+
+    -- end: ds.page
+
+-- end: page
+
+
+-- component past-sessions:
+sessions.session list sessions: $sessions.sessions
+
+    -- ds.column:
+
+    -- ds.heading-medium: Past Sessions
+
+
+    -- session-box:
+    session: $s
+    for: $s in $past-sessions.sessions
+
+    -- end: ds.column
+
+-- end: past-sessions
+
+
+-- component session-box:
+sessions.session session:
+
+    -- ds.row:
+    width: hug-content
+    spacing: $ds.spaces.horizontal-gap.large
+    border: $ds.borders.uniform.small
+    inset: $ds.spaces.inset-wide.large 
+
+    -- ds.column:
+
+    -- ds.copy-large: $session-box.session.meeting_title
+
+    -- ds.row:
+    -- ds.copy-small: Duration (in minutes): 
+    -- ftd.decimal: $session-box.session.duration
+    -- end: ds.row
+
+    -- ds.row:
+    -- ds.copy-small: Joined at:
+    -- ds.copy-small: $session-box.session.joined_at
+    -- end: ds.row
+
+    -- ds.row:
+    -- ds.copy-small: Left at:
+    -- ds.copy-small: $session-box.session.left_at
+    -- end: ds.row
+
+    -- end: ds.column
+
+    -- end: ds.row
+
+-- end: session-box

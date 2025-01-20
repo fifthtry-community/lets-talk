@@ -1,6 +1,13 @@
 -- import: fastn
 
--- fastn.package: lets-talk.fifthtry.site
+-- fastn.package: lets-talk-template.fifthtry.site
 
--- fastn.dependency: fastn-community.github.io/design-system
-provided-via: lets-talk.fifthtry.site/ds
+-- fastn.dependency: design-system.fifthtry.site
+provided-via: lets-talk-template.fifthtry.site/ds
+
+
+-- fastn.migration: Empty
+
+;; We are interested in default tables ('fastn_user' for example) created by
+;; fastn. `fastn` requires at least one `-- fastn.migration:` decl to do that
+SELECT 1;
