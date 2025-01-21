@@ -5,6 +5,7 @@ on:
     branches: [ main ]
     paths:
       - template/**
+      - '!template/.packages/**'
       - .github/workflows/template-to-ft.yml
 
 
