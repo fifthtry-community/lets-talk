@@ -1,10 +1,5 @@
 -- import: lets-talk.fifthtry.site as app
 
-
-;; I was expecting it to use the copyright defined in ds.ftd
 -- app.dashboard:
 
-
-;; i was expecting d to be an alias to talk.mysite.com/ds, but its showing the
-;; value in design-system.fifthtry.site/site/index.ftd.
 -- ftd.text: $ds.copyright
