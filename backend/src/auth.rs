@@ -30,7 +30,13 @@ impl ft_sdk::FromRequest for RequiredUser {
 
         let fud = match ft_sdk::auth::ud(cookie, conn)? {
             Some(v) => v,
-            None => return Err(ft_sdk::anyhow!("User not logged in")),
+            None => {
+                return Err(ft_sdk::SpecialError::Single(
+                    "auth".to_string(),
+                    "User not logged in".to_string(),
+                )
+                .into());
+            }
         };
 
         Ok(Self {
@@ -101,7 +107,4 @@ diesel::table! {
 }
 
 diesel::joinable!(ft_org_member -> ft_org (org_id));
-diesel::allow_tables_to_appear_in_same_query!(
-    ft_org,
-    ft_org_member,
-);
+diesel::allow_tables_to_appear_in_same_query!(ft_org, ft_org_member,);

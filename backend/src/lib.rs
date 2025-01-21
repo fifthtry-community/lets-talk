@@ -129,7 +129,7 @@ fn past_sessions(user: auth::RequiredUser) -> ft_sdk::data::Result {
         })
         .collect::<Vec<_>>();
 
-    ft_sdk::data::json(all_sessions)
+    ft_sdk::data::json(serde_json::json!({"sessions": all_sessions}))
 }
 
 #[derive(serde::Serialize)]
