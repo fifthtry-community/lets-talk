@@ -27,7 +27,7 @@ fn create_meeting(
 
     let meeting = dyte::create_meeting(&title)?;
 
-    ft_sdk::form::redirect(format!("{meeting_page_url}{}", meeting.data.id,))
+    ft_sdk::form::redirect(format!("{meeting_page_url}{}/", meeting.data.id,))
 }
 
 /// Return the token from active session to join the meeting, or,
@@ -90,7 +90,7 @@ fn session_new(
 
     let session_cookie = create_session_cookie(&participant.data.token, &meeting_id, host)?;
 
-    ft_sdk::data::browser_redirect_with_cookie(format!("{meeting_page_url}{meeting_id}"), session_cookie)
+    ft_sdk::data::browser_redirect_with_cookie(format!("{meeting_page_url}{meeting_id}/"), session_cookie)
 }
 
 /// Get past sessions of the logged in user

@@ -19,7 +19,7 @@ provided-via: lets-talk-template.fifthtry.site/ds
 -- fastn.dynamic-urls:
 
 # Meeting
-url: /meeting/<string:meeting-id>
+url: /meeting/<string:meeting-id>/
 document: meeting.ftd
 
 
