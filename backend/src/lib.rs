@@ -18,9 +18,7 @@ fn create_meeting(
     user: auth::RequiredUser,
     mut conn: ft_sdk::Connection,
 ) -> ft_sdk::form::Result {
-    let is_staff = auth::is_fifthtry_staff_org_member(&mut conn, user.user_id)?;
-
-    if !is_staff {
+    if !user.is_allowed_to_create_meeting(&mut conn) {
         return Err(title
             .error("You are not authorized to create a meeting")
             .into());
