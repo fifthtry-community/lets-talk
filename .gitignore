@@ -35,6 +35,9 @@ app/js/build.js.map
 template/.packages/
 template/.fastn/
 
+template-final/.packages/
+template-final/.fastn/
+
 # CI will figure out how to upload these two files to fifthtry
 template/email_auth_provider.wasm
 template/talk.wasm
