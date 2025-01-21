@@ -1,0 +1,30 @@
+-- ftd.string-field $name: name
+-- ftd.string-field $username: username
+-- ftd.string-field $email: email
+-- ftd.string-field $password: password
+-- ftd.string-field $password2: password2
+-- ftd.boolean-field $accept_terms: accept_terms
+
+-- ftd.string-field $next: next
+value: /
+
+
+-- void create-account(name, email, username, password, password2, accept_terms, next):
+ftd.string-field $name:
+ftd.string-field $email:
+ftd.string-field $username:
+ftd.string-field $password:
+ftd.string-field $password2:
+ftd.boolean-field $accept_terms:
+ftd.string-field $next:
+
+ftd.submit_form(
+    "/-/auth/create-account/",
+    name,
+    email,
+    username,
+    password,
+    password2,
+    accept_terms,
+    next
+)

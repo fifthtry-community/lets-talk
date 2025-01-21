@@ -1,0 +1,5 @@
+-- string sign-in: /signin/
+-- string sign-up: /signup/
+-- string forgot-password: /forgot-password/
+-- string forgot-password-success: /forgot-password-success/
+-- string set-password: /set-password/

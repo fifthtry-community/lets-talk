@@ -1,65 +1,81 @@
 -- import: lets-talk-template.fifthtry.site/actions/create-meeting
+-- import: lets-talk-template.fifthtry.site/actions/create-account
+-- import: lets-talk-template.fifthtry.site/actions/signin
+-- import: lets-talk-template.fifthtry.site/actions/forgot-password
+-- import: lets-talk-template.fifthtry.site/actions/set-password
 -- import: lets-talk-template.fifthtry.site/data/sessions
+-- import: lets-talk-template.fifthtry.site/data/urls
 
 -- import: design-system.fifthtry.site as ds
 
 
--- component page:
+;; NOTE: This file contains all the "page" components:
+;; - dashboard-page
+;; - signup-page
+;; - signin-page
+;; - forgot-password-page
+;; - forgot-password-success-page
+;; - set-password-page
+
+
+-- component dashboard-page:
 caption title:
+sessions.session list past-sessions:
 
-    -- ds.page: $ds.title(a = $page.title)
+-- ds.page: $ds.title(a = $dashboard-page.title)
 
-    -- ds.column:
+	-- ds.column:
+	
+		-- ds.heading-large: Start an instant meeting with anyone
+		
+		-- ds.column:
+		width: hug-content
+		
+			-- ftd.text-input:
+			placeholder: Meeting Title (optional)
+			type: text
+			$on-input$: $ftd.set-string($a = $create-meeting.meeting-title.value, v = $VALUE)
+			width: fill-container
+			height.fixed.px: 40
+			border-radius.px: 8
+			background.solid: transparent
+			border-width.px: 1
+			border-color: $inherited.colors.border
+			padding.px: 8
+			color: $inherited.colors.text-strong
+			
+		-- end: ds.column
 
-    -- ds.heading-large: Start an instant meeting with anyone
+		-- ds.primary-button: Start an instant meeting
+		$on-click$: $create-meeting.new-instant()
+		
+		-- ds.copy-small: $create-meeting.meeting-title.error
+		if: { create-meeting.meeting-title.error }
+		color: $ds.colors.error.text
+		
+		-- past-sessions:
+		sessions: $dashboard-page.past-sessions
+		
+	-- end: ds.column
 
-    -- ds.column:
-    width: hug-content
+-- end: ds.page
 
-    -- ftd.text-input:
-    placeholder: Meeting Title (optional)
-    type: text
-    $on-input$: $ftd.set-string($a = $create-meeting.meeting-title.value, v = $VALUE)
-    width: fill-container
-    height.fixed.px: 40
-    border-radius.px: 8
-    background.solid: transparent
-    border-width.px: 1
-    border-color: $inherited.colors.border
-    padding.px: 8
-    color: $inherited.colors.text-strong
-
-    -- end: ds.column
-
-    -- ds.primary-button: Start an instant meeting
-    $on-click$: $create-meeting.new-instant()
-
-    -- ds.copy-small: $create-meeting.meeting-title.error
-    if: { create-meeting.meeting-title.error }
-    color: $ds.colors.error.text
-
-    -- past-sessions:
-
-    -- end: ds.column
-
-    -- end: ds.page
-
--- end: page
+-- end: dashboard-page
 
 
 -- component past-sessions:
-sessions.session list sessions: $sessions.sessions
+sessions.session list sessions:
 
-    -- ds.column:
+-- ds.column:
 
-    -- ds.heading-medium: Past Sessions
-
-
-    -- session-box:
-    session: $s
-    for: $s in $past-sessions.sessions
-
-    -- end: ds.column
+	-- ds.heading-medium: Past Sessions
+	
+	
+	-- session-box:
+	session: $s
+	for: $s in $past-sessions.sessions
+	
+-- end: ds.column
 
 -- end: past-sessions
 
@@ -67,33 +83,450 @@ sessions.session list sessions: $sessions.sessions
 -- component session-box:
 sessions.session session:
 
-    -- ds.row:
-    width: hug-content
-    spacing: $ds.spaces.horizontal-gap.large
-    border: $ds.borders.uniform.small
-    inset: $ds.spaces.inset-wide.large 
+-- ds.row:
+width: hug-content
+spacing: $ds.spaces.horizontal-gap.large
+border: $ds.borders.uniform.small
+inset: $ds.spaces.inset-wide.large
 
-    -- ds.column:
+	-- ds.column:
+	
+		-- ds.copy-large: $session-box.session.meeting_title
+		
+		-- ds.row:
+			-- ds.copy-small: Duration (in minutes):
+			-- ftd.decimal: $session-box.session.duration
+		-- end: ds.row
 
-    -- ds.copy-large: $session-box.session.meeting_title
+		-- ds.row:
+			-- ds.copy-small: Joined at:
+			-- ds.copy-small: $session-box.session.joined_at
+		-- end: ds.row
 
-    -- ds.row:
-    -- ds.copy-small: Duration (in minutes): 
-    -- ftd.decimal: $session-box.session.duration
-    -- end: ds.row
+		-- ds.row:
+			-- ds.copy-small: Left at:
+			-- ds.copy-small: $session-box.session.left_at
+		-- end: ds.row
 
-    -- ds.row:
-    -- ds.copy-small: Joined at:
-    -- ds.copy-small: $session-box.session.joined_at
-    -- end: ds.row
+	-- end: ds.column
 
-    -- ds.row:
-    -- ds.copy-small: Left at:
-    -- ds.copy-small: $session-box.session.left_at
-    -- end: ds.row
-
-    -- end: ds.column
-
-    -- end: ds.row
+-- end: ds.row
 
 -- end: session-box
+
+
+-- component signup-page:
+caption title:
+module action: create-account
+
+
+
+-- ds.page: $ds.title(a = $signup-page.title)
+
+	-- ds.heading-large: $signup-page.title
+	
+	-- ds.column:
+	spacing: $ds.spaces.vertical-gap.extra-extra-small
+	align-content: left
+	
+		-- ds.copy-small: Name
+		
+		-- ftd.text-input:
+		width: fill-container
+		type: text
+		$on-input$: $ftd.set-string($a = $signup-page.action.name.value, v = $VALUE)
+		height.fixed.px: 40
+		border-radius.px: 8
+		placeholder: Enter name
+		background.solid: transparent
+		border-width.px: 1
+		border-color: $inherited.colors.border
+		border-color if { signup-page.action.name.error != NULL }: $inherited.colors.error.border
+		padding.px: 8
+		color: $inherited.colors.text-strong
+		
+		-- ds.copy-small: $signup-page.action.name.error
+		if: { signup-page.action.name.error != NULL }
+		color: $ds.colors.error.text
+		
+	-- end: ds.column
+
+
+	-- ds.column:
+	spacing: $ds.spaces.vertical-gap.extra-extra-small
+	align-content: left
+	
+		-- ds.copy-small: Username
+		
+		-- ftd.text-input:
+		width: fill-container
+		type: text
+		$on-input$: $ftd.set-string($a = $signup-page.action.username.value, v = $VALUE)
+		height.fixed.px: 40
+		border-radius.px: 8
+		placeholder: Enter username
+		background.solid: transparent
+		border-width.px: 1
+		border-color: $inherited.colors.border
+		border-color if { signup-page.action.username.error != NULL }: $inherited.colors.error.border
+		padding.px: 8
+		color: $inherited.colors.text-strong
+		
+		-- ds.copy-small: $signup-page.action.username.error
+		if: { signup-page.action.username.error != NULL }
+		color: $ds.colors.error.text
+		
+	-- end: ds.column
+
+
+
+	-- ds.column:
+	spacing: $ds.spaces.vertical-gap.extra-extra-small
+	align-content: left
+	
+		-- ds.copy-small: Email
+		
+		-- ftd.text-input:
+		placeholder: Enter email
+		type: email
+		$on-input$: $ftd.set-string($a = $signup-page.action.email.value, v = $VALUE)
+		width: fill-container
+		height.fixed.px: 40
+		border-radius.px: 8
+		background.solid: transparent
+		border-width.px: 1
+		border-color: $inherited.colors.border
+		border-color if { signup-page.action.email.error != NULL }: $inherited.colors.error.border
+		padding.px: 8
+		color: $inherited.colors.text-strong
+		
+		-- ds.copy-small: $signup-page.action.email.error
+		if: { signup-page.action.email.error != NULL }
+		color: $ds.colors.error.text
+		
+	-- end: ds.column
+
+	-- ds.column:
+	spacing: $ds.spaces.vertical-gap.extra-extra-small
+	align-content: left
+	
+		-- ds.copy-small: Password
+		
+		-- ftd.text-input:
+		placeholder: Enter password
+		type: password
+		$on-input$: $ftd.set-string($a = $signup-page.action.password.value, v = $VALUE)
+		width: fill-container
+		height.fixed.px: 40
+		border-radius.px: 8
+		background.solid: transparent
+		border-width.px: 1
+		border-color: $inherited.colors.border
+		border-color if { signup-page.action.password.error != NULL }: $inherited.colors.error.border
+		padding.px: 8
+		color: $inherited.colors.text-strong
+		
+		-- ds.copy-small: $signup-page.action.password.error
+		if: { signup-page.action.password.error != NULL }
+		color: $ds.colors.error.text
+		
+	-- end: ds.column
+
+
+	-- ds.column:
+	spacing: $ds.spaces.vertical-gap.extra-extra-small
+	align-content: left
+	
+		-- ds.copy-small: Confirm Password
+		
+		-- ftd.text-input:
+		placeholder: Enter password again
+		type: password
+		$on-input$: $ftd.set-string($a = $signup-page.action.password2.value, v = $VALUE)
+		width: fill-container
+		height.fixed.px: 40
+		border-radius.px: 8
+		background.solid: transparent
+		border-width.px: 1
+		border-color: $inherited.colors.border
+		border-color if { signup-page.action.password2.error != NULL }: $inherited.colors.error.border
+		padding.px: 8
+		color: $inherited.colors.text-strong
+		
+		-- ds.copy-small: $signup-page.action.password2.error
+		if: { signup-page.action.password2.error != NULL }
+		color: $ds.colors.error.text
+		
+	-- end: ds.column
+
+	;; Accept Terms and Conditions checkbox
+
+	-- ds.column:
+	spacing: $ds.spaces.vertical-gap.extra-extra-small
+	align-content: left
+	
+		-- ds.checkbox: I accept Terms and Conditions
+		$is-checked: $signup-page.action.accept_terms.value
+		size: small
+		
+		-- ds.copy-small: $signup-page.action.accept_terms.error
+		if: { signup-page.action.accept_terms.error != NULL }
+		color: $ds.colors.error.text
+		
+	-- end: ds.column
+
+	-- ds.primary-button: Sign up
+	$on-click$: $signup-page.action.create-account($name = $signup-page.action.name, $email = $signup-page.action.email, $username = $signup-page.action.username, $password = $signup-page.action.password, $password2 = $signup-page.action.password2, $accept_terms = $signup-page.action.accept_terms, $next = $signup-page.action.next)
+	width: full
+	radius: curved
+	
+	-- ds.row:
+	spacing: $ds.spaces.horizontal-gap.extra-small
+	inset: $ds.spaces.inset-square.small
+	wrap: true
+	
+		-- ds.copy-regular: Already have an account?
+		width: hug-content
+		
+		-- ds.link: Log in
+		color: $ds.colors.accent.primary
+		link: $urls.sign-in
+		
+	-- end: ds.row
+
+-- end: ds.page
+
+-- end: signup-page
+
+
+
+-- component signin-page:
+caption title:
+module action: signin
+
+
+
+-- ds.page: $ds.title(a = $signin-page.title)
+
+	-- ds.heading-large: $signin-page.title
+	
+	
+	-- ds.column:
+	spacing: $ds.spaces.vertical-gap.extra-extra-small
+	align-content: left
+	
+		-- ds.copy-small: Username or email address
+		
+		-- ftd.text-input:
+		placeholder: Enter username or email address
+		type: text
+		$on-input$: $ftd.set-string($a = $signin-page.action.username-or-email.value, v = $VALUE)
+		width: fill-container
+		height.fixed.px: 40
+		border-radius.px: 8
+		background.solid: transparent
+		border-width.px: 1
+		border-color: $inherited.colors.border
+		border-color if { signin-page.action.username-or-email.error != NULL }: $inherited.colors.error.border
+		padding.px: 8
+		color: $inherited.colors.text-strong
+		
+		-- ds.copy-small: $signin-page.action.username-or-email.error
+		if: { signin-page.action.username-or-email.error != NULL }
+		color: $ds.colors.error.text
+		
+	-- end: ds.column
+
+	-- ds.column:
+	spacing: $ds.spaces.vertical-gap.extra-extra-small
+	align-content: left
+	
+		-- ds.copy-small: Password
+		
+		-- ftd.text-input:
+		placeholder: Enter password
+		type: password
+		$on-input$: $ftd.set-string($a = $signin-page.action.password.value, v = $VALUE)
+		width: fill-container
+		height.fixed.px: 40
+		border-radius.px: 8
+		background.solid: transparent
+		border-width.px: 1
+		border-color: $inherited.colors.border
+		border-color if { signin-page.action.password.error != NULL }: $inherited.colors.error.border
+		padding.px: 8
+		color: $inherited.colors.text-strong
+		
+		-- ds.copy-small: $signin-page.action.password.error
+		if: { signin-page.action.password.error != NULL }
+		color: $ds.colors.error.text
+		
+	-- end: ds.column
+
+	-- ds.primary-button: Login
+	$on-click$: $signin-page.action.signin($username_or_email=$signin-page.action.username-or-email, $password=$signin-page.action.password, $next=$signin-page.action.next)
+	width: full
+	radius: curved
+	
+	-- ds.row:
+	spacing: $ds.spaces.vertical-gap.small
+	inset: $ds.spaces.inset-square.small
+	wrap: true
+	
+		-- ds.copy-regular: Don’t have an account?
+		width: hug-content
+		
+		-- ds.link: **Create an account**
+		color: $ds.colors.accent.primary
+		link: $urls.sign-up
+		
+	-- end: ds.row
+
+	-- ds.row:
+	spacing: $ds.spaces.horizontal-gap.extra-small
+	inset: $ds.spaces.inset-square.small
+	wrap: true
+	
+		-- ds.link: I forgot my password
+		color: $ds.colors.accent.primary
+		link: $urls.forgot-password
+		
+	-- end: ds.row
+
+-- end: ds.page
+
+-- end: signin-page
+
+
+-- component forgot-password-page:
+caption title:
+module action: forgot-password
+
+
+
+-- ds.page: $ds.title(a = $forgot-password-page.title)
+
+	-- ds.heading-large: $forgot-password-page.title
+	
+	-- ds.column:
+	    spacing: $ds.spaces.vertical-gap.extra-extra-small
+	    align-content: left
+	
+		-- ds.copy-small: Username or email address
+		
+		-- ftd.text-input:
+		placeholder: Enter username or email address
+		type: text
+		$on-input$: $ftd.set-string($a = $forgot-password-page.action.username-or-email.value, v = $VALUE)
+		width: fill-container
+		height.fixed.px: 40
+		border-radius.px: 8
+		background.solid: transparent
+		border-width.px: 1
+		border-color: $inherited.colors.border
+		border-color if { forgot-password-page.action.username-or-email.error != NULL }: $inherited.colors.error.border
+		padding.px: 8
+		color: $inherited.colors.text-strong
+		
+		-- ds.copy-small: $forgot-password-page.action.username-or-email.error
+		if: { forgot-password-page.action.username-or-email.error != NULL }
+		color: $ds.colors.error.text
+		
+	-- end: ds.column
+
+	-- ds.primary-button: Send Reset Link
+	$on-click$: $forgot-password-page.action.submit-values(username_or_email = $forgot-password-page.action.username-or-email)
+	width: full
+	radius: curved
+	
+	-- ds.row:
+	spacing: $ds.spaces.vertical-gap.small
+	inset: $ds.spaces.inset-square.small
+	wrap: true
+	
+		-- ds.copy-regular: Don’t have an account?
+		width: hug-content
+		
+		-- ds.link: Sign Up
+		color: $ds.colors.accent.primary
+		link: $urls.sign-up
+		
+	-- end: ds.row
+
+
+-- end: ds.page
+
+-- end: forgot-password-page
+
+
+-- component set-password-page:
+caption title:
+module action: set-password
+ftd.string-field email:
+ftd.string-field code:
+ftd.string-field spr:
+
+-- ds.page: $ds.title(a = $set-password-page.title)
+
+	-- ds.heading-large: $set-password-page.title
+	
+	-- ds.column:
+	spacing: $ds.spaces.vertical-gap.extra-extra-small
+	align-content: left
+	
+		-- ds.copy-small: New Password
+		
+		-- ftd.text-input:
+		placeholder: Enter new password
+		type: password
+		$on-input$: $ftd.set-string($a = $set-password-page.action.new-password.value, v = $VALUE)
+		width: fill-container
+		height.fixed.px: 40
+		border-radius.px: 8
+		background.solid: transparent
+		border-width.px: 1
+		border-color: $inherited.colors.border
+		border-color if { set-password-page.action.new-password.error != NULL }: $inherited.colors.error.border
+		padding.px: 8
+		color: $inherited.colors.text-strong
+		
+		-- ds.copy-small: $set-password-page.action.new-password.error
+		if: { set-password-page.action.new-password.error != NULL }
+		color: $ds.colors.error.text
+		
+	-- end: ds.column
+
+	-- ds.column:
+	spacing: $ds.spaces.vertical-gap.extra-extra-small
+	align-content: left
+	
+		-- ds.copy-small: Confirm New Password
+		
+		-- ftd.text-input:
+		placeholder: Re-enter new password
+		type: password
+		$on-input$: $ftd.set-string($a = $set-password-page.action.new-password2.value, v = $VALUE)
+		width: fill-container
+		height.fixed.px: 40
+		border-radius.px: 8
+		background.solid: transparent
+		border-width.px: 1
+		border-color: $inherited.colors.border
+		border-color if { set-password-page.action.new-password2.error != NULL }: $inherited.colors.error.border
+		padding.px: 8
+		color: $inherited.colors.text-strong
+		
+		-- ds.copy-small: $set-password-page.action.new-password2.error
+		if: { set-password-page.action.new-password2.error != NULL }
+		color: $ds.colors.error.text
+		
+	-- end: ds.column
+
+	-- ds.primary-button: Change Password
+	$on-click$: $set-password-page.action.submit-values(new_password = $set-password-page.action.new-password, new_password2 = $set-password-page.action.new-password2, code = $set-password-page.code, email = $set-password-page.email, spr = $set-password-page.spr)
+	width: full
+	radius: curved
+	
+-- end: ds.page
+
+-- end: set-password-page

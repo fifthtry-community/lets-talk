@@ -1,0 +1,16 @@
+-- ftd.string-field $username-or-email: username-or-email
+-- ftd.string-field $password: password
+-- ftd.string-field $next: next
+value: /
+
+-- void signin(username_or_email, password, next):
+ftd.string-field $username_or_email:
+ftd.string-field $password:
+ftd.string-field $next:
+
+ftd.submit_form(
+    "/-/auth/login/",
+    username_or_email,
+    password,
+    next
+)

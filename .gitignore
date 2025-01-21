@@ -27,5 +27,11 @@ www/.packages/
 
 app/.packages/lets-talk-ui.fifthtry.site/.packages/
 app/.packages/lets-talk-ui.fifthtry.site/.fastn/
+
+# Templates shouldn't be using any packages that is not hosted outside of fifthtry
 template/.packages/
 template/.fastn/
+
+# CI will figure out how to upload these two files to fifthtry
+template/email_auth_provider.wasm
+template/talk.wasm

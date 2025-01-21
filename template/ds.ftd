@@ -15,6 +15,7 @@ wide.px: 1340
 -- ftd.image-src site-logo: $assets.files.assets.logo.svg
 
 
+;; Fix(siddhantk232): this does not overwrite the default ds.title function
 -- string title(a):
 string a:
 

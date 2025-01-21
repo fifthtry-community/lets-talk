@@ -1,0 +1,19 @@
+-- import: lets-talk-template.fifthtry.site/app
+
+-- import: fastn/processors as pr
+
+-- ftd.temporary-redirect: /
+if: { user != NULL }
+
+-- app.signup-page: Sign Up
+
+
+;; DATA
+-- record user-details:
+string name:
+string email:
+string identity:
+boolean verified-email:
+
+-- optional user-details user:
+$processor$: pr.user-details

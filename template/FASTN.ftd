@@ -6,6 +6,14 @@
 provided-via: lets-talk-template.fifthtry.site/ds
 
 
+-- fastn.url-mappings:
+
+/talk/api/* -> wasm+proxy://talk.wasm/*
+;; `email_auth_provider` is required so that only authenticated users can
+;; create meetings. Not all participants of a meeting require to be authenticated.
+/-/auth/* -> wasm+proxy://email_auth_provider.wasm/*
+
+
 -- fastn.migration: Empty
 
 ;; We are interested in default tables ('fastn_user' for example) created by

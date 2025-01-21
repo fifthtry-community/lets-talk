@@ -1,18 +1,19 @@
 -- import: lets-talk-template.fifthtry.site/app
+-- import: lets-talk-template.fifthtry.site/data/sessions
+-- import: lets-talk-template.fifthtry.site/data/urls
 
 -- import: fastn/processors as pr
 
 ;; TODO: add the auth package for signin/signup functionality
-;; Go to /signin/ if not authenticated
-;; -- ftd.temporary-redirect: /signin/
-;; if: { user == NULL }
+;; login if not authenticated
+-- ftd.temporary-redirect: $urls.sign-in
+if: { user == NULL }
 
-
--- app.page: Dashboard
+-- app.dashboard-page: Dashboard
+past-sessions: $sessions.data.sessions
 
 
 ;; DATA
-
 -- record user-details:
 string name:
 string email:
