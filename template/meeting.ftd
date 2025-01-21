@@ -1,6 +1,6 @@
 -- import: lets-talk-template.fifthtry.site/data/urls
 
-;; -- import: lets-talk.fifthtry.site/assets ;; this is not lets-talk-template.fifthtry.site!
+-- import: lets-talk.fifthtry.site/assets ;; this is not lets-talk-template.fifthtry.site!
 
 -- import: fastn/processors as pr
 
@@ -13,28 +13,26 @@ url: /talk/api/session/
 meeting-id: $meeting-id
 meeting-page-url: $urls.meeting
 
--- ftd.text: $session.token
-
 ;; Initialises the DyteClient
-/-- talk-app:
+-- talk-app:
 if: { session.token }
 token: $session.token
 mid: $meeting-id
 
 ;; meeting UI (repackaged from @dytesdk/ui-kit)
-/-- dyte-meeting:
+-- dyte-meeting:
 if: { session.token }
 
 
-;; -- web-component dyte-meeting:
-;; js: $assets.files.talk.js.build.js
-;; 
-;; ;; Initialize dyte sdk
-;; -- web-component talk-app:
-;; optional string token:
-;; optional string mid:
-;; js: $assets.files.talk.js.build.js
-;; 
+-- web-component dyte-meeting:
+js: $assets.files.js.build.js
+
+;; Initialize dyte sdk
+-- web-component talk-app:
+optional string token:
+optional string mid:
+js: $assets.files.js.build.js
+
 
 -- record talk-session:
 string token:
