@@ -18,5 +18,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - run: sh -c "$(curl -fsSL https://fastn.com/install.sh)"
+        # TODO(siddhantk232): upload build.js too
       - name: Build the pages with fastn
         run: cd app/ && fastn upload lets-talk
