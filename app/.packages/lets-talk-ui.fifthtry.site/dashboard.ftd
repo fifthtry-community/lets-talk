@@ -1,0 +1,9 @@
+-- component dashboard:
+
+-- ds.site-page: Dashboard
+
+    -- ds.heading-medium: Dashboard
+
+-- end: ds.site-page
+
+-- end: dashboard
