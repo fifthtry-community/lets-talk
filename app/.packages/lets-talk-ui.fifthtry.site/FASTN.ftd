@@ -1,7 +1,10 @@
 -- import: fastn
 
 -- fastn.package: lets-talk-ui.fifthtry.site
+system: lets-talk-ui
+system-is-confidential: false
 
 -- fastn.dependency: design-system.fifthtry.site
 
 -- fastn.auto-import: design-system.fifthtry.site as ds
+-- fastn.auto-import: lets-talk-ui.fifthtry.site as lets-talk-ui

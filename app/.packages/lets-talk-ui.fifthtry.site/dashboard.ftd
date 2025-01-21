@@ -3,7 +3,15 @@
 -- ds.site-page: Dashboard
 
     -- ds.heading-medium: Dashboard
+    -- lets-talk-ui.my-button:
 
 -- end: ds.site-page
 
 -- end: dashboard
+
+
+-- component my-button:
+
+-- ds.heading-large: my button
+
+-- end: my-button

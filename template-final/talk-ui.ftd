@@ -1,0 +1,8 @@
+-- import: lets-talk-ui.fifthtry.site
+export: dashboard
+
+-- component my-button:
+
+-- ds.copy-regular: this is my button, balle balle
+
+-- end: my-button

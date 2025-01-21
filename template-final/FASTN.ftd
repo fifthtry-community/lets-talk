@@ -5,9 +5,12 @@
 -- fastn.dependency: lets-talk.fifthtry.site
 -- fastn.dependency: design-system.fifthtry.site
 provided-via: talk.mysite.com/ds
+-- fastn.dependency: lets-talk-ui.fifthtry.site
+provided-via: talk.mysite.com/talk-ui
 
 ;; this should have worked as per design but does not
 ;; -- fastn.auto-import: design-system.fifthtry.site as ds
 ;; another important tip: if you modify FASTN.ftd you have to restart fastn
 ;; server itself
 -- fastn.auto-import: talk.mysite.com/ds
+-- fastn.auto-import: talk.mysite.com/talk-ui
