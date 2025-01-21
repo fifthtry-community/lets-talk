@@ -16,6 +16,13 @@ provided-via: lets-talk-template.fifthtry.site/ds
 /-/auth/* -> wasm+proxy://email_auth_provider.wasm/*
 
 
+-- fastn.dynamic-urls:
+
+# Meeting
+url: /meeting/<string:meeting-id>
+document: meeting.ftd
+
+
 
 ;; Uncomment the following code block and modify it to suite your needs
 ;; -- fastn.migration: Override example

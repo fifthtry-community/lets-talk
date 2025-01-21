@@ -27,6 +27,9 @@ www/.packages/
 
 app/.packages/lets-talk-ui.fifthtry.site/.packages/
 app/.packages/lets-talk-ui.fifthtry.site/.fastn/
+app/js/node_modules/
+app/js/build.js
+app/js/build.js.map
 
 # Templates shouldn't be using any packages that is not hosted outside of fifthtry
 template/.packages/

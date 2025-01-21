@@ -1,0 +1,2 @@
+This app/ dir is linked to the template/ dir for development so we do not want `fastn update` to fetch this package from fifthtry.
+`template/.packages` is gitignored so in production, this will be fetched from fifthtry.

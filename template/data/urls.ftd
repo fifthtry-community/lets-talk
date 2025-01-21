@@ -3,3 +3,7 @@
 -- string forgot-password: /forgot-password/
 -- string forgot-password-success: /forgot-password-success/
 -- string set-password: /set-password/
+
+;; WARN: You'll have to create a file similar to meeting.ftd if you change this
+;; WARN: Also change the dynamic-urls in FASTN.ftd
+-- string meeting: /meeting/

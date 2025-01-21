@@ -15,6 +15,7 @@ fn ping() -> ft_sdk::data::Result {
 /// Create a meeting and add the user to it as a participant
 fn create_meeting(
     title: ft_sdk::Required<"title">,
+    ft_sdk::Required(meeting_page_url): ft_sdk::Required<"meeting-page-url">,
     user: auth::RequiredUser,
     mut conn: ft_sdk::Connection,
 ) -> ft_sdk::form::Result {
@@ -26,7 +27,7 @@ fn create_meeting(
 
     let meeting = dyte::create_meeting(&title)?;
 
-    ft_sdk::form::redirect(format!("/talk/{}", meeting.data.id,))
+    ft_sdk::form::redirect(format!("{meeting_page_url}{}", meeting.data.id,))
 }
 
 /// Return the token from active session to join the meeting, or,
@@ -36,6 +37,7 @@ fn create_meeting(
 fn session(
     ft_sdk::Cookie(token): ft_sdk::Cookie<{ TALK_TOKEN_COOKIE }>,
     meeting_id: ft_sdk::Query<"meeting-id", String>,
+    ft_sdk::Query(meeting_page_url): ft_sdk::Query<"meeting-page-url">,
 ) -> ft_sdk::processor::Result {
     ft_sdk::println!("======= in session handler ======");
     ft_sdk::println!("token: {:?}", token);
@@ -53,13 +55,14 @@ fn session(
     }
 
     return ft_sdk::processor::temporary_redirect(format!(
-        "/talk/api/session/new/?meeting-id={meeting_id}"
+        "/talk/api/session/new/?meeting-id={meeting_id}&meeting-page-url={meeting_page_url}",
     ));
 }
 
 #[ft_sdk::data]
 fn session_new(
     meeting_id: ft_sdk::Query<"meeting-id", String>,
+    ft_sdk::Query(meeting_page_url): ft_sdk::Query<"meeting-page-url", String>,
     user: auth::OptionalUser,
     host: ft_sdk::Host,
 ) -> ft_sdk::data::Result {
@@ -87,7 +90,7 @@ fn session_new(
 
     let session_cookie = create_session_cookie(&participant.data.token, &meeting_id, host)?;
 
-    ft_sdk::data::browser_redirect_with_cookie(format!("/talk/{meeting_id}"), session_cookie)
+    ft_sdk::data::browser_redirect_with_cookie(format!("{meeting_page_url}{meeting_id}"), session_cookie)
 }
 
 /// Get past sessions of the logged in user
