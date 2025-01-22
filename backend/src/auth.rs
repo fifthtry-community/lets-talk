@@ -71,74 +71,46 @@ impl ft_sdk::FromRequest for OptionalUser {
 }
 
 impl RequiredUser {
+    /// Use the following environment variables to dictate if the user is allowed to create a
+    /// meeting:
+    /// `LETS_TALK_ALLOWED_EMAIL_DOMAINS` (comma separated list of email domains)
+    /// `LETS_TALK_REQUIRE_VERIFICATION` (true/false)
+    ///
+    /// If `LETS_TALK_REQUIRE_VERIFICATION` is set to true, then the user account must be verified
     pub(crate) fn is_allowed_to_create_meeting(&self, conn: &mut ft_sdk::Connection) -> bool {
         use diesel::prelude::*;
 
-        let config = match talk_config::table
-            .select(TalkConfig::as_select())
-            .order_by(talk_config::id.desc())
-            .first(conn)
-        {
-            Err(e) => {
-                ft_sdk::println!("Error getting talk config: {:?}", e);
-                return false;
-            }
-            Ok(v) => v,
-        };
-
-        config
-            .allowed_usernames
-            .split(',')
-            .map(|v| v.trim())
-            .chain(config.allowed_emails.split(',').map(|v| v.trim()))
-            .chain(config.allowed_email_domains.split(',').map(|v| v.trim()))
-            .any(|v| {
-                if v.is_empty() {
+        let allowed_email_domains =
+            match ft_sdk::env::var("LETS_TALK_ALLOWED_EMAIL_DOMAINS".to_string()) {
+                Some(v) => v,
+                None => {
+                    ft_sdk::println!(
+                    "LETS_TALK_ALLOWED_EMAIL_DOMAINS not set. No one is allowed to create meetings"
+                );
                     return false;
                 }
+            };
 
-                if v.contains('@') {
-                    // check email or email domain
-                    let m = self.email == v || self.email.ends_with(v);
-                    // if the email matches, check if the account is verified (verification is done
-                    // by clicking on a link that is sent to user's email)
-                    if config.require_verification {
-                        return m && self.email_is_verified;
-                    }
+        allowed_email_domains.split(',').map(|v| v.trim()).any(|v| {
+            if v.is_empty() {
+                return false;
+            }
 
-                    return m;
-                }
+            // check email domain
+            let email_matches = self.email.ends_with(v);
+            // if the email matches, check if the account is verified (verification is done
+            // by clicking on a link that is sent to user's email)
+            let require_verification =
+                match ft_sdk::env::var("LETS_TALK_REQUIRE_VERIFICATION".to_string()) {
+                    Some(v) => v == "true",
+                    None => false,
+                };
 
-                if config.require_verification {
-                    return self.username == v && self.email_is_verified;
-                }
-                self.username == v
-            })
+            if require_verification {
+                return email_matches && self.email_is_verified;
+            }
+
+            return email_matches;
+        })
     }
 }
-
-#[derive(Debug, diesel::Queryable, diesel::Selectable)]
-#[diesel(table_name = talk_config)]
-struct TalkConfig {
-    allowed_usernames: String,
-    allowed_emails: String,
-    allowed_email_domains: String,
-    require_verification: bool,
-}
-
-diesel::table! {
-    talk_config (id) {
-        id -> BigInt,
-        // comma separated list of allowed usernames, emails, email domains
-        // eg.:
-        // "allowed_usernames": "alice,bob",
-        // "allowed_emails": "alice@acmen.com",
-        // "allowed_email_domains": "acme.com" // only acme.com emails are allowed
-        allowed_usernames -> Text,
-        allowed_emails -> Text,
-        allowed_email_domains -> Text,
-        require_verification -> Bool,
-    }
-}
-
-diesel::allow_tables_to_appear_in_same_query!(talk_config,);

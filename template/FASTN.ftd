@@ -21,30 +21,3 @@ provided-via: lets-talk-template.fifthtry.site/ds
 # Meeting
 url: /meeting/<string:meeting-id>/
 document: meeting.ftd
-
-
-
-;; Uncomment the following code block and modify it to suite your needs
-;; -- fastn.migration: Override example
-;; 
-;; UPDATE "talk_config" set allowed_email_domains = 'fifthtry.com, acme.com' WHERE id = 1;
-
--- fastn.migration: Configure
-
-INSERT INTO "talk_config"
-    (id, allowed_usernames, allowed_emails, allowed_email_domains)
-VALUES
-    (1,  'sidd',            '',             'fifthtry.com');
-
--- fastn.migration: Setup
-
-;; You can put your config in this table by creating new `-- fastn.migration`s
-;; You can insert new rows to override old configs or you can updated the single config
-;; See the first commented out migration for an example
-CREATE TABLE IF NOT EXISTS "talk_config" (
-    "id"                     integer primary key,
-    "allowed_usernames"      text    NOT NULL, -- use '' if you want no values
-    "allowed_emails"         text    NOT NULL, -- use '' if you want no values
-    "allowed_email_domains"  text    NOT NULL, -- use '' if you want no values
-    "require_verification"   boolean default true
-);
