@@ -17,6 +17,7 @@ fn create_meeting(
     title: ft_sdk::Required<"title">,
     ft_sdk::Required(meeting_page_url): ft_sdk::Required<"meeting-page-url">,
     user: auth::RequiredUser,
+    host: ft_sdk::Host,
     mut conn: ft_sdk::Connection,
 ) -> ft_sdk::form::Result {
     if !user.is_special(&mut conn) {
@@ -27,7 +28,23 @@ fn create_meeting(
 
     let meeting = dyte::create_meeting(&title)?;
 
-    ft_sdk::form::redirect(format!("{meeting_page_url}{}/", meeting.data.id,))
+    let name = if user.name.is_empty() {
+        None
+    } else {
+        Some(user.name.as_str())
+    };
+
+    let preset = ft_sdk::env::var("TALK_PRESET_HOST".to_string())
+        .unwrap_or(dyte::DEFAULT_MEETING_PRESET_HOST.to_string());
+
+    let participant = dyte::add_participant(&meeting.data.id, &preset, name, &user.username)?;
+
+    let session_cookie = create_session_cookie(&participant.data.token, &meeting.data.id, host)?;
+
+    Ok(
+        ft_sdk::form::redirect(format!("{meeting_page_url}{}", meeting.data.id))?
+            .with_cookie(session_cookie),
+    )
 }
 
 /// Return the token from active session to join the meeting, or,
@@ -79,12 +96,10 @@ fn session_new(
         (uuid, None)
     };
 
-    let participant = dyte::add_participant(
-        &meeting_id,
-        dyte::MEETING_PRESET_PARTICIPANT,
-        name.as_deref(),
-        &username,
-    )?;
+    let preset = ft_sdk::env::var("TALK_PRESET_PARTICIPANT".to_string())
+        .unwrap_or(dyte::DEFAULT_MEETING_PRESET_PARTICIPANT.to_string());
+
+    let participant = dyte::add_participant(&meeting_id, &preset, name.as_deref(), &username)?;
 
     ft_sdk::println!("dyte response: {:?}", participant);
 

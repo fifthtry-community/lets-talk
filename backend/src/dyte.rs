@@ -1,6 +1,9 @@
 // https://dev.dyte.io/presets?orgId=f233a0a4-afa0-4afd-9969-971d77e799d8
-pub const MEETING_PRESET_HOST: &str = "group_call_host";
-pub const MEETING_PRESET_PARTICIPANT: &str = "group_call_participant";
+// These presets have FifthTry's branding
+// Use TALK_PRESET_HOST and TALK_PRESET_PARTICIPANT environment variables to configure this
+// Ask FifthTry to create custom presets for you
+pub const DEFAULT_MEETING_PRESET_HOST: &str = "group_call_host";
+pub const DEFAULT_MEETING_PRESET_PARTICIPANT: &str = "group_call_participant";
 
 /// Get all sessions of the organization
 /// Latest session appears first in the list

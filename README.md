@@ -14,9 +14,11 @@ elements used by the `lets-talk` app.
 
 # Required environment variables
 
-- `DYTE_ORG_ID`
-- `DYTE_API_KEY`
-- `TALK_SECURE_SESSIONS`: use secure http cookies
+- `TALK_SECURE_SESSIONS`: Use secure http cookies.
+- `TALK_PRESET_PARTICIPANT`: Preset name that'll be used for participants (can only join and chat).
+- `TALK_PRESET_HOST`: Preset name that'll be used for meeting hosts (can kick and end meetings for all).
+- `LETS_TALK_REQUIRE_VERIFICATION`: (default false) Require email verification of account before they can create a new meeting.
+- `LETS_TALK_ALLOWED_EMAIL_DOMAINS`: (default empty) Comma separated list of allowed email domains. If empty, no one can create meetings.
 
 
 # UI Storybook
