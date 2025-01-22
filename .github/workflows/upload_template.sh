@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 # WARN: assume PWD is project root
+# WARN: This should not be run out of github CI
 
 set -ex
 
@@ -23,4 +24,12 @@ mv email_auth_provider.wasm template/
 cargo build --release --target wasm32-unknown-unknown
 mv target/wasm32-unknown-unknown/release/talk.wasm template/
 
-cd template/ && fastn upload lets-talk-template
+# explicitly ignore things we want to for the template/ dir
+rm .gitignore
+{ echo "template/.packages/";
+  echo "template/.fastn/"; } >> .gitignore
+
+cd template/
+echo "uploading with following dir contents:"
+ls -la
+fastn upload lets-talk-template
