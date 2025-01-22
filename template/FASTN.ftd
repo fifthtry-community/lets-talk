@@ -31,7 +31,10 @@ document: meeting.ftd
 
 -- fastn.migration: Configure
 
-INSERT INTO "talk_config" (id, allowed_usernames, allowed_emails, allowed_email_domains) VALUES (1, 'sidd', '', 'fifthtry.com');
+INSERT INTO "talk_config"
+    (id, allowed_usernames, allowed_emails, allowed_email_domains)
+VALUES
+    (1,  'sidd',            '',             'fifthtry.com');
 
 -- fastn.migration: Setup
 

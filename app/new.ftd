@@ -60,12 +60,6 @@ ftd.submit_form("/talk/api/create-meeting/", title)
 
 
 
--- record user-session:
-string id:
-string meeting_title:
-string joined_at:
-string left_at:
-decimal duration:
 
 -- user-session list sessions:
 $processor$: pr.http

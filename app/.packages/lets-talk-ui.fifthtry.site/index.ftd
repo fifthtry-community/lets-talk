@@ -7,3 +7,12 @@ export: dashboard, my-button
 string a:
 
 "Let's Talk: " + a
+
+
+-- record config:
+optional string allowed-usernames:
+optional string allowed-emails:
+optional string allowed-domain:
+
+
+-- config config:

@@ -10,3 +10,10 @@
 ;; we will re-export everything in this package from index.ftd so it is easy
 ;; to use as a system package and overwrite
 -- fastn.auto-import: lets-talk-ui.fifthtry.site as ui
+
+
+
+;; talk-session
+;;     scheduled (time) | one off | recurring (slug, time) | permanent (slug)
+;;     (we still allow people to join past scheduled / one off meeting?) yes.
+;;
