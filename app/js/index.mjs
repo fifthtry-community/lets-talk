@@ -32,5 +32,17 @@ class Talk extends HTMLElement {
     }
 }
 
+function UTCDateStringToFormattedString(dateString) {
+    const date = new Date(dateString.get());
+    const formatted =  new Intl.DateTimeFormat('en-US', {
+        dateStyle: 'medium',
+        timeStyle: 'short',
+    }).format(date);
+
+    return formatted;
+}
+
+window.UTCDateStringToFormattedString = UTCDateStringToFormattedString;
+
 customElements.define('talk-app', Talk);
 defineDyteCustomElements();

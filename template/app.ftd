@@ -6,6 +6,8 @@
 -- import: lets-talk-template.fifthtry.site/data/sessions
 -- import: lets-talk-template.fifthtry.site/data/urls
 
+-- import: lets-talk.fifthtry.site/assets as lets-talk-assets
+
 -- import: design-system.fifthtry.site as ds
 
 
@@ -100,12 +102,12 @@ inset: $ds.spaces.inset-wide.large
 
 		-- ds.row:
 			-- ds.copy-small: Joined at:
-			-- ds.copy-small: $session-box.session.joined_at
+			-- ds.copy-small: $format-date(d=$session-box.session.joined_at)
 		-- end: ds.row
 
 		-- ds.row:
 			-- ds.copy-small: Left at:
-			-- ds.copy-small: $session-box.session.left_at
+			-- ds.copy-small: $format-date(d=$session-box.session.left_at)
 		-- end: ds.row
 
 	-- end: ds.column
@@ -530,3 +532,10 @@ ftd.string-field spr:
 -- end: ds.page
 
 -- end: set-password-page
+
+
+-- string format-date(d):
+string d:
+js: $lets-talk-assets.files.js.build.js
+
+UTCDateStringToFormattedString(d)

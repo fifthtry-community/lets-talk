@@ -4,7 +4,7 @@
 value: New Meeting
 
 -- ftd.string-field $meeting-page-url: meeting-page-url
-value: $urls.meeting
+value: *$urls.meeting
 
 
 -- void new-instant():
