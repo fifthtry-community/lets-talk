@@ -7,6 +7,7 @@ on:
       - template/**
       - '!template/.packages/**'
       - .github/workflows/template-to-ft.yml
+      - .github/workflows/upload_template.sh
 
 
 jobs:
@@ -18,7 +19,5 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - run: sh -c "$(curl -fsSL https://fastn.com/install.sh)"
-      - name: Build the pages with fastn
-        # TODO(siddhantk232): download a fresh copy of fifthtry-community/auth before uploading
-        # TODO(siddhantk232): build a fresh copy of backend/ and put it in template/backend.wasm
-        run: cd template/ && fastn upload lets-talk-template
+      - name: Build and upload lets-talk-template.fifthtry.site
+        run: ./.github/workflows/upload_template.sh
