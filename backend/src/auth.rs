@@ -71,14 +71,23 @@ impl ft_sdk::FromRequest for OptionalUser {
 }
 
 impl RequiredUser {
-    /// Use the following environment variables to dictate if the user is allowed to create a
+    /// Special users are the ones who have access to meeting data and are able to create new
+    /// meetings.
+    /// It uses the following environment variables to dictate if the user is allowed to create a
     /// meeting:
     /// `LETS_TALK_ALLOWED_EMAIL_DOMAINS` (comma separated list of email domains)
     /// `LETS_TALK_REQUIRE_VERIFICATION` (true/false)
     ///
     /// If `LETS_TALK_REQUIRE_VERIFICATION` is set to true, then the user account must be verified
-    pub(crate) fn is_allowed_to_create_meeting(&self, conn: &mut ft_sdk::Connection) -> bool {
+    pub(crate) fn is_special(&self, conn: &mut ft_sdk::Connection) -> bool {
         use diesel::prelude::*;
+
+        // don't require verified accounts by default
+        let require_verification =
+            match ft_sdk::env::var("LETS_TALK_REQUIRE_VERIFICATION".to_string()) {
+                Some(v) => v == "true",
+                None => false,
+            };
 
         let allowed_email_domains =
             match ft_sdk::env::var("LETS_TALK_ALLOWED_EMAIL_DOMAINS".to_string()) {
@@ -100,12 +109,6 @@ impl RequiredUser {
             let email_matches = self.email.ends_with(v);
             // if the email matches, check if the account is verified (verification is done
             // by clicking on a link that is sent to user's email)
-            let require_verification =
-                match ft_sdk::env::var("LETS_TALK_REQUIRE_VERIFICATION".to_string()) {
-                    Some(v) => v == "true",
-                    None => false,
-                };
-
             if require_verification {
                 return email_matches && self.email_is_verified;
             }
