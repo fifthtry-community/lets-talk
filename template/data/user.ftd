@@ -1,0 +1,12 @@
+-- import: fastn/processors as pr
+
+;; DATA
+-- record user-details:
+string name:
+string email:
+string identity:
+boolean verified-email:
+
+
+-- optional user-details user-data:
+$processor$: pr.user-details

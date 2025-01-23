@@ -4,6 +4,7 @@
 -- import: lets-talk-template.fifthtry.site/actions/forgot-password
 -- import: lets-talk-template.fifthtry.site/actions/set-password
 -- import: lets-talk-template.fifthtry.site/data/sessions
+-- import: lets-talk-template.fifthtry.site/data/user
 -- import: lets-talk-template.fifthtry.site/data/urls
 
 -- import: lets-talk.fifthtry.site/assets as lets-talk-assets
@@ -23,8 +24,20 @@
 -- component dashboard-page:
 caption title:
 sessions.session list past-sessions:
+user.user-details user:
+
 
 -- ds.page: $ds.title(a = $dashboard-page.title)
+margin: $ds.spaces.vertical-gap.zero
+fastn-badge: false
+
+    -- ds.row:
+    align-content: right
+
+    -- ds.copy-small: $login-msg(n = $dashboard-page.user.name)
+
+    -- end: ds.row
+
 
 	-- ds.column:
 	
@@ -124,6 +137,7 @@ module action: create-account
 
 
 -- ds.page: $ds.title(a = $signup-page.title)
+margin: $ds.spaces.vertical-gap.zero
 
 	-- ds.heading-large: $signup-page.title
 	
@@ -309,6 +323,8 @@ module action: signin
 
 
 -- ds.page: $ds.title(a = $signin-page.title)
+margin: $ds.spaces.vertical-gap.zero
+
 
 	-- ds.heading-large: $signin-page.title
 	
@@ -407,6 +423,8 @@ module action: forgot-password
 
 
 -- ds.page: $ds.title(a = $forgot-password-page.title)
+margin: $ds.spaces.vertical-gap.zero
+
 
 	-- ds.heading-large: $forgot-password-page.title
 	
@@ -469,6 +487,8 @@ ftd.string-field code:
 ftd.string-field spr:
 
 -- ds.page: $ds.title(a = $set-password-page.title)
+margin: $ds.spaces.vertical-gap.zero
+
 
 	-- ds.heading-large: $set-password-page.title
 	
@@ -539,3 +559,9 @@ string d:
 js: $lets-talk-assets.files.js.build.js
 
 UTCDateStringToFormattedString(d)
+
+
+-- string login-msg(n):
+string n:
+
+"You're logged in as **" + n + "**. [logout](/-/auth/logout/)"
