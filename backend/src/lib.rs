@@ -34,8 +34,10 @@ fn create_meeting(
         Some(user.name.as_str())
     };
 
-    let preset = ft_sdk::env::var("TALK_PRESET_HOST".to_string())
+    let preset = ft_sdk::env::var("LETS_TALK_PRESET_HOST".to_string())
         .unwrap_or(dyte::DEFAULT_MEETING_PRESET_HOST.to_string());
+
+    ft_sdk::println!("Using preset: {preset} to create meeting");
 
     let participant = dyte::add_participant(&meeting.data.id, &preset, name, &user.username)?;
 
@@ -96,8 +98,10 @@ fn session_new(
         (uuid, None)
     };
 
-    let preset = ft_sdk::env::var("TALK_PRESET_PARTICIPANT".to_string())
+    let preset = ft_sdk::env::var("LETS_TALK_PRESET_PARTICIPANT".to_string())
         .unwrap_or(dyte::DEFAULT_MEETING_PRESET_PARTICIPANT.to_string());
+
+    ft_sdk::println!("Using preset: {preset} to create a new session for {username}");
 
     let participant = dyte::add_participant(&meeting_id, &preset, name.as_deref(), &username)?;
 
@@ -168,7 +172,7 @@ fn create_session_cookie(
     meeting_id: &str,
     host: ft_sdk::Host,
 ) -> Result<http::HeaderValue, ft_sdk::Error> {
-    let talk_secure_sessions = ft_sdk::env::var("TALK_SECURE_SESSIONS".to_string()).is_some();
+    let talk_secure_sessions = ft_sdk::env::var("LETS_TALK_SECURE_SESSIONS".to_string()).is_some();
 
     let val = format!("{}:{}", meeting_id, token);
     let cookie = cookie::Cookie::build((TALK_TOKEN_COOKIE, val))
