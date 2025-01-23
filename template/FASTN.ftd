@@ -21,3 +21,9 @@ provided-via: lets-talk-template.fifthtry.site/ds
 # Meeting
 url: /meeting/<string:meeting-id>/
 document: meeting.ftd
+
+-- fastn.migration: Empty
+
+;; We are interested in default tables ('fastn_user' for example) created by
+;; fastn. `fastn` requires at least one `-- fastn.migration:` decl to do that.
+SELECT 1;
