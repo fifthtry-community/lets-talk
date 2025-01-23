@@ -5,6 +5,7 @@ on:
     branches: [ main ]
     paths:
       - template/**
+      - backend/**
       - '!template/.packages/**'
       - .github/workflows/template-to-ft.yml
       - .github/workflows/upload_template.sh
