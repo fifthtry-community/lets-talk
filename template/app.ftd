@@ -30,6 +30,7 @@ user.user-details user:
 -- ds.page: $ds.title(a = $dashboard-page.title)
 margin: $ds.spaces.vertical-gap.zero
 fastn-badge: false
+fifthtry-badge: true
 
     -- ds.row:
     align-content: right
@@ -134,16 +135,27 @@ inset: $ds.spaces.inset-wide.large
 caption title:
 module action: create-account
 
-
-
 -- ds.page: $ds.title(a = $signup-page.title)
 margin: $ds.spaces.vertical-gap.zero
+fastn-badge: false
+fifthtry-badge: true
+
+	-- ds.section-column:
+	align-content: center
+	spacing: $ds.spaces.vertical-gap.extra-large
 
 	-- ds.heading-large: $signup-page.title
+
+	-- ds.column:
+	width.fixed.px: 600
+	border: $ds.borders.uniform.small
+	inset: $ds.spaces.inset-square.large
 	
 	-- ds.column:
 	spacing: $ds.spaces.vertical-gap.extra-extra-small
 	align-content: left
+	inset: $ds.spaces.inset-square.zero
+
 	
 		-- ds.copy-small: Name
 		
@@ -171,6 +183,8 @@ margin: $ds.spaces.vertical-gap.zero
 	-- ds.column:
 	spacing: $ds.spaces.vertical-gap.extra-extra-small
 	align-content: left
+	inset: $ds.spaces.inset-square.zero
+
 	
 		-- ds.copy-small: Username
 		
@@ -199,6 +213,8 @@ margin: $ds.spaces.vertical-gap.zero
 	-- ds.column:
 	spacing: $ds.spaces.vertical-gap.extra-extra-small
 	align-content: left
+	inset: $ds.spaces.inset-square.zero
+
 	
 		-- ds.copy-small: Email
 		
@@ -225,6 +241,7 @@ margin: $ds.spaces.vertical-gap.zero
 	-- ds.column:
 	spacing: $ds.spaces.vertical-gap.extra-extra-small
 	align-content: left
+	inset: $ds.spaces.inset-square.zero
 	
 		-- ds.copy-small: Password
 		
@@ -252,6 +269,7 @@ margin: $ds.spaces.vertical-gap.zero
 	-- ds.column:
 	spacing: $ds.spaces.vertical-gap.extra-extra-small
 	align-content: left
+	inset: $ds.spaces.inset-square.zero
 	
 		-- ds.copy-small: Confirm Password
 		
@@ -280,6 +298,7 @@ margin: $ds.spaces.vertical-gap.zero
 	-- ds.column:
 	spacing: $ds.spaces.vertical-gap.extra-extra-small
 	align-content: left
+	inset: $ds.spaces.inset-square.zero
 	
 		-- ds.checkbox: I accept Terms and Conditions
 		$is-checked: $signup-page.action.accept_terms.value
@@ -310,6 +329,9 @@ margin: $ds.spaces.vertical-gap.zero
 		
 	-- end: ds.row
 
+	-- end: ds.column
+	-- end: ds.section-column
+
 -- end: ds.page
 
 -- end: signup-page
@@ -320,18 +342,26 @@ margin: $ds.spaces.vertical-gap.zero
 caption title:
 module action: signin
 
-
-
 -- ds.page: $ds.title(a = $signin-page.title)
 margin: $ds.spaces.vertical-gap.zero
+fastn-badge: false
+fifthtry-badge: true
 
+	-- ds.section-column:
+	align-content: center
+	spacing: $ds.spaces.vertical-gap.extra-large
 
 	-- ds.heading-large: $signin-page.title
-	
+
+	-- ds.column:
+	width.fixed.px: 600
+	border: $ds.borders.uniform.small
+	inset: $ds.spaces.inset-square.large
 	
 	-- ds.column:
 	spacing: $ds.spaces.vertical-gap.extra-extra-small
 	align-content: left
+	inset: $ds.spaces.inset-square.zero
 	
 		-- ds.copy-small: Username or email address
 		
@@ -358,6 +388,7 @@ margin: $ds.spaces.vertical-gap.zero
 	-- ds.column:
 	spacing: $ds.spaces.vertical-gap.extra-extra-small
 	align-content: left
+	inset: $ds.spaces.inset-square.zero
 	
 		-- ds.copy-small: Password
 		
@@ -411,6 +442,10 @@ margin: $ds.spaces.vertical-gap.zero
 		
 	-- end: ds.row
 
+	-- end: ds.column
+
+	-- end: ds.section-column
+
 -- end: ds.page
 
 -- end: signin-page
@@ -424,7 +459,8 @@ module action: forgot-password
 
 -- ds.page: $ds.title(a = $forgot-password-page.title)
 margin: $ds.spaces.vertical-gap.zero
-
+fastn-badge: false
+fifthtry-badge: true
 
 	-- ds.heading-large: $forgot-password-page.title
 	
@@ -488,7 +524,8 @@ ftd.string-field spr:
 
 -- ds.page: $ds.title(a = $set-password-page.title)
 margin: $ds.spaces.vertical-gap.zero
-
+fastn-badge: false
+fifthtry-badge: true
 
 	-- ds.heading-large: $set-password-page.title
 	
