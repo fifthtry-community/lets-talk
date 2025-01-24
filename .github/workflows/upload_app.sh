@@ -12,12 +12,9 @@ cd ../../
 
 
 # explicitly ignore things we want to for the app/ dir
-rm .gitignore
 { echo "app/.packages/lets-talk-ui.fifthtry.site/.packages/";
   echo "app/.packages/lets-talk-ui.fifthtry.site/.fastn/";
-  echo "app/js/node_modules/";
-  echo "app/js/build.js";
-  echo "app/js/build.js.map"; } >> .gitignore
+  echo "app/js/node_modules/"; } > .gitignore
 
 
 cd app/

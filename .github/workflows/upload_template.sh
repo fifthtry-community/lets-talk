@@ -19,15 +19,9 @@ download_release fifthtry-community/auth 0.1.2 email_auth_provider.wasm
 
 mv email_auth_provider.wasm template/
 
-# Build talk.wasm
-
-cargo build --release --target wasm32-unknown-unknown
-mv target/wasm32-unknown-unknown/release/talk.wasm template/
-
 # explicitly ignore things we want to for the template/ dir
-rm .gitignore
 { echo "template/.packages/";
-  echo "template/.fastn/"; } >> .gitignore
+  echo "template/.fastn/"; } > .gitignore
 
 cd template/
 echo "uploading with following dir contents:"
