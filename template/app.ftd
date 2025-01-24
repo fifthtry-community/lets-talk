@@ -21,6 +21,23 @@
 ;; - set-password-page
 
 
+
+-- component app-badge:
+
+    -- ftd.image:
+	src: $assets.files.assets.hosted-on.svg
+	anchor: window
+	right.px: 0
+	bottom.px: 0
+	z-index: 99999999999999
+	link: https://www.fifthtry.com/
+	open-in-new-tab: true
+    width.fixed.px: 132
+	height.fixed.px: 35
+
+-- end: app-badge
+
+
 -- component dashboard-page:
 caption title:
 sessions.session list past-sessions:
@@ -28,9 +45,10 @@ user.user-details user:
 
 
 -- ds.page: $ds.title(a = $dashboard-page.title)
-margin: $ds.spaces.vertical-gap.zero
 fastn-badge: false
-fifthtry-badge: true
+margin: $ds.spaces.vertical-gap.zero
+
+-- app-badge:
 
     -- ds.row:
     align-content: right
@@ -136,9 +154,10 @@ caption title:
 module action: create-account
 
 -- ds.page: $ds.title(a = $signup-page.title)
-margin: $ds.spaces.vertical-gap.zero
 fastn-badge: false
-fifthtry-badge: true
+margin: $ds.spaces.vertical-gap.zero
+
+-- app-badge:
 
 	-- ds.section-column:
 	align-content: center
@@ -343,9 +362,10 @@ caption title:
 module action: signin
 
 -- ds.page: $ds.title(a = $signin-page.title)
-margin: $ds.spaces.vertical-gap.zero
 fastn-badge: false
-fifthtry-badge: true
+margin: $ds.spaces.vertical-gap.zero
+
+-- app-badge:
 
 	-- ds.section-column:
 	align-content: center
@@ -458,9 +478,10 @@ module action: forgot-password
 
 
 -- ds.page: $ds.title(a = $forgot-password-page.title)
-margin: $ds.spaces.vertical-gap.zero
 fastn-badge: false
-fifthtry-badge: true
+margin: $ds.spaces.vertical-gap.zero
+
+-- app-badge:
 
 	-- ds.heading-large: $forgot-password-page.title
 	
@@ -523,9 +544,10 @@ ftd.string-field code:
 ftd.string-field spr:
 
 -- ds.page: $ds.title(a = $set-password-page.title)
-margin: $ds.spaces.vertical-gap.zero
 fastn-badge: false
-fifthtry-badge: true
+margin: $ds.spaces.vertical-gap.zero
+
+-- app-badge:
 
 	-- ds.heading-large: $set-password-page.title
 	
