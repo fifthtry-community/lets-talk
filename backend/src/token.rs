@@ -42,23 +42,32 @@ fn session_new(
 ) -> ft_sdk::data::Result {
     ft_sdk::println!("======= in session new handler ======");
 
-    let (username, name) = if user.is_logged_in {
+    let (username, name, is_guest) = if user.is_logged_in {
         ft_sdk::println!("Found user name through login");
-        (user.username, Some(user.name))
+        (user.username, Some(user.name), false)
     } else {
         let seed: f64 = ft_sdk::env::random();
         let uuid = crate::uuid::gen_uuid_with_xorshift(seed);
         ft_sdk::println!("adding guest with id: {uuid}");
         // The frontend will ask for the name
-        (uuid, None)
+        (uuid, None, true)
     };
 
     let preset = ft_sdk::env::var("LETS_TALK_PRESET_PARTICIPANT".to_string())
         .unwrap_or(crate::dyte::DEFAULT_MEETING_PRESET_PARTICIPANT.to_string());
 
+    let preset = if is_guest {
+        // _guest presets are allowed to change their name
+        format!("{preset}_guest")
+    } else {
+        // Name is taken from user's account name and they're not allowed to change it
+        preset
+    };
+
     ft_sdk::println!("Using preset: {preset} to create a new session for {username}");
 
-    let participant = crate::dyte::add_participant(&meeting_id, &preset, name.as_deref(), &username)?;
+    let participant =
+        crate::dyte::add_participant(&meeting_id, &preset, name.as_deref(), &username)?;
 
     ft_sdk::println!("dyte response: {:?}", participant);
 
@@ -75,4 +84,3 @@ struct TalkSession {
     /// <mid>:<token>
     token: Option<String>,
 }
-
