@@ -17,5 +17,5 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - run: sh -c "$(curl -fsSL https://fastn.com/install.sh)"
-      - name: Build the pages with fastn
+      - name: Upload to FifthTry using fastn
         run: cd app/.packages/lets-talk-system.fifthtry.site/ && fastn upload lets-talk-system
