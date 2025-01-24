@@ -9,8 +9,7 @@ on:
       productionRelease:
         type: boolean
         description: Mark release as production ready
-permissions:
-  contents: write
+permissions: write-all
 jobs:
   release-main:
     name: Release from latest main
