@@ -4,7 +4,7 @@
 ;; the various scenarios they represent.
 
 -- import: fastn/processors as pr
--- import: lets-talk-ui.fifthtry.site/storybook
+-- import: lets-talk-system.fifthtry.site/storybook
 -- import: design-system.fifthtry.site/assets as ds-assets
 -- import: design-system.fifthtry.site/actions/navigate
 export: active-file-content, active-title, active-sub-title, submit

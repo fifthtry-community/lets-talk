@@ -34,7 +34,7 @@ decimal duration_seconds:
 -- ds.site-page: Dashboard
 
     -- ds.heading-medium: Dashboard
-    -- lets-talk-ui.my-button:
+    -- lets-talk.my-button:
 
 -- end: ds.site-page
 

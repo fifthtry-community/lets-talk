@@ -25,8 +25,9 @@ Cargo.lock
 
 www/.packages/
 
-app/.packages/lets-talk-ui.fifthtry.site/.packages/
-app/.packages/lets-talk-ui.fifthtry.site/.fastn/
+app/.packages
+app/.packages/lets-talk-system.fifthtry.site/.packages/
+app/.packages/lets-talk-system.fifthtry.site/.fastn/
 app/js/node_modules/
 app/js/build.js
 app/js/build.js.map

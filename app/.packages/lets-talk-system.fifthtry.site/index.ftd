@@ -1,4 +1,4 @@
--- import: lets-talk-ui.fifthtry.site/dashboard as _
+-- import: lets-talk-system.fifthtry.site/dashboard as _
 export: dashboard, my-button
 
 -- ftd.text: checkout [storybook](/storybook/)

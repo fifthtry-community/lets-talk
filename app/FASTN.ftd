@@ -1,19 +1,12 @@
 -- import: fastn
 
 ;; this is the package people will use to add lets-talk to their websites
-;; they will also import lets-talk-ui.fifthtry.site if they want to overwrite
-;; the UI
+;; they will also import lets-talk-system.fifthtry.site if they want to
+;; overwrite any configuration
 -- fastn.package: lets-talk.fifthtry.site
 
--- fastn.dependency: lets-talk-ui.fifthtry.site
+-- fastn.dependency: lets-talk-system.fifthtry.site
 
 ;; we will re-export everything in this package from index.ftd so it is easy
 ;; to use as a system package and overwrite
--- fastn.auto-import: lets-talk-ui.fifthtry.site as ui
-
-
-
-;; talk-session
-;;     scheduled (time) | one off | recurring (slug, time) | permanent (slug)
-;;     (we still allow people to join past scheduled / one off meeting?) yes.
-;;
+-- fastn.auto-import: lets-talk-system.fifthtry.site as lets-talk

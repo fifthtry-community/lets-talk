@@ -13,9 +13,9 @@ function popd2() {
 }
 
 function run-ui() {
-  pushd2 "${PROJ_ROOT}/app/.packages/lets-talk-ui.fifthtry.site" || return 1
+  pushd2 "${PROJ_ROOT}/app/.packages/lets-talk-system.fifthtry.site" || return 1
 
-  echo "Using $FASTN to serve lets-talk-ui.fifthtry.site/"
+  echo "Using $FASTN to serve lets-talk-system.fifthtry.site/"
 
   $FASTN serve --port 8002 --offline
 

@@ -1,7 +1,5 @@
--- import: lets-talk-ui.fifthtry.site as ui
-
 -- component dashboard:
 
--- ui.dashboard:
+-- lets-talk.dashboard:
 
 -- end: dashboard

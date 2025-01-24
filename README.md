@@ -6,9 +6,9 @@ This repository contains four fastn packages. `www` contains the source code
 of the official website of `lets-talk` app: 
 [lets-talk.fifthtry-community.com](https://lets-talk.fifthtry-community.com),
 `app`, contains the source of the fastn package `lets-talk.fifthtry.site` that 
-people are supposed to use. `app/.packages/lets-talk-ui.fifthtry.site` contains 
-the source code of fastn package `lets-talk-ui.fifthtry.site` containing UI 
-elements used by the `lets-talk` app.
+people are supposed to use. `app/.packages/lets-talk-system.fifthtry.site` 
+contains the source code of fastn package `lets-talk-system.fifthtry.site` 
+containing UI and other configurations used by the `lets-talk` app.
 
 
 

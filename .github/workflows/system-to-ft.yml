@@ -1,0 +1,21 @@
+name: Upload lets-talk-system to FifthTry
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - app/.packages/lets-talk-system.fifthtry.site/**
+      - .github/workflows/system-to-ft.yml
+
+
+jobs:
+  upload-to-fifthtry:
+    runs-on: ubuntu-latest
+    env:
+      FIFTHTRY_SITE_WRITE_TOKEN: ${{ secrets.FT_LETS_TALK_SYSTEM }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - run: sh -c "$(curl -fsSL https://fastn.com/install.sh)"
+      - name: Build the pages with fastn
+        run: cd app/.packages/lets-talk-system.fifthtry.site/ && fastn upload lets-talk-system
