@@ -24,6 +24,6 @@ function run-ui() {
 
 function update-ui() {
   pushd2 "${PROJ_ROOT}/app/.packages/lets-talk-system.fifthtry.site" || return 1
-  $FASTN serve update
+  $FASTN update
   popd2
 }
