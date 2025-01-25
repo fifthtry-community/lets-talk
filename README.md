@@ -12,7 +12,7 @@ containing UI and other configurations used by the `lets-talk` app.
 
 
 
-# Required environment variables
+## Required environment variables
 
 - `LETS_TALK_SECURE_SESSIONS`: Use secure http cookies.
 - `LETS_TALK_PRESET_PARTICIPANT`: Preset name that'll be used for participants (can only join and chat).
@@ -21,7 +21,7 @@ containing UI and other configurations used by the `lets-talk` app.
 - `LETS_TALK_ALLOWED_EMAIL_DOMAINS`: (default empty) Comma separated list of allowed email domains. If empty, no one can create meetings.
 
 
-# UI Storybook
+## UI Storybook
 
 All lets-talk UIs are developed using storybook.  
 
@@ -29,6 +29,7 @@ Run `fastn` service using `run-ui` alias:
 
 ```shell
 source scripts/auto.sh
+update-ui  # only run this when modifying dependencies in FASTN.ftd
 run-ui
 ```
 
