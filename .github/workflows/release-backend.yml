@@ -35,11 +35,14 @@ jobs:
       - name: print file info
         run: |
           file ./target/wasm32-unknown-unknown/release/talk.wasm
-      - name: Install wasm-opt
-        run: cargo install wasm-opt
-      - name: optimize wasm builds
+      - name: Optimize with wasm-opt
         run: |
-          wasm-opt -O3 ./target/wasm32-unknown-unknown/release/talk.wasm -o talk.wasm
+          curl -L -o "binaryen-version_119-x86_64-linux.tar.gz" "https://github.com/WebAssembly/binaryen/releases/download/version_119/binaryen-version_119-x86_64-linux.tar.gz"
+          tar -xzf binaryen-version_119-x86_64-linux.tar.gz
+          mv binaryen-version_119/bin/wasm-opt .
+          chmod +x wasm-opt
+          ./wasm-opt -O3 ../target/wasm32-unknown-unknown/release/talk.wasm -o talk.wasm
+          rm -rf binaryen-version_119 wasm-opt binaryen-version_119-aarch64-linux.tar.gz
       - name: print file info after optmization
         run: |
           file talk.wasm
