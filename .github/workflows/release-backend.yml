@@ -9,11 +9,12 @@ on:
       productionRelease:
         type: boolean
         description: Mark release as production ready
-permissions: write-all
 jobs:
   release-main:
     name: Release from latest main
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     env:
       CARGO_TERM_COLOR: always
       FIFTHTRY_SITE_WRITE_TOKEN: ${{ secrets.FT_LETS_TALK_TEMPLATE }}
@@ -55,7 +56,6 @@ jobs:
         with:
           artifacts: "talk.wasm"
           generateReleaseNotes: true
-          token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ github.event.inputs.releaseTag }}
           prerelease: ${{ github.event.inputs.productionRelease && github.event.inputs.productionRelease == 'false' }}
           bodyFile: .github/RELEASE_TEMPLATE.md
