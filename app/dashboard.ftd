@@ -11,8 +11,6 @@ module action: create-meeting
 fastn-badge: false
 margin: $ds.spaces.vertical-gap.zero
 
--- lets-talk.footer-badge:
-
     -- ds.row:
     align-content: right
 
@@ -54,6 +52,8 @@ margin: $ds.spaces.vertical-gap.zero
 		;; sessions: $dashboard-page.past-sessions
 		
 	-- end: ds.column
+
+    -- lets-talk.footer-badge:
 
 -- end: ds.page
 

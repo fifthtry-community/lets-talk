@@ -1,14 +1,8 @@
 -- import: lets-talk.fifthtry.site/dashboard as _
-export: dashboard-page, my-button
+export: dashboard-page
 
 -- import: lets-talk.fifthtry.site/badge as _
 export: footer-badge
-
--- string title(a):
-string a:
-
-"Let's Talk: " + a
-
 
 -- string meeting-page-url: /meeting/
 
@@ -16,5 +10,5 @@ string a:
 -- ftd.temporary-redirect: /-/auth/signin/
 if: { lets-auth.user == NULL }
 
--- dashboard-page: Dashboard
+-- lets-talk.dashboard-page: Dashboard
 user: $lets-auth.user

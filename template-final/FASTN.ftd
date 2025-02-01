@@ -3,12 +3,10 @@
 -- fastn.package: lets-talk-template.fifthtry.site
 
 -- fastn.dependency: lets-talk.fifthtry.site
+provided-via: lets-talk-template.fifthtry.site/lets-talk
 
 -- fastn.dependency: design-system.fifthtry.site
 provided-via: lets-talk-template.fifthtry.site/ds
-
--- fastn.dependency: lets-talk-ui.fifthtry.site
-provided-via: lets-talk-template.fifthtry.site/talk-ui
 
 -- fastn.dependency: lets-auth.fifthtry.site
 
@@ -17,7 +15,7 @@ provided-via: lets-talk-template.fifthtry.site/talk-ui
 ;; another important tip: if you modify FASTN.ftd you have to restart fastn
 ;; server itself
 -- fastn.auto-import: lets-talk-template.fifthtry.site/ds
--- fastn.auto-import: lets-talk-template.fifthtry.site/talk-ui
+-- fastn.auto-import: lets-talk.fifthtry.site as lets-talk
 -- fastn.auto-import: lets-auth.fifthtry.site as lets-auth
 
 -- fastn.auto-import: lets-talk-template.fifthtry.site/app
@@ -26,3 +24,7 @@ provided-via: lets-talk-template.fifthtry.site/talk-ui
 -- fastn.app: Lets Auth App
 mount-point: /-/auth/
 package: lets-auth.fifthtry.site
+
+-- fastn.app: Lets Talk App
+mount-point: /
+package: lets-talk.fifthtry.site
