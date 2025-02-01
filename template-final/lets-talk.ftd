@@ -1,2 +1,2 @@
 -- import: lets-talk.fifthtry.site
-export: dashboard-page, footer-badge, meeting-page-url
+export: dashboard-page, footer-badge, meeting-page-url, session

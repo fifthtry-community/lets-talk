@@ -4,7 +4,7 @@
 caption title:
 lets-auth.user-details user:
 module action: create-meeting
-;; sessions.session list past-sessions:
+lets-talk.session list past-sessions:
 
 
 -- ds.page: $ds.title(a = $dashboard-page.title)
@@ -48,8 +48,8 @@ margin: $ds.spaces.vertical-gap.zero
 		;; if: { dashboard-page.action.meeting-title.error }
 		;; color: $ds.colors.error.text
 		
-		;; -- past-sessions:
-		;; sessions: $dashboard-page.past-sessions
+		-- past-sessions:
+		sessions: $dashboard-page.past-sessions
 		
 	-- end: ds.column
 
@@ -60,7 +60,65 @@ margin: $ds.spaces.vertical-gap.zero
 -- end: dashboard-page
 
 
+-- component past-sessions:
+lets-talk.session list sessions:
+
+-- ds.column:
+
+	-- ds.heading-medium: Past Sessions
+	
+	
+	-- session-box:
+	session: $s
+	for: $s in $past-sessions.sessions
+	
+-- end: ds.column
+
+-- end: past-sessions
+
+-- component session-box:
+lets-talk.session session:
+
+-- ds.row:
+width: hug-content
+spacing: $ds.spaces.horizontal-gap.large
+border: $ds.borders.uniform.small
+inset: $ds.spaces.inset-wide.large
+
+	-- ds.column:
+	
+		-- ds.copy-large: $session-box.session.meeting_title
+		
+		-- ds.row:
+			-- ds.copy-small: Duration (in minutes):
+			-- ftd.decimal: $session-box.session.duration
+		-- end: ds.row
+
+		-- ds.row:
+			-- ds.copy-small: Joined at:
+			-- ds.copy-small: $format-date(d=$session-box.session.joined_at)
+		-- end: ds.row
+
+		-- ds.row:
+			-- ds.copy-small: Left at:
+			-- ds.copy-small: $format-date(d=$session-box.session.left_at)
+		-- end: ds.row
+
+	-- end: ds.column
+
+-- end: ds.row
+
+-- end: session-box
+
+
 -- string login-msg(n):
 string n:
 
 "You're logged in as **" + n + "**. [logout](/-/auth/logout/)"
+
+
+-- string format-date(d):
+string d:
+js: $assets.files.js.build.js
+
+UTCDateStringToFormattedString(d)

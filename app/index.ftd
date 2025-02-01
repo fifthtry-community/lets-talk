@@ -4,6 +4,9 @@ export: dashboard-page
 -- import: lets-talk.fifthtry.site/badge as _
 export: footer-badge
 
+
+-- import: fastn/processors as pr
+
 -- string meeting-page-url: /meeting/
 
 ;; $lets-auth.sign-in-url does not work with temporary redirect :(
@@ -12,3 +15,21 @@ if: { lets-auth.user == NULL }
 
 -- lets-talk.dashboard-page: Dashboard
 user: $lets-auth.user
+
+
+-- record session:
+string id:
+string meeting_title:
+string joined_at:
+string left_at:
+decimal duration:
+
+
+
+-- record response:
+session list sessions:
+
+
+-- response data:
+$processor$: pr.http
+url: /talk/past-sessions/ ;; TODO: figure out how we can use ftd.app-url
