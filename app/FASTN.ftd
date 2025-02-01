@@ -1,12 +1,16 @@
 -- import: fastn
 
-;; this is the package people will use to add lets-talk to their websites
-;; they will also import lets-talk-system.fifthtry.site if they want to
-;; overwrite any configuration
 -- fastn.package: lets-talk.fifthtry.site
+system: lets-talk
+system-is-confidential: false
 
--- fastn.dependency: lets-talk-system.fifthtry.site
+-- fastn.dependency: design-system.fifthtry.site
+-- fastn.dependency: lets-auth.fifthtry.site
 
-;; we will re-export everything in this package from index.ftd so it is easy
-;; to use as a system package and overwrite
--- fastn.auto-import: lets-talk-system.fifthtry.site as lets-talk
+;; this is a system: alias must be ds
+-- fastn.auto-import: design-system.fifthtry.site as ds
+-- fastn.auto-import: lets-auth.fifthtry.site as lets-auth
+-- fastn.auto-import: lets-talk.fifthtry.site as lets-talk
+-- fastn.auto-import: lets-talk.fifthtry.site/assets
+
+;; TODO: add migrations

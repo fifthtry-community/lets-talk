@@ -1,0 +1,66 @@
+-- import: lets-talk.fifthtry.site/actions/create-meeting
+
+-- component dashboard-page:
+caption title:
+lets-auth.user-details user:
+module action: create-meeting
+;; sessions.session list past-sessions:
+
+
+-- ds.page: $ds.title(a = $dashboard-page.title)
+fastn-badge: false
+margin: $ds.spaces.vertical-gap.zero
+
+-- lets-talk.footer-badge:
+
+    -- ds.row:
+    align-content: right
+
+    -- ds.copy-small: $login-msg(n = $dashboard-page.user.name)
+
+    -- end: ds.row
+
+
+	-- ds.column:
+	
+		-- ds.heading-large: Start an instant meeting with anyone
+		
+		-- ds.column:
+		width: hug-content
+		
+			-- ftd.text-input:
+			placeholder: Meeting Title (optional)
+			type: text
+			$on-input$: $ftd.set-string($a = $dashboard-page.action.meeting-title.value, v = $VALUE)
+			width: fill-container
+			height.fixed.px: 40
+			border-radius.px: 8
+			background.solid: transparent
+			border-width.px: 1
+			border-color: $inherited.colors.border
+			padding.px: 8
+			color: $inherited.colors.text-strong
+			
+		-- end: ds.column
+
+		-- ds.primary-button: Start an instant meeting
+		$on-click$: $dashboard-page.action.new-instant()
+		
+		;; -- ds.copy-small: $dashboard-page.action.meeting-title.error
+		;; if: { dashboard-page.action.meeting-title.error }
+		;; color: $ds.colors.error.text
+		
+		;; -- past-sessions:
+		;; sessions: $dashboard-page.past-sessions
+		
+	-- end: ds.column
+
+-- end: ds.page
+
+-- end: dashboard-page
+
+
+-- string login-msg(n):
+string n:
+
+"You're logged in as **" + n + "**. [logout](/-/auth/logout/)"

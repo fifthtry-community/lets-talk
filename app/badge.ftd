@@ -1,0 +1,14 @@
+-- component footer-badge:
+
+    -- ftd.image:
+	src: $assets.files.assets.hosted-on.svg
+	anchor: window
+	right.px: 0
+	bottom.px: 0
+	z-index: 99999999999999
+	link: https://www.fifthtry.com/
+	open-in-new-tab: true
+    width.fixed.px: 132
+	height.fixed.px: 35
+
+-- end: footer-badge

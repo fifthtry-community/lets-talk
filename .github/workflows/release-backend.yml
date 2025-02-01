@@ -50,6 +50,7 @@ jobs:
       - run: sh -c "$(curl -fsSL https://fastn.com/install.sh)"
       - name: Upload talk.wasm to lets-talk-template.fifthtry.site
         run: |
+          # TODO: this should be uploaded to lets-talk since it's supposed to be mounted as fastn.app
           fastn upload --file talk.wasm lets-talk-template
       - name: Update .github/RELEASE_TEMPLATE.md
         run: |

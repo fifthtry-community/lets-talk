@@ -1,5 +1,20 @@
--- component dashboard:
+-- import: lets-talk.fifthtry.site/dashboard as _
+export: dashboard-page, my-button
 
--- lets-talk.dashboard:
+-- import: lets-talk.fifthtry.site/badge as _
+export: footer-badge
 
--- end: dashboard
+-- string title(a):
+string a:
+
+"Let's Talk: " + a
+
+
+-- string meeting-page-url: /meeting/
+
+;; $lets-auth.sign-in-url does not work with temporary redirect :(
+-- ftd.temporary-redirect: /-/auth/signin/
+if: { lets-auth.user == NULL }
+
+-- dashboard-page: Dashboard
+user: $lets-auth.user
