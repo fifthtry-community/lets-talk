@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main ]
     paths:
-      - app/**
+      - '!app/**'
       - '!app/.packages/**'
       - .github/workflows/app-to-ft.yml
       - .github/workflows/upload_app.sh
