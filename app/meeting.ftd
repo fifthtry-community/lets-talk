@@ -1,0 +1,34 @@
+-- import: fastn/processors as pr
+
+-- optional string meeting-id:
+$processor$: pr.request-data
+
+-- talk-session session:
+$processor$: pr.http
+url: /talk/session/ ;; TODO: this is bad, figure out how to use ftd.app-url instead
+meeting-id: $meeting-id
+meeting-page-url: $lets-talk.meeting-page-url
+
+;; Initialises the DyteClient
+-- talk-app:
+if: { session.token }
+token: $session.token
+mid: $meeting-id
+
+;; meeting UI (repackaged from @dytesdk/ui-kit)
+-- dyte-meeting:
+if: { session.token }
+
+
+-- web-component dyte-meeting:
+js: $assets.files.js.build.js
+
+;; Initialize dyte sdk
+-- web-component talk-app:
+optional string token:
+optional string mid:
+js: $assets.files.js.build.js
+
+
+-- record talk-session:
+string token:
