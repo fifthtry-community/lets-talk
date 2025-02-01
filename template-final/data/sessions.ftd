@@ -1,0 +1,17 @@
+-- import: fastn/processors as pr
+
+
+-- record response:
+session list sessions:
+
+
+-- record session:
+string id:
+string meeting_title:
+string joined_at:
+string left_at:
+decimal duration:
+
+-- response data:
+$processor$: pr.http
+url: /talk/api/past-sessions/

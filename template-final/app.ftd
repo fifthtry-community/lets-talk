@@ -1,0 +1,152 @@
+-- import: lets-talk-template.fifthtry.site/actions/create-meeting
+-- import: lets-talk-template.fifthtry.site/data/sessions
+-- import: lets-talk-template.fifthtry.site/data/urls
+
+-- import: lets-talk.fifthtry.site/assets as lets-talk-assets
+
+-- import: design-system.fifthtry.site as ds
+
+
+;; NOTE: This file contains all the "page" components:
+;; - dashboard-page
+
+
+
+-- component app-badge:
+
+    -- ftd.image:
+	src: $assets.files.assets.hosted-on.svg
+	anchor: window
+	right.px: 0
+	bottom.px: 0
+	z-index: 99999999999999
+	link: https://www.fifthtry.com/
+	open-in-new-tab: true
+    width.fixed.px: 132
+	height.fixed.px: 35
+
+-- end: app-badge
+
+
+-- component dashboard-page:
+caption title:
+sessions.session list past-sessions:
+lets-auth.user-details user:
+
+
+-- ds.page: $ds.title(a = $dashboard-page.title)
+fastn-badge: false
+margin: $ds.spaces.vertical-gap.zero
+
+-- app-badge:
+
+    -- ds.row:
+    align-content: right
+
+    -- ds.copy-small: $login-msg(n = $dashboard-page.user.name)
+
+    -- end: ds.row
+
+
+	-- ds.column:
+	
+		-- ds.heading-large: Start an instant meeting with anyone
+		
+		-- ds.column:
+		width: hug-content
+		
+			-- ftd.text-input:
+			placeholder: Meeting Title (optional)
+			type: text
+			$on-input$: $ftd.set-string($a = $create-meeting.meeting-title.value, v = $VALUE)
+			width: fill-container
+			height.fixed.px: 40
+			border-radius.px: 8
+			background.solid: transparent
+			border-width.px: 1
+			border-color: $inherited.colors.border
+			padding.px: 8
+			color: $inherited.colors.text-strong
+			
+		-- end: ds.column
+
+		-- ds.primary-button: Start an instant meeting
+		$on-click$: $create-meeting.new-instant()
+		
+		-- ds.copy-small: $create-meeting.meeting-title.error
+		if: { create-meeting.meeting-title.error }
+		color: $ds.colors.error.text
+		
+		-- past-sessions:
+		sessions: $dashboard-page.past-sessions
+		
+	-- end: ds.column
+
+-- end: ds.page
+
+-- end: dashboard-page
+
+
+-- component past-sessions:
+sessions.session list sessions:
+
+-- ds.column:
+
+	-- ds.heading-medium: Past Sessions
+	
+	
+	-- session-box:
+	session: $s
+	for: $s in $past-sessions.sessions
+	
+-- end: ds.column
+
+-- end: past-sessions
+
+
+-- component session-box:
+sessions.session session:
+
+-- ds.row:
+width: hug-content
+spacing: $ds.spaces.horizontal-gap.large
+border: $ds.borders.uniform.small
+inset: $ds.spaces.inset-wide.large
+
+	-- ds.column:
+	
+		-- ds.copy-large: $session-box.session.meeting_title
+		
+		-- ds.row:
+			-- ds.copy-small: Duration (in minutes):
+			-- ftd.decimal: $session-box.session.duration
+		-- end: ds.row
+
+		-- ds.row:
+			-- ds.copy-small: Joined at:
+			-- ds.copy-small: $format-date(d=$session-box.session.joined_at)
+		-- end: ds.row
+
+		-- ds.row:
+			-- ds.copy-small: Left at:
+			-- ds.copy-small: $format-date(d=$session-box.session.left_at)
+		-- end: ds.row
+
+	-- end: ds.column
+
+-- end: ds.row
+
+-- end: session-box
+
+
+-- string format-date(d):
+string d:
+js: $lets-talk-assets.files.js.build.js
+
+UTCDateStringToFormattedString(d)
+
+
+-- string login-msg(n):
+string n:
+
+"You're logged in as **" + n + "**. [logout](/-/auth/logout/)"

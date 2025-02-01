@@ -1,16 +1,28 @@
 -- import: fastn
 
--- fastn.package: talk.mysite.com
+-- fastn.package: lets-talk-template.fifthtry.site
 
 -- fastn.dependency: lets-talk.fifthtry.site
+
 -- fastn.dependency: design-system.fifthtry.site
-provided-via: talk.mysite.com/ds
+provided-via: lets-talk-template.fifthtry.site/ds
+
 -- fastn.dependency: lets-talk-ui.fifthtry.site
-provided-via: talk.mysite.com/talk-ui
+provided-via: lets-talk-template.fifthtry.site/talk-ui
+
+-- fastn.dependency: lets-auth.fifthtry.site
 
 ;; this should have worked as per design but does not
 ;; -- fastn.auto-import: design-system.fifthtry.site as ds
 ;; another important tip: if you modify FASTN.ftd you have to restart fastn
 ;; server itself
--- fastn.auto-import: talk.mysite.com/ds
--- fastn.auto-import: talk.mysite.com/talk-ui
+-- fastn.auto-import: lets-talk-template.fifthtry.site/ds
+-- fastn.auto-import: lets-talk-template.fifthtry.site/talk-ui
+-- fastn.auto-import: lets-auth.fifthtry.site as lets-auth
+
+-- fastn.auto-import: lets-talk-template.fifthtry.site/app
+-- fastn.auto-import: lets-talk-template.fifthtry.site/assets
+
+-- fastn.app: Lets Auth App
+mount-point: /-/auth/
+package: lets-auth.fifthtry.site
