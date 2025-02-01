@@ -1,6 +1,0 @@
-;; $lets-auth.sign-in-url does not work with temporary redirect :(
--- ftd.temporary-redirect: /-/auth/signin/
-if: { lets-auth.user == NULL }
-
--- app.dashboard-page: Dashboard
-user: $lets-auth.user
