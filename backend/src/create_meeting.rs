@@ -34,8 +34,12 @@ fn create_meeting(
     let participant =
         crate::dyte::add_participant(&meeting.data.id, &preset, name, &user.username)?;
 
-    let session_cookie =
-        crate::create_session_cookie(&participant.data.token, &meeting.data.id, host, config.secure_sessions)?;
+    let session_cookie = crate::create_session_cookie(
+        &participant.data.token,
+        &meeting.data.id,
+        host,
+        config.secure_sessions,
+    )?;
 
     Ok(
         ft_sdk::form::redirect(format!("{meeting_page_url}{}", meeting.data.id))?

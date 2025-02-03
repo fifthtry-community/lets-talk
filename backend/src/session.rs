@@ -15,12 +15,9 @@ fn past_sessions(user: crate::auth::RequiredUser) -> ft_sdk::data::Result {
                 }
             };
 
-            let Some(p) = participants
+            let p = participants
                 .into_iter()
-                .find(|p| p.custom_participant_id == user.username)
-            else {
-                return None;
-            };
+                .find(|p| p.custom_participant_id == user.username)?;
 
             Some(UserSession {
                 id: s.id,

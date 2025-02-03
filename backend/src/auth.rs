@@ -1,5 +1,3 @@
-const FIFTHTRY_SUPPORT_ORG_SLUG: &str = "fifthtry-support";
-
 #[derive(Debug, Default, Clone, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "kebab-case")]
 /// Read logged in user data from request
@@ -102,7 +100,7 @@ impl RequiredUser {
                 return email_matches && self.email_is_verified;
             }
 
-            return email_matches;
+            email_matches
         })
     }
 }

@@ -61,6 +61,9 @@ pub(crate) struct Config {
 impl Default for Config {
     fn default() -> Self {
         Config {
+            // https://dev.dyte.io/presets?orgId=f233a0a4-afa0-4afd-9969-971d77e799d8
+            // These presets have FifthTry's branding
+            // Ask FifthTry to create custom presets for you
             preset_host: "group_call_host".to_string(),
             preset_participant: "group_call_participant".to_string(),
             require_verification: false,
