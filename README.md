@@ -10,15 +10,10 @@ people are supposed to use. `app/.packages/lets-talk-system.fifthtry.site`
 contains the source code of fastn package `lets-talk-system.fifthtry.site` 
 containing UI and other configurations used by the `lets-talk` app.
 
+## Configuration
 
-
-## Required environment variables
-
-- `LETS_TALK_SECURE_SESSIONS`: Use secure http cookies.
-- `LETS_TALK_PRESET_PARTICIPANT`: Preset name that'll be used for participants (can only join and chat).
-- `LETS_TALK_PRESET_HOST`: Preset name that'll be used for meeting hosts (can kick and end meetings for all).
-- `LETS_TALK_REQUIRE_VERIFICATION`: (default false) Require email verification of account before they can create a new meeting.
-- `LETS_TALK_ALLOWED_EMAIL_DOMAINS`: (default empty) Comma separated list of allowed email domains. If empty, no one can create meetings.
+See the `lets-talk-template.fifthtry.site` folder for an example of how to
+configure an instance of the `lets-talk` app.
 
 
 ## UI Storybook
