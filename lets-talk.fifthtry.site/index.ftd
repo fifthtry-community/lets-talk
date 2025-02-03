@@ -33,3 +33,33 @@ session list sessions:
 -- response data:
 $processor$: pr.http
 url: /talk/past-sessions/ ;; TODO: figure out how we can use ftd.app-url
+
+
+;; Note(siddhantk232): this mimics the current config required by the backend
+;; (talk.wasm). Ideally the app does not need to change its preset when it's
+;; possible to configure logo and colors through this package's components
+-- string host-preset-name: group_call_host
+-- string participant-preset-name: group_call_participant
+
+;;; New account signup must be verified before they're able to create meetings
+;; `false` we need emails working to be able to verify accounts automatically
+-- boolean require-verified-accounts: false
+
+;;; Use secure cookies (see https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#block_access_to_your_cookies)
+;; NOTE(siddhantk232): `false` for testing. Should be true in production
+-- boolean use-secure-cookies: false
+
+
+;;; List of emails or email domains that are allowed to create new meetings
+-- string list allowed-emails:
+
+;;; siddhant@fifthtry.com, amitu@fifthtry.com etc are allowed to create a meeting
+-- string: fifthtry.com
+
+;; Uncomment the following to allow "john@gmail.com" to create meetings
+;; -- string: john@gmail.com
+
+;; More entries can be added to this list. A user account will we checked
+;; against all these entries and if it matches **any** of them then it'll be
+;; allowed to create meetings.
+-- end: allowed-emails

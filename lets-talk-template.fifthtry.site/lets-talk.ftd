@@ -1,6 +1,5 @@
 -- import: lets-talk.fifthtry.site as o
-export: dashboard-page, footer-badge, session
-
+export: dashboard-page, footer-badge, session, host-preset-name, participant-preset-name, require-verified-accounts, use-secure-cookies, allowed-emails
 
 ;; NOTE(siddhantk232): Because of a fastn bug, we can't simply re-export $o.meeting-page-url
 -- string meeting-page-url: $o.meeting-page-url

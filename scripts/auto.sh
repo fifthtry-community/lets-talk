@@ -55,5 +55,5 @@ function run-template() {
     pushd2 "${PROJ_ROOT}/lets-talk-template.fifthtry.site" || return 1
 
     build-wasm
-    $FASTN --trace serve --offline
+    $FASTN --trace serve --port 9093 --offline
 }
