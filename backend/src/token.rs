@@ -38,15 +38,10 @@ fn session_new(
     meeting_id: ft_sdk::Query<"meeting-id", String>,
     ft_sdk::Query(meeting_page_url): ft_sdk::Query<"meeting-page-url", String>,
     user: crate::auth::OptionalUser,
-    scheme: ft_sdk::Scheme,
     host: ft_sdk::Host,
-    current_app_url: ft_sdk::AppUrl,
+    config: crate::Config,
 ) -> ft_sdk::data::Result {
     ft_sdk::println!("======= in session new handler ======");
-    let config = crate::config(&scheme, &host, &current_app_url)
-        .inspect_err(|e| ft_sdk::println!("[create-meeting] Failed to read config: {e}"))
-        .unwrap_or_default();
-
     let (username, name, is_guest) = if user.is_logged_in {
         ft_sdk::println!("Found user name through login");
         (user.username, Some(user.name), false)

@@ -31,23 +31,6 @@ fn create_session_cookie(
     Ok(http::HeaderValue::from_str(cookie.to_string().as_str())?)
 }
 
-pub(crate) fn config(
-    scheme: &ft_sdk::Scheme,
-    host: &ft_sdk::Host,
-    current_app_url: &ft_sdk::AppUrl,
-) -> Result<Config, ft_sdk::Error> {
-    let url = current_app_url.join(scheme, host, "config")?;
-    ft_sdk::println!("Requesting config from url: {url}");
-
-    let req = http::Request::builder()
-        .uri(url)
-        .body(bytes::Bytes::new())?;
-
-    let res = ft_sdk::http::send(req).unwrap();
-
-    serde_json::from_slice(res.body()).map_err(|e| e.into())
-}
-
 #[derive(serde::Deserialize)]
 #[serde(rename_all = "kebab-case")]
 pub(crate) struct Config {
@@ -63,6 +46,7 @@ impl Default for Config {
         Config {
             // https://dev.dyte.io/presets?orgId=f233a0a4-afa0-4afd-9969-971d77e799d8
             // These presets have FifthTry's branding
+            // Use TALK_PRESET_HOST and TALK_PRESET_PARTICIPANT environment variables to configure this
             // Ask FifthTry to create custom presets for you
             preset_host: "group_call_host".to_string(),
             preset_participant: "group_call_participant".to_string(),
@@ -70,5 +54,22 @@ impl Default for Config {
             secure_sessions: false,
             allowed_emails: vec![],
         }
+    }
+}
+
+impl ft_sdk::FromRequest for Config {
+    fn from_request(req: &http::Request<serde_json::Value>) -> Result<Self, ft_sdk::Error> {
+        let host = ft_sdk::Host::from_request(req)?;
+        let scheme = ft_sdk::Scheme::from_request(req)?;
+        let current_app_url: ft_sdk::AppUrl = ft_sdk::AppUrl::from_request(req)?;
+        let url = current_app_url.join(&scheme, &host, "config")?;
+
+        let req = http::Request::builder()
+            .uri(url)
+            .body(bytes::Bytes::new())?;
+
+        let res = ft_sdk::http::send(req).unwrap();
+
+        serde_json::from_slice(res.body()).map_err(|e| e.into())
     }
 }

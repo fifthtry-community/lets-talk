@@ -4,15 +4,10 @@ fn create_meeting(
     title: ft_sdk::Required<"title">,
     ft_sdk::Required(meeting_page_url): ft_sdk::Required<"meeting-page-url">,
     user: crate::auth::RequiredUser,
-    scheme: ft_sdk::Scheme,
     host: ft_sdk::Host,
-    current_app_url: ft_sdk::AppUrl,
+    config: crate::Config,
     mut conn: ft_sdk::Connection,
 ) -> ft_sdk::form::Result {
-    let config = crate::config(&scheme, &host, &current_app_url)
-        .inspect_err(|e| ft_sdk::println!("[create-meeting] Failed to read config: {e}"))
-        .unwrap_or_default();
-
     if !user.is_special(&mut conn, &config) {
         return Err(title
             .error("You are not authorized to create a meeting")
