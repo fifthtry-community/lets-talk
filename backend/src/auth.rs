@@ -79,28 +79,17 @@ impl RequiredUser {
     /// `LETS_TALK_REQUIRE_VERIFICATION` (true/false)
     ///
     /// If `LETS_TALK_REQUIRE_VERIFICATION` is set to true, then the user account must be verified
-    pub(crate) fn is_special(&self, conn: &mut ft_sdk::Connection) -> bool {
+    pub(crate) fn is_special(&self, conn: &mut ft_sdk::Connection, config: &crate::Config) -> bool {
         use diesel::prelude::*;
 
-        // don't require verified accounts by default
-        let require_verification =
-            match ft_sdk::env::var("LETS_TALK_REQUIRE_VERIFICATION".to_string()) {
-                Some(v) => v == "true",
-                None => false,
-            };
+        if config.allowed_emails.is_empty() {
+            ft_sdk::println!(
+                "`allowed-emails` list is empty. No one is allowed to create meetings"
+            );
+            return false;
+        }
 
-        let allowed_email_domains =
-            match ft_sdk::env::var("LETS_TALK_ALLOWED_EMAIL_DOMAINS".to_string()) {
-                Some(v) => v,
-                None => {
-                    ft_sdk::println!(
-                    "LETS_TALK_ALLOWED_EMAIL_DOMAINS not set. No one is allowed to create meetings"
-                );
-                    return false;
-                }
-            };
-
-        allowed_email_domains.split(',').map(|v| v.trim()).any(|v| {
+        config.allowed_emails.iter().map(|v| v.trim()).any(|v| {
             if v.is_empty() {
                 return false;
             }
@@ -109,7 +98,7 @@ impl RequiredUser {
             let email_matches = self.email.ends_with(v);
             // if the email matches, check if the account is verified (verification is done
             // by clicking on a link that is sent to user's email)
-            if require_verification {
+            if config.require_verification {
                 return email_matches && self.email_is_verified;
             }
 

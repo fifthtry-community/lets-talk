@@ -38,9 +38,14 @@ fn session_new(
     meeting_id: ft_sdk::Query<"meeting-id", String>,
     ft_sdk::Query(meeting_page_url): ft_sdk::Query<"meeting-page-url", String>,
     user: crate::auth::OptionalUser,
+    scheme: ft_sdk::Scheme,
     host: ft_sdk::Host,
+    current_app_url: ft_sdk::AppUrl,
 ) -> ft_sdk::data::Result {
     ft_sdk::println!("======= in session new handler ======");
+    let config = crate::config(&scheme, &host, &current_app_url)
+        .inspect_err(|e| ft_sdk::println!("[create-meeting] Failed to read config: {e}"))
+        .unwrap_or_default();
 
     let (username, name, is_guest) = if user.is_logged_in {
         ft_sdk::println!("Found user name through login");
@@ -53,9 +58,7 @@ fn session_new(
         (uuid, None, true)
     };
 
-    let preset = ft_sdk::env::var("LETS_TALK_PRESET_PARTICIPANT".to_string())
-        .unwrap_or(crate::dyte::DEFAULT_MEETING_PRESET_PARTICIPANT.to_string());
-
+    let preset = config.preset_participant;
     let preset = if is_guest {
         // _guest presets are allowed to change their name
         format!("{preset}_guest")
@@ -71,7 +74,12 @@ fn session_new(
 
     ft_sdk::println!("dyte response: {:?}", participant);
 
-    let session_cookie = crate::create_session_cookie(&participant.data.token, &meeting_id, host)?;
+    let session_cookie = crate::create_session_cookie(
+        &participant.data.token,
+        &meeting_id,
+        host,
+        config.secure_sessions,
+    )?;
 
     ft_sdk::data::browser_redirect_with_cookie(
         format!("{meeting_page_url}{meeting_id}/"),

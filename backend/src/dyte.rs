@@ -73,6 +73,7 @@ fn call_dyte<D: DyteData>(
     ft_sdk::println!("Calling with data:");
     ft_sdk::println!("{:?}", body);
 
+    // DYTE_ORG_ID and DYTE_API_KEY are accessible to all the websites hosted on FifthTry
     let dyte_org_id = ft_sdk::env::var("DYTE_ORG_ID".to_string()).ok_or_else(|| {
         ft_sdk::anyhow!("DYTE_ORG_ID is not set. Please set it in the environment variables")
     })?;
