@@ -3,4 +3,4 @@ preset-host: $lets-talk.host-preset-name
 preset-participant: $lets-talk.participant-preset-name
 require-verification: $lets-talk.require-verified-accounts
 secure-sessions: $lets-talk.use-secure-cookies
-allowed-emails: $lets-talk.allowed-emails
+allowed-emails: $lets-talk.who-can-create-meetings

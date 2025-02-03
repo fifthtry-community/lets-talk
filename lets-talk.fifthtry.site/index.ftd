@@ -51,15 +51,5 @@ url: /talk/past-sessions/ ;; TODO: figure out how we can use ftd.app-url
 
 
 ;;; List of emails or email domains that are allowed to create new meetings
--- string list allowed-emails:
-
 ;;; siddhant@fifthtry.com, amitu@fifthtry.com etc are allowed to create a meeting
--- string: fifthtry.com
-
-;; Uncomment the following to allow "john@gmail.com" to create meetings
-;; -- string: john@gmail.com
-
-;; More entries can be added to this list. A user account will we checked
-;; against all these entries and if it matches **any** of them then it'll be
-;; allowed to create meetings.
--- end: allowed-emails
+-- string who-can-create-meetings: fifthtry.com

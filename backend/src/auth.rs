@@ -87,7 +87,7 @@ impl RequiredUser {
             return false;
         }
 
-        config.allowed_emails.iter().map(|v| v.trim()).any(|v| {
+        config.allowed_emails.split(',').map(|v| v.trim()).any(|v| {
             if v.is_empty() {
                 return false;
             }

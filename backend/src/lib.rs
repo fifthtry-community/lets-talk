@@ -34,7 +34,7 @@ fn create_session_cookie(
 #[derive(serde::Deserialize)]
 #[serde(rename_all = "kebab-case")]
 pub(crate) struct Config {
-    pub allowed_emails: Vec<String>,
+    pub allowed_emails: String,
     pub preset_host: String,
     pub preset_participant: String,
     pub require_verification: bool,
@@ -52,7 +52,7 @@ impl Default for Config {
             preset_participant: "group_call_participant".to_string(),
             require_verification: false,
             secure_sessions: false,
-            allowed_emails: vec![],
+            allowed_emails: "".to_string(),
         }
     }
 }
