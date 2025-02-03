@@ -37,9 +37,9 @@
               sqlite
             ];
 
-            # shellHook = ''
-            #   source scripts/auto.sh
-            # '';
+            shellHook = ''
+              source scripts/auto.sh
+            '';
 
 
             RUST_SRC_PATH = "${toolchain}/lib/rustlib/src/rust/library";

@@ -13,4 +13,10 @@ system-is-confidential: false
 -- fastn.auto-import: lets-talk.fifthtry.site as lets-talk
 -- fastn.auto-import: lets-talk.fifthtry.site/assets
 
-;; TODO: add migrations
+;; TODO: add more migrations (cdp tables that store meeting/sessions)
+
+-- fastn.migration: Empty
+
+;; We are interested in default tables ('fastn_user' for example) created by
+;; fastn. `fastn` requires at least one `-- fastn.migration:` decl to do that.
+SELECT 1;

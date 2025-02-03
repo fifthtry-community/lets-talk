@@ -22,25 +22,13 @@ Cargo.lock
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
+*.sqlite
 
-www/.packages/
+.fastn
+.packages
+*.wasm
+node_modules
 
-app/.packages/*
-!app/.packages/lets-talk-system.fifthtry.site/
-!app/.packages/lets-talk-system.fifthtry.site/**
-app/.packages/lets-talk-system.fifthtry.site/.packages/
-app/.packages/lets-talk-system.fifthtry.site/.fastn/
-app/js/node_modules/
-app/js/build.js
-app/js/build.js.map
+lets-talk.fifthtry.site/js/build.js
+lets-talk.fifthtry.site/js/build.js.map
 
-# Templates shouldn't be using any packages that is not hosted outside of fifthtry
-template/.packages/
-template/.fastn/
-
-template-final/.packages/
-template-final/.fastn/
-
-# CI will figure out how to upload these two files to fifthtry
-template/email_auth_provider.wasm
-template/talk.wasm
