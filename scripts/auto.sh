@@ -51,9 +51,18 @@ function build-wasm() {
     popd2
 }
 
+function build-js() {
+    pushd2 "${PROJ_ROOT}/lets-talk.fifthtry.site" || return 1
+    cd js/ || return 1
+    npm run build
+    cd ..
+    popd2
+}
+
 function run-template() {
     pushd2 "${PROJ_ROOT}/lets-talk-template.fifthtry.site" || return 1
 
     build-wasm
+    build-js
     $FASTN --trace serve --port 9093 --offline
 }

@@ -14,8 +14,14 @@ class Talk extends HTMLElement {
 
     async connectedCallback() {
         const data = window.ftd.component_data(this);
-        const token = data.token.get();
         const mid = data.mid.get();
+        const meeting_page_url = data.meeting_page_url.get();
+
+        const endpoint_url = ftd.app_url_ex("/talk/session/", "lets-talk");
+        const req_url = `${endpoint_url}?meeting-id=${mid}&meeting-page-url=${meeting_page_url}`;
+
+        const res = await fetch(req_url).then(r => r.json());
+        const token = res.token;
 
         console.log("Meeting ID: ", mid);
         console.log("Token: ", token);
