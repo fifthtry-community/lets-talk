@@ -21,11 +21,11 @@ pub fn add_participant(
     meeting_id: &str,
     preset_name: &str,
     participant_name: Option<&str>,
-    custom_participant_id: &str,
+    username: Username,
 ) -> Result<DyteResponse<DyteAddParticipant>, ft_sdk::Error> {
     let body = &mut serde_json::json!({
         "preset_name": preset_name,
-        "custom_participant_id": custom_participant_id,
+        "custom_participant_id": username.as_str(),
     });
 
     // Dyte's api does not like name: null. So we have to remove the key altogether
@@ -99,6 +99,18 @@ fn call_dyte<D: DyteData>(
     ft_sdk::println!("=====================================");
 
     DyteData::deserialize(String::from_utf8_lossy(response.body()))
+}
+
+pub struct Username(String);
+
+impl Username {
+    pub fn new<S: AsRef<str>>(username: S, host: &ft_sdk::Host) -> Self {
+        Self(format!("{}__{}", host.without_port(), username.as_ref()))
+    }
+
+    pub fn as_str(&self) -> &str {
+        self.0.as_ref()
+    }
 }
 
 #[derive(serde::Deserialize, Debug)]

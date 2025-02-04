@@ -6,7 +6,6 @@ fn create_meeting(
     user: crate::auth::RequiredUser,
     host: ft_sdk::Host,
     config: crate::Config,
-    mut conn: ft_sdk::Connection,
 ) -> ft_sdk::form::Result {
     if !user.is_special(&config) {
         return Err(title
@@ -26,8 +25,8 @@ fn create_meeting(
 
     ft_sdk::println!("Using preset: {preset} to create meeting");
 
-    let participant =
-        crate::dyte::add_participant(&meeting.data.id, &preset, name, &user.username)?;
+    let username = crate::dyte::Username::new(user.username, &host);
+    let participant = crate::dyte::add_participant(&meeting.data.id, &preset, name, username)?;
 
     let session_cookie = crate::create_session_cookie(
         &participant.data.token,

@@ -1,7 +1,7 @@
 /// Get past sessions of the logged in user
 /// This call is expensive, should be done in the background
 #[ft_sdk::data]
-fn past_sessions(user: crate::auth::RequiredUser) -> ft_sdk::data::Result {
+fn past_sessions(user: crate::auth::RequiredUser, host: ft_sdk::Host) -> ft_sdk::data::Result {
     let all_sessions = crate::dyte::sessions()?
         .data
         .sessions
@@ -15,9 +15,11 @@ fn past_sessions(user: crate::auth::RequiredUser) -> ft_sdk::data::Result {
                 }
             };
 
+            let username = crate::dyte::Username::new(&user.username, &host);
+
             let p = participants
                 .into_iter()
-                .find(|p| p.custom_participant_id == user.username)?;
+                .find(|p| p.custom_participant_id == username.as_str())?;
 
             Some(UserSession {
                 id: s.id,

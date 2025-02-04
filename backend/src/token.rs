@@ -64,8 +64,9 @@ fn session_new(
 
     ft_sdk::println!("Using preset: {preset} to create a new session for {username}");
 
+    let username = crate::dyte::Username::new(username, &host);
     let participant =
-        crate::dyte::add_participant(&meeting_id, &preset, name.as_deref(), &username)?;
+        crate::dyte::add_participant(&meeting_id, &preset, name.as_deref(), username)?;
 
     ft_sdk::println!("dyte response: {:?}", participant);
 

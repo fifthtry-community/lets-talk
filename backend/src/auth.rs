@@ -77,8 +77,6 @@ impl RequiredUser {
     ///
     /// If `require-verification` is set to true, then the user account must be verified
     pub(crate) fn is_special(&self, config: &crate::Config) -> bool {
-        use diesel::prelude::*;
-
         if config.allowed_emails.is_empty() {
             ft_sdk::println!(
                 "`allowed-emails` list is empty. No one is allowed to create meetings"
