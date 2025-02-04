@@ -8,7 +8,7 @@ fn create_meeting(
     config: crate::Config,
     mut conn: ft_sdk::Connection,
 ) -> ft_sdk::form::Result {
-    if !user.is_special(&mut conn, &config) {
+    if !user.is_special(&config) {
         return Err(title
             .error("You are not authorized to create a meeting")
             .into());

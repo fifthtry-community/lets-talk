@@ -71,13 +71,12 @@ impl ft_sdk::FromRequest for OptionalUser {
 impl RequiredUser {
     /// Special users are the ones who have access to meeting data and are able to create new
     /// meetings.
-    /// It uses the following environment variables to dictate if the user is allowed to create a
-    /// meeting:
-    /// `LETS_TALK_ALLOWED_EMAIL_DOMAINS` (comma separated list of email domains)
-    /// `LETS_TALK_REQUIRE_VERIFICATION` (true/false)
+    /// It uses the following settings to dictate if the user is allowed to create a meeting:
+    /// `allowed-emails`       (comma separated list of email domains)
+    /// `require-verification` (true/false)
     ///
-    /// If `LETS_TALK_REQUIRE_VERIFICATION` is set to true, then the user account must be verified
-    pub(crate) fn is_special(&self, conn: &mut ft_sdk::Connection, config: &crate::Config) -> bool {
+    /// If `require-verification` is set to true, then the user account must be verified
+    pub(crate) fn is_special(&self, config: &crate::Config) -> bool {
         use diesel::prelude::*;
 
         if config.allowed_emails.is_empty() {
