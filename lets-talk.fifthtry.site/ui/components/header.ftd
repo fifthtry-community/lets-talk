@@ -5,10 +5,12 @@ lets-auth.user-details user:
     align-content: left
     inset: $ds.spaces.inset-square.medium
     spacing: $ds.spaces.horizontal-gap.space-between
+    margin: $ds.spaces.vertical-gap.small
 
         -- ftd.image:
         src: $ds.site-logo
         width.fixed.px: 250
+        width.fixed.px if { ftd.device == "mobile" }: 140
 
         -- ds.copy-small: $login-msg(n=$header.user.name)
         if: { header.user }
