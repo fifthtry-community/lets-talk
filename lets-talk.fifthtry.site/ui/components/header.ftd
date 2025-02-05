@@ -11,6 +11,7 @@ lets-auth.user-details user:
         width.fixed.px: 250
 
         -- ds.copy-small: $login-msg(n=$header.user.name)
+        if: { header.user }
 
     -- end: ds.section-row
 
