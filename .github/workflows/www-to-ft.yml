@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main ]
     paths:
-      - www/**
+      - lets-talk.fifthtry-community.com/**
       - .github/workflows/www-to-ft.yml
 
 
@@ -14,8 +14,6 @@ jobs:
     env:
       FIFTHTRY_SITE_WRITE_TOKEN: ${{ secrets.FT_LETS_TALK_WWW }}
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
       - run: sh -c "$(curl -fsSL https://fastn.com/install.sh)"
-      - name: Upload to FifthTry using fastn
-        run: cd www/ && fastn upload lets-talk-www
+      - run: cd lets-talk.fifthtry-community.com/ && fastn upload lets-talk-www

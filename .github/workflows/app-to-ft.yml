@@ -4,10 +4,9 @@ on:
   push:
     branches: [ main ]
     paths:
-      - '!app/**'
-      - '!app/.packages/**'
+      - lets-talk.fifthtry.site/**
+      - scripts/*.sh
       - .github/workflows/app-to-ft.yml
-      - .github/workflows/upload_app.sh
 
 
 jobs:
@@ -16,8 +15,6 @@ jobs:
     env:
       FIFTHTRY_SITE_WRITE_TOKEN: ${{ secrets.FT_LETS_TALK }}
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - run: sh -c "$(curl -fsSL https://fastn.com/install.sh)"
-      - name: Upload to FifthTry using fastn
-        run: ./.github/workflows/upload_app.sh
+      - uses: actions/checkout@v2
+      - uses: Swatinem/rust-cache@v2
+      - run: ./scripts/publish-app.sh
