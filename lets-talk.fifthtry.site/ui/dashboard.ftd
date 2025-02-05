@@ -28,18 +28,9 @@ margin: $ds.spaces.vertical-gap.zero
 		inset: $ds.spaces.inset-square.zero
 		margin: $ds.spaces.vertical-gap.zero
 		
-			-- ftd.text-input:
-			placeholder: Meeting Title (optional)
-			type: text
-			$on-input$: $ftd.set-string($a = $dashboard-page.action.meeting-title.value, v = $VALUE)
-			width: fill-container
-			height.fixed.px: 40
-			border-radius.px: 16
-			background.solid: transparent
-			border-width.px: 1
-			border-color: $inherited.colors.border
-			padding.px: 8
-			color: $inherited.colors.text-strong
+			-- ds.form-field: Meeting Title (optional)
+            $field: $dashboard-page.action.meeting-title
+            placeholder: New Meeting
 			
 		-- end: ds.column
 
