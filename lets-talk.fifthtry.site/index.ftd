@@ -16,7 +16,6 @@ export: footer-badge
 if: { lets-auth.user == NULL }
 
 -- lets-talk.dashboard-page: Dashboard
-user: $lets-auth.user
 past-sessions: $dummy.sessions
 
 

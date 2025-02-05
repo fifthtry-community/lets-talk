@@ -5,10 +5,12 @@ system: lets-talk
 system-is-confidential: false
 
 -- fastn.dependency: design-system.fifthtry.site
+provided-via: lets-talk.fifthtry.site/ds
+
 -- fastn.dependency: lets-auth.fifthtry.site
 
 ;; this is a system: alias must be ds
--- fastn.auto-import: design-system.fifthtry.site as ds
+-- fastn.auto-import: lets-talk.fifthtry.site/ds
 -- fastn.auto-import: lets-auth.fifthtry.site as lets-auth
 -- fastn.auto-import: lets-talk.fifthtry.site as lets-talk
 -- fastn.auto-import: lets-talk.fifthtry.site/assets

@@ -1,0 +1,23 @@
+-- component header:
+lets-auth.user-details user:
+
+    -- ds.section-row:
+    align-content: left
+    inset: $ds.spaces.inset-square.medium
+    spacing: $ds.spaces.horizontal-gap.space-between
+
+        -- ftd.image:
+        src: $ds.site-logo
+        width.fixed.px: 250
+
+        -- ds.copy-small: $login-msg(n=$header.user.name)
+
+    -- end: ds.section-row
+
+-- end: header
+
+
+-- string login-msg(n):
+string n:
+
+"You're logged in as **" + n + "**. [logout](/-/auth/logout/)"

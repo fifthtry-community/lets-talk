@@ -4,19 +4,11 @@
 caption title:
 module action: create-meeting
 lets-talk.session list past-sessions:
-lets-auth.user-details user:
 
 
 -- ds.site-page: Dashboard
 fastn-badge: false
 margin: $ds.spaces.vertical-gap.zero
-
-    -- ds.row:
-    align-content: right
-
-    -- ds.copy-small: $login-msg(n = $dashboard-page.user.name)
-
-    -- end: ds.row
 
 	-- ds.row:
 	align-content: left
@@ -80,12 +72,17 @@ margin: $ds.spaces.vertical-gap.zero
 lets-talk.session list sessions:
 
 -- ds.column:
+align-content: right
 
-	-- ds.heading-medium: Past Sessions
+	-- ds.heading-medium: Past Sessions (Coming Soon)
 	
+    -- ds.column:
+
 	-- session-box:
 	session: $s
 	for: $s in $past-sessions.sessions
+
+    -- end: ds.column
 	
 -- end: ds.column
 
@@ -153,10 +150,4 @@ string d:
 js: $assets.files.js.build.js
 
 UTCDateStringToFormattedString(d)
-
-
--- string login-msg(n):
-string n:
-
-"You're logged in as **" + n + "**. [logout](/-/auth/logout/)"
 
