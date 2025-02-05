@@ -11,6 +11,7 @@ fastn-badge: false
 margin: $ds.spaces.vertical-gap.zero
 
 	-- ds.row:
+	if: { ftd.device != "mobile" }
 	align-content: left
 
 	-- ds.column:
@@ -28,22 +29,17 @@ margin: $ds.spaces.vertical-gap.zero
 		inset: $ds.spaces.inset-square.zero
 		margin: $ds.spaces.vertical-gap.zero
 		
-			-- ds.form-field: Meeting Title (optional)
+			-- ds.form-field: 
             $field: $dashboard-page.action.meeting-title
-            placeholder: New Meeting
+            placeholder: Meeting Title (optional)
+            rounded: true	
+            size: small
 			
 		-- end: ds.column
 
-
-		-- ds.phosphor-icon-button: Start an instant meeting
+		-- create-meeting-btn: Start an instant meeting
 		$on-click$: $create-meeting.new-instant()
 		icon: video-camera
-		rounded: true
-        width: full
-		
-		-- ds.copy-small: $create-meeting.meeting-title.error
-		if: { create-meeting.meeting-title.error }
-		color: $ds.colors.error.text
 
 		-- end: ds.row
 
@@ -53,6 +49,35 @@ margin: $ds.spaces.vertical-gap.zero
 		sessions: $dashboard-page.past-sessions
 
 	-- end: ds.row
+
+	-- ds.column:
+	if: { ftd.device == "mobile" }
+	align-content: top-center
+	spacing: $ds.spaces.vertical-gap.extra-large
+
+	-- ds.heading-large: Start an instant meeting with anyone
+	;;align: center
+
+	-- ds.column:
+	inset: $ds.spaces.inset-square.zero
+	spacing if { create-meeting.meeting-title.error != NULL }: $ds.spaces.vertical-gap.large
+
+	-- ds.form-field: 
+	$field: $dashboard-page.action.meeting-title
+	placeholder: Meeting Title (optional)
+	rounded: true
+	size: small
+
+	-- create-meeting-btn: Start an instant meeting
+	$on-click$: $create-meeting.new-instant()
+	icon: video-camera
+
+	-- end: ds.column
+
+	-- past-sessions:
+	sessions: $dashboard-page.past-sessions
+
+	-- end: ds.column
 
 -- end: ds.site-page
 
@@ -64,10 +89,13 @@ lets-talk.session list sessions:
 
 -- ds.column:
 align-content: right
+inset if { ftd.device == "mobile" }: $ds.spaces.inset-square.zero
 
 	-- ds.heading-medium: Past Sessions (Coming Soon)
 	
     -- ds.column:
+    width.fixed.px if { ftd.device != "mobile" }: 460
+	inset if { ftd.device == "mobile" }: $ds.spaces.inset-square.zero
 
 	-- session-box:
 	session: $s
@@ -84,7 +112,7 @@ align-content: right
 lets-talk.session session:
 
 -- ds.row:
-width.fixed.px: 360
+width.fixed.px if { ftd.device != "mobile" }: 360
 spacing: $ds.spaces.horizontal-gap.large
 border: $ds.borders.uniform.small
 inset: $ds.spaces.inset-square.medium
@@ -134,6 +162,34 @@ align-content: left
 -- end: ds.row
 
 -- end: session-box
+
+
+
+
+
+
+
+-- component create-meeting-btn:
+caption title:
+optional string link:
+string icon:
+optional string error:
+
+-- ds.column:
+align-content: left
+inset: $ds.spaces.inset-square.zero
+
+-- ds.phosphor-rounded-button: $create-meeting-btn.title
+icon: $create-meeting-btn.icon
+
+-- ds.copy-small: $create-meeting-btn.error
+if: { create-meeting-btn.error }
+color: $ds.colors.error.text
+
+-- end: ds.column
+
+-- end: create-meeting-btn
+
 
 
 -- string format-date(d):
