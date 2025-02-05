@@ -1,0 +1,18 @@
+-- lets-talk.session list sessions:
+
+-- lets-talk.session:
+id: 1
+meeting_title: Test
+joined_at: 2025-01-31T07:22:51.062Z
+left_at: 2025-01-31T07:22:51.062Z
+duration: 2.4324234242342
+
+
+-- lets-talk.session:
+id: 2
+meeting_title: Test 2
+joined_at: 2025-01-31T07:22:51.062Z
+left_at: 2025-01-31T07:22:51.062Z
+duration: 2.432
+
+-- end: sessions

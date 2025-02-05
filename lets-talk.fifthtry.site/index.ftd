@@ -1,8 +1,10 @@
--- import: lets-talk.fifthtry.site/dashboard as _
+-- import: lets-talk.fifthtry.site/ui/dashboard as _
 export: dashboard-page
 
 -- import: lets-talk.fifthtry.site/badge as _
 export: footer-badge
+
+-- import: lets-talk.fifthtry.site/dummy
 
 
 -- import: fastn/processors as pr
@@ -15,6 +17,7 @@ if: { lets-auth.user == NULL }
 
 -- lets-talk.dashboard-page: Dashboard
 user: $lets-auth.user
+past-sessions: $dummy.sessions
 
 
 -- record session:
@@ -23,16 +26,6 @@ string meeting_title:
 string joined_at:
 string left_at:
 decimal duration:
-
-
-
--- record response:
-session list sessions:
-
-
--- response data:
-$processor$: pr.http
-url: /talk/past-sessions/ ;; TODO: figure out how we can use ftd.app-url
 
 
 ;; Note(siddhantk232): this mimics the current config required by the backend
