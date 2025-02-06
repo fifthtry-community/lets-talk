@@ -32,8 +32,8 @@ margin: $ds.spaces.vertical-gap.zero
 			-- ds.form-field: 
             $field: $dashboard-page.action.meeting-title
             placeholder: Meeting Title (optional)
-            rounded: true	
-            size: small
+            rounded: true
+            margin: $ds.spaces.vertical-gap.zero
 			
 		-- end: ds.column
 
