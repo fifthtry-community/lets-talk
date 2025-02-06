@@ -1,7 +1,5 @@
 -- import: lets-talk-template.fifthtry.site/data/urls
 
--- import: lets-talk.fifthtry.site/assets as lets-talk-assets
-
 -- import: fastn/processors as pr
 
 -- optional string meeting-id:
@@ -25,13 +23,13 @@ if: { session.token }
 
 
 -- web-component dyte-meeting:
-js: $lets-talk-assets.files.js.build.js
+js: $assets.files.build.js
 
 ;; Initialize dyte sdk
 -- web-component talk-app:
 optional string token:
 optional string mid:
-js: $lets-talk-assets.files.js.build.js
+js: $assets.files.build.js
 
 
 -- record talk-session:

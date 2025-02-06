@@ -5,8 +5,6 @@
 -- fastn.dependency: design-system.fifthtry.site
 provided-via: lets-talk-template.fifthtry.site/ds
 
--- fastn.dependency: lets-talk.fifthtry.site
-
 -- fastn.auto-import: lets-talk-template.fifthtry.site/assets
 
 -- fastn.url-mappings:
