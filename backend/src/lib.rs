@@ -14,7 +14,7 @@ const TALK_TOKEN_COOKIE: &str = "talk-token";
 fn create_session_cookie(
     token: &str,
     meeting_id: &str,
-    host: ft_sdk::Host,
+    host: &ft_sdk::Host,
     secure: bool,
 ) -> Result<http::HeaderValue, ft_sdk::Error> {
     let val = format!("{}:{}", meeting_id, token);
@@ -69,5 +69,14 @@ impl ft_sdk::FromRequest for Config {
         let res = ft_sdk::http::send(req).unwrap();
 
         serde_json::from_slice(res.body()).map_err(|e| e.into())
+    }
+}
+
+// NOTE: remove this when https://github.com/fastn-stack/ft-sdk/pull/63 is released
+fn temp_fix_app_url(app_url: ft_sdk::AppUrl) -> ft_sdk::AppUrl {
+    if app_url.0 == Some("//".to_string()) {
+        ft_sdk::AppUrl(Some("/".to_string()))
+    } else {
+        app_url
     }
 }

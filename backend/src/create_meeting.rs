@@ -2,10 +2,11 @@
 /// Create a meeting and add the user to it as a participant
 fn create_meeting(
     title: ft_sdk::Required<"title">,
-    ft_sdk::Required(meeting_page_url): ft_sdk::Required<"meeting-page-url">,
     user: crate::auth::RequiredUser,
     host: ft_sdk::Host,
     config: crate::Config,
+    app_url: ft_sdk::AppUrl,
+    scheme: ft_sdk::Scheme,
 ) -> ft_sdk::form::Result {
     if !user.is_special(&config) {
         return Err(title
@@ -31,9 +32,13 @@ fn create_meeting(
     let session_cookie = crate::create_session_cookie(
         &participant.data.token,
         &meeting.data.id,
-        host,
+        &host,
         config.secure_sessions,
     )?;
+
+    // lets-talk.fifthtry.site/meeting.ftd
+    let app_url = crate::temp_fix_app_url(app_url);
+    let meeting_page_url = app_url.join(&scheme, &host, "meeting")?;
 
     Ok(
         ft_sdk::form::redirect(format!("{meeting_page_url}{}", meeting.data.id))?

@@ -9,8 +9,6 @@ export: footer-badge
 
 -- import: fastn/processors as pr
 
--- string meeting-page-url: /meeting/
-
 ;; $lets-auth.sign-in-url does not work with temporary redirect :(
 -- ftd.temporary-redirect: /-/auth/signin/
 if: { lets-auth.user == NULL }

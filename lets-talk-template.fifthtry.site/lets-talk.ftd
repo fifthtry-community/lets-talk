@@ -11,7 +11,3 @@ export: dashboard-page, footer-badge, session, host-preset-name, participant-pre
 ;; More entries can be added by separating them with a comma (,)
 ;; This allows anyone with fifthtry.com email or "john@gmail.com" to create meetings
 ;; -- string who-can-create-meetings: fifthry.com, john@gmail.com
-
-
-;; NOTE(siddhantk232): Because of a fastn bug, we can't simply re-export $o.meeting-page-url
--- string meeting-page-url: $o.meeting-page-url
