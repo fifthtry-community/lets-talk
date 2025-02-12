@@ -9,7 +9,7 @@
 fn session(
     ft_sdk::Cookie(token): ft_sdk::Cookie<{ crate::TALK_TOKEN_COOKIE }>,
     meeting_id: ft_sdk::Query<"meeting-id", String>,
-    scheme: ft_sdk::Scheme,
+    scheme: crate::HTTPSScheme,
     host: ft_sdk::Host,
     app_url: ft_sdk::AppUrl,
 ) -> ft_sdk::processor::Result {
@@ -46,7 +46,7 @@ fn session_new(
     host: ft_sdk::Host,
     config: crate::Config,
     app_url: ft_sdk::AppUrl,
-    scheme: ft_sdk::Scheme,
+    scheme: crate::HTTPSScheme,
 ) -> ft_sdk::form::Result {
     ft_sdk::println!("======= in session new handler ======");
     let (username, name, is_guest) = if user.is_logged_in {

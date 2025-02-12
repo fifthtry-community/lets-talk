@@ -6,7 +6,7 @@ fn create_meeting(
     host: ft_sdk::Host,
     config: crate::Config,
     app_url: ft_sdk::AppUrl,
-    scheme: ft_sdk::Scheme,
+    scheme: crate::HTTPSScheme,
 ) -> ft_sdk::form::Result {
     if !user.is_special(&config) {
         return Err(title

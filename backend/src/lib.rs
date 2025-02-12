@@ -58,9 +58,10 @@ impl Default for Config {
 impl ft_sdk::FromRequest for Config {
     fn from_request(req: &http::Request<serde_json::Value>) -> Result<Self, ft_sdk::Error> {
         let host = ft_sdk::Host::from_request(req)?;
-        let scheme = ft_sdk::Scheme::from_request(req)?;
-        let current_app_url: ft_sdk::AppUrl = ft_sdk::AppUrl::from_request(req)?;
-        let url = current_app_url.join(&scheme, &host, "config")?;
+        let scheme = crate::HTTPSScheme::from_request(req)?;
+        let app_url: ft_sdk::AppUrl = ft_sdk::AppUrl::from_request(req)?;
+        let app_url = crate::temp_fix_app_url(app_url);
+        let url = app_url.join(&scheme, &host, "config")?;
 
         let req = http::Request::builder()
             .uri(url)
@@ -78,5 +79,29 @@ fn temp_fix_app_url(app_url: ft_sdk::AppUrl) -> ft_sdk::AppUrl {
         ft_sdk::AppUrl(Some("/".to_string()))
     } else {
         app_url
+    }
+}
+
+/// Same as `ft_sdk::Scheme`
+/// - https only when host: 127.0.0.1
+struct HTTPSScheme(pub ft_sdk::Scheme);
+
+impl ft_sdk::FromRequest for HTTPSScheme {
+    fn from_request(req: &http::Request<serde_json::Value>) -> Result<Self, ft_sdk::Error> {
+        let host = ft_sdk::Host::from_request(req)?;
+
+        if host.without_port() == "127.0.0.1" {
+            Ok(HTTPSScheme(ft_sdk::Scheme::Http))
+        } else {
+            Ok(HTTPSScheme(ft_sdk::Scheme::Https))
+        }
+    }
+}
+
+impl std::ops::Deref for HTTPSScheme {
+    type Target = ft_sdk::Scheme;
+
+    fn deref(&self) -> &Self::Target {
+        &self.0
     }
 }
