@@ -10,6 +10,9 @@ fn session(
     ft_sdk::Cookie(token): ft_sdk::Cookie<{ crate::TALK_TOKEN_COOKIE }>,
     meeting_id: ft_sdk::Query<"meeting-id", String>,
     ft_sdk::Query(meeting_page_url): ft_sdk::Query<"meeting-page-url">,
+    scheme: ft_sdk::Scheme,
+    host: ft_sdk::Host,
+    app_url: ft_sdk::AppUrl,
 ) -> ft_sdk::processor::Result {
     ft_sdk::println!("======= in session handler ======");
     ft_sdk::println!("token: {:?}", token);
@@ -26,21 +29,30 @@ fn session(
         }
     }
 
+    // NOTE: remove this when https://github.com/fastn-stack/ft-sdk/pull/63 is released
+    let app_url = if app_url.0 == Some("//".to_string()) {
+        ft_sdk::AppUrl(Some("/".to_string()))
+    } else {
+        app_url
+    };
+
+    // talk -> talk.wasm
+    let create_new_session_url = app_url.join(&scheme, &host, "talk/session/new")?;
     return ft_sdk::processor::temporary_redirect(format!(
-        "/talk/api/session/new/?meeting-id={meeting_id}&meeting-page-url={meeting_page_url}",
+        "{create_new_session_url}?meeting-id={meeting_id}&meeting-page-url={meeting_page_url}",
     ));
 }
 
 /// Add the logged in user as participant to the meeting and create a session, or,
 /// Use provided name and create guest user if not logged in
-#[ft_sdk::data]
+#[ft_sdk::form]
 fn session_new(
     meeting_id: ft_sdk::Query<"meeting-id", String>,
     ft_sdk::Query(meeting_page_url): ft_sdk::Query<"meeting-page-url", String>,
     user: crate::auth::OptionalUser,
     host: ft_sdk::Host,
     config: crate::Config,
-) -> ft_sdk::data::Result {
+) -> ft_sdk::form::Result {
     ft_sdk::println!("======= in session new handler ======");
     let (username, name, is_guest) = if user.is_logged_in {
         ft_sdk::println!("Found user name through login");
@@ -77,9 +89,9 @@ fn session_new(
         config.secure_sessions,
     )?;
 
-    ft_sdk::data::browser_redirect_with_cookie(
-        format!("{meeting_page_url}{meeting_id}/"),
-        session_cookie,
+    Ok(
+        ft_sdk::form::redirect(format!("{meeting_page_url}{meeting_id}/"))?
+            .with_cookie(session_cookie),
     )
 }
 

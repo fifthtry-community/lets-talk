@@ -21,6 +21,11 @@ class Talk extends HTMLElement {
         const req_url = `${endpoint_url}?meeting-id=${mid}&meeting-page-url=${meeting_page_url}`;
 
         const res = await fetch(req_url).then(r => r.json());
+
+        if (res.redirect) {
+            window.location.href = res.redirect;
+        }
+
         const token = res.token;
 
         console.log("Meeting ID: ", mid);
