@@ -10,17 +10,6 @@ provided-via: lets-talk-template.fifthtry.site/ds
 
 -- fastn.dependency: lets-auth.fifthtry.site
 
-;; this should have worked as per design but does not
-;; -- fastn.auto-import: design-system.fifthtry.site as ds
-;; another important tip: if you modify FASTN.ftd you have to restart fastn
-;; server itself
--- fastn.auto-import: lets-talk-template.fifthtry.site/ds
--- fastn.auto-import: lets-talk.fifthtry.site as lets-talk
--- fastn.auto-import: lets-auth.fifthtry.site as lets-auth
-
--- fastn.auto-import: lets-talk-template.fifthtry.site/app
--- fastn.auto-import: lets-talk-template.fifthtry.site/assets
-
 -- fastn.app: Lets Auth App
 mount-point: /-/auth/
 package: lets-auth.fifthtry.site
