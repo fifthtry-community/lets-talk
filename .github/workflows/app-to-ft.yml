@@ -5,6 +5,7 @@ on:
     branches: [ main ]
     paths:
       - lets-talk.fifthtry.site/**
+      - backend/**
       - scripts/*.sh
       - .github/workflows/app-to-ft.yml
 
