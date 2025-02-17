@@ -33,7 +33,7 @@ You'll need to install the following dependencies:
 - [fastn](https://fastn.com/install/)
 - nodejs 20
 - rust (See ./rust-toolchain.toml for version details)
-- sqlite3
+- sqlite3 (optional)
 
 Then do:
 
