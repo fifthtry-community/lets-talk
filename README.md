@@ -52,8 +52,7 @@ All lets-talk UIs are developed using [storybook](https://design-system.fifthtry
 
 Run `fastn` service using `run-ui` alias: 
 
-```shell
-source scripts/auto.sh
+```sh
 update-ui  # only run this when modifying dependencies in FASTN.ftd
 run-ui
 ```
