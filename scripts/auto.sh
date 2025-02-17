@@ -54,6 +54,11 @@ function build-wasm() {
 function build-js() {
     pushd2 "${PROJ_ROOT}/lets-talk.fifthtry.site" || return 1
     cd js/ || return 1
+
+    if test ! -d node_modules; then
+        npm install
+    fi
+
     npm run build
     cd ..
     popd2
