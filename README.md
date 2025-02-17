@@ -2,7 +2,7 @@
 
 An online video chat application in fastn app ecosystem.
 
-This repository contains four fastn packages:
+This repository contains following `fastn` packages:
 - `lets-talk.fifthtry-community.com/` contains the source code of the official website of `lets-talk` app. This is available at https://lets-talk.fifthtry-community.com.
 - `lets-talk.fifthtry.site/` is the app package that can be mounted in other fastn packages using [`-- fastn.app`](https://fastn.com/app/).
 - `lets-talk-template.fifthtry.site/` is a template that shows how to use `lets-talk.fifthtry.site` package.
