@@ -45,6 +45,9 @@ update-template # only run this when lets-talk-template.fifthtry.site dependenci
 run-template
 ```
 
+The `lets-talk-template.fifthtry.site/` is setup to use the local `lets-talk.fifthtry.site/` folder as a package.
+This is done by creating a symlink `lets-talk-template.fifthtry.site/.packages/lets-talk.fifthtry.site -> ../../lets-talk.fifthtry.site`.
+This allows you to make changes to the `lets-talk.fifthtry.site/` package and see the changes reflected in the `lets-talk-template.fifthtry.site/` without publishing the package.
 
 ## UI Development
 
