@@ -1,13 +1,21 @@
 -- import: lets-talk.fifthtry.site as o
 export: dashboard-page, footer-badge, session, host-preset-name, participant-preset-name, require-verified-accounts, use-secure-cookies
 
+;; Line starting with ";;" are comments. Changing/Removing them will not do anything.
 
-;;; List of emails or email domains that are allowed to create new meetings
--- string who-can-create-meetings: sidd@mail.com
 
-;; Uncomment the following to allow only "john@gmail.com" to create meetings
-;; -- string who-can-create-meetings: john@gmail.com
+;; List of emails or email domains that are allowed to create new meetings
+;; This means that any email associated with fifthtry is able to create a meeting (siddhant@fifthtry.com for example)
+;; Change "fifthtry.com" below to "john@gmail.com" to only allow user with john@gmail.com email to create meetings
+-- string who-can-create-meetings: fifthtry.com
 
-;; More entries can be added by separating them with a comma (,)
-;; This allows anyone with fifthtry.com email or "john@gmail.com" to create meetings
-;; -- string who-can-create-meetings: fifthry.com, john@gmail.com
+
+;; Other examples of values that can be set for `who-can-create-meetings` variable:
+;; -- string who-can-create-meetings: fifthry.com, john@gmail.com ;; anyone from fifthtry and john@gmail.com can create meetings
+;; -- string who-can-create-meetings: mystartup.com ;; anyone with email of mystartup.com can create meetings
+;; -- string who-can-create-meetings: john@gmail.com, monika@gmail.com, raj@hotmail.com ;; only these 3 can create meetings
+
+
+;;; New account signup must be verified before they're able to create meetings.
+;;; WARN: Changing "true" to "false" is a security risk and should never be done ideally.
+-- boolean require-verified-accounts: true
