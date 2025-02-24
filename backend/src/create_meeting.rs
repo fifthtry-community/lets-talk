@@ -6,12 +6,45 @@ fn create_meeting(
     host: ft_sdk::Host,
     config: crate::Config,
     app_url: ft_sdk::AppUrl,
+    lets_auth_app_url: ft_sdk::AppUrl<"lets-auth">,
     scheme: crate::HTTPSScheme,
 ) -> ft_sdk::form::Result {
-    if !user.is_special(&config) {
-        return Err(title
-            .error("You are not authorized to create a meeting")
-            .into());
+    if let Err(e) = user.is_special(&config, &host) {
+        use crate::auth::AuthorizationError;
+        let msg = match e {
+            AuthorizationError::Unauthorized => {
+                "You are not authorized to create a meeting. Please contact the admin.".to_string()
+            }
+            AuthorizationError::EmptyWhitelist => {
+                "`who-can-create-meetings` variable is empty. You can't create a meeting."
+                    .to_string()
+            }
+            AuthorizationError::RequiresVerification => {
+                let verification_link = lets_auth_app_url.join(
+                    &scheme,
+                    &host,
+                    format!(
+                        "/{auth_wasm_name}/resend-confirmation-email/?email={email}",
+                        auth_wasm_name = crate::AUTH_WASM_NAME,
+                        email = user.email
+                    )
+                    .as_str(),
+                );
+                let link_text = match verification_link {
+                    Ok(v) => format!(" or [click here]({}) to get a new email", v.trim_end_matches('/')),
+                    Err(e) => {
+                        ft_sdk::println!("Error creating verification link: {e}");
+                        "".to_string()
+                    }
+                };
+                format!(
+                    "Verify your email to create a meeting. Check your email{}.",
+                    link_text
+                )
+            }
+        };
+
+        return Err(title.error(msg).into());
     }
 
     let meeting = crate::dyte::create_meeting(&title)?;
