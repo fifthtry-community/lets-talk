@@ -13,6 +13,15 @@ export: footer-badge
 -- ftd.temporary-redirect: /-/auth/signin/
 if: { lets-auth.user == NULL }
 
+-- boolean mail-sent: false
+$processor$: pr.request-data
+
+-- banner:
+close-link: /
+if: { mail-sent }
+
+An email to verify your account has been sent to your registered email address.
+
 -- lets-talk.dashboard-page: Dashboard
 past-sessions: $dummy.sessions
 
@@ -41,3 +50,26 @@ decimal duration:
 ;;; List of emails or email domains that are allowed to create new meetings
 ;;; The host name will be picked if this value is empty
 -- string who-can-create-meetings: $ftd.empty
+
+
+-- component banner:
+body content:
+string close-link:
+
+-- ds.column:
+background.solid: $ds.colors.background.step-1
+radius: $ds.radius.zero
+inset: $ds.spaces.inset-square.small 
+
+-- ds.row:
+spacing: $ds.spaces.horizontal-gap.small
+
+-- ds.copy-small: $banner.content
+-- ds.link: Close
+link: $banner.close-link
+
+-- end: ds.row
+
+-- end: ds.column
+
+-- end: banner
