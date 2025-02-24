@@ -39,5 +39,5 @@ decimal duration:
 
 
 ;;; List of emails or email domains that are allowed to create new meetings
-;;; siddhant@fifthtry.com, amitu@fifthtry.com etc are allowed to create a meeting
--- string who-can-create-meetings: fifthtry.com
+;;; The host name will be picked if this value is empty
+-- string who-can-create-meetings: $ftd.empty
