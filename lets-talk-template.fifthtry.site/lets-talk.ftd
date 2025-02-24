@@ -4,10 +4,15 @@ export: dashboard-page, footer-badge, session, host-preset-name, participant-pre
 ;; Line starting with ";;" are comments. Changing/Removing them will not do anything.
 
 
-;; List of emails or email domains that are allowed to create new meetings
-;; This means that any email associated with fifthtry is able to create a meeting (siddhant@fifthtry.com for example)
-;; Change "fifthtry.com" below to "john@gmail.com" to only allow user with john@gmail.com email to create meetings
--- string who-can-create-meetings: fifthtry.com
+;; Emty value will let the server check emails against your host name.
+;; If your website is: https://mybusiness.com/ then, emails like support@mybusiness.com will be allowed to create meetings.
+;; Read below paragraphs to learn more about possible values to this variable.
+-- string who-can-create-meetings: $ftd.empty
+
+;; List of emails or email domains that are allowed to create new meetings.
+;; This means that any email associated with fifthtry is able to create a meeting (siddhant@fifthtry.com for example).
+;; Change "fifthtry.com" below to "john@gmail.com" to only allow user with john@gmail.com email to create meetings.
+;; -- string who-can-create-meetings: fifthtry.com
 
 
 ;; Other examples of values that can be set for `who-can-create-meetings` variable:
