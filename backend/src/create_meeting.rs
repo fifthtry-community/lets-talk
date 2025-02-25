@@ -24,14 +24,16 @@ fn create_meeting(
                     &scheme,
                     &host,
                     format!(
-                        "/{auth_wasm_name}/resend-confirmation-email/?email={email}",
-                        auth_wasm_name = crate::AUTH_WASM_NAME,
+                        "/backend/resend-confirmation-email/?email={email}",
                         email = user.email
                     )
                     .as_str(),
                 );
                 let link_text = match verification_link {
-                    Ok(v) => format!(" or [click here]({}) to get a new email", v.trim_end_matches('/')),
+                    Ok(v) => format!(
+                        " or [click here]({}) to get a new email",
+                        v.trim_end_matches('/')
+                    ),
                     Err(e) => {
                         ft_sdk::println!("Error creating verification link: {e}");
                         "".to_string()

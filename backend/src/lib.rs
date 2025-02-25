@@ -10,7 +10,6 @@ mod session;
 mod token;
 
 const TALK_TOKEN_COOKIE: &str = "talk-token";
-const AUTH_WASM_NAME: &str = "email_auth_provider";
 
 fn create_session_cookie(
     token: &str,
