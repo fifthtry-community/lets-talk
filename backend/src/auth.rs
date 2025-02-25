@@ -117,8 +117,10 @@ fn get_allowed_emails_or_host(
         .collect::<Vec<&str>>()
         .as_slice()
     {
-        // meet.fifthtry.com
-        [_, host, ext] => Some(format!("{}.{}", host, ext)),
+        // foo.bar.gov.in -> bar.gov.in
+        [.., subdomain, domain, ext1, ext2] => Some(format!("{}.{}.{}", domain, ext1, ext2)),
+        // meet.fifthtry.com -> fifthtry.com
+        [.., subdomain, domain, ext] => Some(format!("{}.{}", domain, ext)),
         // fifthtry.com/talk/
         [host, ext] => Some(format!("{}.{}", host, ext)),
         _ => None,
@@ -172,6 +174,13 @@ mod tests {
         assert_eq!(
             get_allowed_emails_or_host(allowed_emails, &host).unwrap(),
             "capybara.com"
+        );
+
+        let host = ft_sdk::Host("foo.bar.gov.in".to_string());
+        let allowed_emails = "".to_string();
+        assert_eq!(
+            get_allowed_emails_or_host(allowed_emails, &host).unwrap(),
+            "bar.gov.in"
         );
     }
 
