@@ -1,0 +1,17 @@
+;; All this state is mutated by `talk-app` web component
+
+;; Show setup screen (edit name, audio/video settings etc) when this is false
+;; Otherwise show the main meeting screen
+-- boolean $inside-meeting: false
+
+;; TODO: differentiate pinned participants, participants and, screen sharing participants
+-- participant list $participants:
+
+;; This is null when [inside-meeting] is false
+-- optional participant $self:
+
+-- record participant:
+string id:
+string name:
+boolean mute:
+boolean video:

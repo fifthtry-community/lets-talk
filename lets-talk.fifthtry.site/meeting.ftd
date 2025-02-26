@@ -1,21 +1,112 @@
 -- import: fastn/processors as pr
 
+-- import: lets-talk.fifthtry.site/state
+
 -- optional string meeting-id:
 $processor$: pr.request-data
 
 ;; Initialises the DyteClient
 -- talk-app:
 mid: $meeting-id
+$inside-meeting: $state.inside-meeting
+$self: $state.self
+$participants: $state.participants
 
 ;; meeting UI (repackaged from @dytesdk/ui-kit)
--- dyte-meeting:
+;; -- dyte-meeting:
+-- dyte-setup-screen:
+id: lets-talk-dyte
+if: { !state.inside-meeting }
+
+
+-- ftd.video:
+id: test-video-my
+autoplay: true
+controls: false
+src: $ftd.empty
+
+
+-- main-meeting:
+if: { state.inside-meeting }
+
+-- component main-meeting:
+;; private boolean pass-meeting: $pass-meeting()
+
+-- ftd.column:
+
+	-- participant-details-debug:
+	p: $state.self
+    if: { state.self != NULL }
+	
+	-- ftd.text: No participants
+	color: red
+	if: { ftd.is_empty(state.participants) }
+	
+	-- participant-details-debug:
+	p: $p
+	for: p in $state.participants
+	
+	-- dyte-mic-toggle:
+	id: lets-talk-dyte
+	
+	-- dyte-camera-toggle:
+	id: lets-talk-dyte
+	
+-- end: ftd.column
+
+-- end: main-meeting
+
+-- component participant-details-debug:
+state.participant p:
+
+-- ftd.row:
+
+	-- ftd.text: $participant-details-debug.p.id
+    -- ftd.text: |
+	-- ftd.text: $participant-details-debug.p.name
+
+	-- ftd.text: [on mute]
+	if: { participant-details-debug.p.mute }
+
+	-- ftd.text: [unmute]
+	if: { !participant-details-debug.p.mute }
+
+	-- ftd.text: [video on]
+	if: { participant-details-debug.p.video }
+
+	-- ftd.text: [video off]
+	if: { !participant-details-debug.p.video }
+	
+-- end: ftd.row
+
+-- end: participant-details-debug
+
+-- web-component dyte-setup-screen:
+string id:
+js: $assets.files.js.build.js
+
+-- web-component dyte-grid:
+string id:
+js: $assets.files.js.build.js
+
+-- web-component dyte-camera-toggle:
+string id:
+js: $assets.files.js.build.js
+
+-- web-component dyte-mic-toggle:
+string id:
+js: $assets.files.js.build.js
 
 -- web-component dyte-meeting:
+string id:
 js: $assets.files.js.build.js
 
 ;; Initialize dyte sdk
 -- web-component talk-app:
 optional string mid:
+boolean $inside-meeting:
+state.participant $self:
+state.participant list $participants:
 js: $assets.files.js.build.js
 
 

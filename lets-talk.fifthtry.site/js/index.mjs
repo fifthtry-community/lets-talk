@@ -14,6 +14,7 @@ class Talk extends HTMLElement {
 
     async connectedCallback() {
         const data = window.ftd.component_data(this);
+        window.data = data; // WARN: debugging only, remove before merging
         const mid = data.mid.get();
 
         const endpoint_url = ftd.app_url_ex("/talk/session/", "lets-talk");
@@ -38,8 +39,48 @@ class Talk extends HTMLElement {
             authToken: token,
         });
 
-        document.querySelector("dyte-meeting").meeting = this.meeting;
+        window.meeting = this.meeting; // WARN: debug only, remove before merging
+        document.querySelector("dyte-setup-screen").meeting = this.meeting;
+
+        this.meeting.self.on("roomJoined", () => {
+            const self = {
+                id: this.meeting.self.id,
+                name: this.meeting.self.name,
+                mute: this.meeting.self.audioEnabled,
+                video: this.meeting.self.videoEnabled,
+            }
+            data.self.set(fastn.recordInstance(self));
+            data.inside_meeting.set(true);
+            console.log("room joined by self: ", self.name);
+            window.pass_meeting(this.meeting);
+        });
+
+        this.meeting.participants.joined.on("participantJoined", (p) => {
+            console.log("participant joined: ", p.name);
+            data.participants.push(fastn.recordInstance({
+                id: p.id,
+                name: p.name,
+                mute: p.audioEnabled,
+                video: p.videoEnabled,
+            }));
+        });
+
+        this.meeting.participants.joined.on("participantLeft", (p) => {
+            console.log("participant left: ", p.name);
+            const index = data.participants.get().findIndex(participant => {
+                const id = participant.item.get("id").get();
+                return id == p.id;
+            });
+            console.log("removing index: ", index);
+            data.participants.deleteAt(index);
+        });
+
+        // TODO: listen for self audio/video change and update self record
+        // TODO: listen for screenshare change and update multiple participant lists
+        // TODO: listen for pinned change and update multiple participant lists
+        // we want pinned participant list, screen sharing participants and, participants
     }
+
 }
 
 function UTCDateStringToFormattedString(dateString) {
@@ -53,6 +94,15 @@ function UTCDateStringToFormattedString(dateString) {
 }
 
 window.UTCDateStringToFormattedString = UTCDateStringToFormattedString;
+
+/** 
+ * @param {DyteClient} meeting
+ * */
+window.pass_meeting = function (meeting) {
+    document.querySelector("dyte-grid").meeting = meeting;
+    document.querySelector("dyte-camera-toggle").meeting = meeting;
+    document.querySelector("dyte-mic-toggle").meeting = meeting;
+}
 
 customElements.define('talk-app', Talk);
 defineDyteCustomElements();
