@@ -53,8 +53,7 @@ fn session_new(
         ft_sdk::println!("Found user name through login");
         (user.username, Some(user.name), false)
     } else {
-        let seed: f64 = ft_sdk::env::random();
-        let uuid = crate::uuid::gen_uuid_with_xorshift(seed);
+        let uuid = ft_sdk::uuid();
         ft_sdk::println!("adding guest with id: {uuid}");
         // The frontend will ask for the name
         (uuid, None, true)

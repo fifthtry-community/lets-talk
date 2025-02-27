@@ -3,7 +3,6 @@ extern crate self as lets_talk;
 
 mod auth;
 mod dyte;
-mod uuid;
 
 mod create_meeting;
 mod session;

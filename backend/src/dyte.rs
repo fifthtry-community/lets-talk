@@ -115,6 +115,7 @@ impl Username {
 
 #[derive(serde::Deserialize, Debug)]
 pub struct DyteResponse<T> {
+    #[expect(unused)]
     pub success: bool,
     pub data: T,
 }
@@ -124,6 +125,7 @@ pub struct DyteResponse<T> {
 /// https://docs.dyte.io/api/#/operations/create_meeting
 pub struct DyteCreateMeeting {
     pub id: String,
+    #[expect(unused)]
     pub title: String,
 }
 
@@ -131,8 +133,10 @@ pub struct DyteCreateMeeting {
 /// See [add_participant] to create instance of this type
 /// https://docs.dyte.io/api/#/operations/add_participant
 pub struct DyteAddParticipant {
+    #[expect(unused)]
     pub id: String,
     // The docs say `preset_name` but the server returns `preset_id`
+    #[expect(unused)]
     pub preset_id: String,
     pub token: String,
 }
@@ -165,8 +169,10 @@ pub struct DyteParticipants {
 /// https://docs.dyte.io/api#/operations/GetSessionParticipants
 #[derive(serde::Deserialize, Debug)]
 pub struct DyteParticipant {
+    #[expect(unused)]
     pub id: String,
     pub custom_participant_id: String,
+    #[expect(unused)]
     pub display_name: String,
     pub duration: f64,
     pub joined_at: String,

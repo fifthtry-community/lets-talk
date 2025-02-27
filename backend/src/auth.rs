@@ -4,6 +4,7 @@
 /// Return error if user is not logged in
 pub struct RequiredUser {
     #[serde(skip)]
+    #[expect(unused)]
     pub user_id: i64,
     pub username: String,
     pub email: String,
@@ -17,6 +18,7 @@ pub struct RequiredUser {
 /// Return default if user is not logged in: is_logged_in = false
 pub struct OptionalUser {
     #[serde(skip)]
+    #[expect(unused)]
     pub user_id: i64,
     pub username: String,
     pub name: String,
@@ -118,9 +120,9 @@ fn get_allowed_emails_or_host(
         .as_slice()
     {
         // foo.bar.gov.in -> bar.gov.in
-        [.., subdomain, domain, ext1, ext2] => Some(format!("{}.{}.{}", domain, ext1, ext2)),
+        [.., _subdomain, domain, ext1, ext2] => Some(format!("{}.{}.{}", domain, ext1, ext2)),
         // meet.fifthtry.com -> fifthtry.com
-        [.., subdomain, domain, ext] => Some(format!("{}.{}", domain, ext)),
+        [.., _subdomain, domain, ext] => Some(format!("{}.{}", domain, ext)),
         // fifthtry.com/talk/
         [host, ext] => Some(format!("{}.{}", host, ext)),
         _ => None,
