@@ -10,6 +10,7 @@
 ;; This is null when [inside-meeting] is false
 -- optional participant $self:
 
+;; TODO: support profile picture
 -- record participant:
 string id:
 string name:
