@@ -25,5 +25,13 @@ $processor$: pr.toc
 - Dashboard:
   - Logged In: /storybook/dashboard/
 
+- Components:
+  - 1-1 Meeting: /storybook/1-1-meeting/
+  - 3 People Meeting: /storybook/3-meeting/
+  - 6 People Meeting: /storybook/6-meeting/
+  - 9 People Meeting: /storybook/9-meeting/
+  - With 1 Screen Sharing: /storybook/screen-sharing/
+  - With More Screen Sharing: /storybook/screen-sharing/
+
 
 -- optional string $active-file-preview-url: /storybook/dashboard/

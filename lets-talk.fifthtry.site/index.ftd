@@ -1,10 +1,16 @@
 -- import: lets-talk.fifthtry.site/ui/dashboard as _
 export: dashboard-page
 
+-- import: lets-talk.fifthtry.site/ui/components/grid as _
+export: grid
+
 -- import: lets-talk.fifthtry.site/badge as _
 export: footer-badge
 
 -- import: lets-talk.fifthtry.site/dummy
+
+-- import: lets-talk.fifthtry.site/state as _
+export: participant, self, participants, inside-meeting
 
 
 -- import: fastn/processors as pr
