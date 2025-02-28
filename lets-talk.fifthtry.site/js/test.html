@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Date Time Picker Test</title>
+        <!-- Import the web component script -->
+        <script src="calender.js"></script>
+    </head>
+    <body>
+        <h2>Date Time Picker Demo</h2>
+        <date-time-picker id="myDateTimePicker"></date-time-picker>
+
+        <script>
+            // Get reference to the component
+            const picker = document.getElementById("myDateTimePicker");
+
+            // Set initial value
+            picker.value = new Date();
+
+            // Alternative callback method
+            picker.onChange((date) => {
+                console.log("Date changed to:", date);
+            });
+        </script>
+    </body>
+</html>
