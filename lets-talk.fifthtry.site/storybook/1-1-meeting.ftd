@@ -1,0 +1,24 @@
+-- lets-talk.grid:
+self: $dummy-self
+participants: $dummy-p
+
+
+;; ----------------
+;; Dummy Data
+;; ----------------
+
+-- lets-talk.participant list dummy-p:
+
+-- lets-talk.participant:
+id    : fjklsdlfj-djfklsfjkld-fsdjfksdfjlk
+name  : April
+mute  : false
+video : false
+
+-- end: dummy-p
+
+-- lets-talk.participant dummy-self:
+id    : fjklsdlfj-djfklsfjkld-fsdjfksdfjlk
+name  : Siddhant
+mute  : false
+video : false

@@ -38,6 +38,21 @@ pub(crate) struct Config {
     pub preset_participant: String,
     pub require_verification: bool,
     pub secure_sessions: bool,
+    pub meeting_page_url: Option<String>,
+}
+
+impl Config {
+    fn get_meeting_page_url(
+        &self,
+        scheme: &crate::HTTPSScheme,
+        host: &ft_sdk::Host,
+        app_url: &ft_sdk::AppUrl,
+    ) -> ft_sdk::Result<String> {
+        match self.meeting_page_url {
+            Some(ref url) => Ok(url.clone()),
+            None => app_url.join(scheme, host, "meeting"),
+        }
+    }
 }
 
 impl Default for Config {
@@ -50,6 +65,7 @@ impl Default for Config {
             require_verification: false,
             secure_sessions: false,
             allowed_emails: "".to_string(),
+            meeting_page_url: None,
         }
     }
 }

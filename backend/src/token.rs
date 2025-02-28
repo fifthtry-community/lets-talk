@@ -59,7 +59,7 @@ fn session_new(
         (uuid, None, true)
     };
 
-    let preset = config.preset_participant;
+    let preset = config.preset_participant.clone();
     let preset = if is_guest {
         // _guest presets are allowed to change their name
         format!("{preset}_guest")
@@ -85,9 +85,9 @@ fn session_new(
 
     // lets-talk.fifthtry.site/meeting.ftd
     let app_url = crate::temp_fix_app_url(app_url);
-    let meeting_page_url = app_url.join(&scheme, &host, "meeting")?;
+    let meeting_page_url = config.get_meeting_page_url(&scheme, &host, &app_url)?;
     Ok(
-        ft_sdk::form::redirect(format!("{meeting_page_url}{meeting_id}/"))?
+        ft_sdk::form::redirect(format!("{meeting_page_url}?meeting-id={meeting_id}"))?
             .with_cookie(session_cookie),
     )
 }

@@ -1,1 +1,4 @@
--- lets-talk.dashboard:
+-- import: lets-talk.fifthtry.site/dummy
+
+-- lets-talk.dashboard-page: Let's Talk
+past-sessions: $dummy.sessions

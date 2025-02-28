@@ -13,13 +13,6 @@ provided-via: lets-talk.fifthtry.site/ds
 -- fastn.auto-import: lets-talk.fifthtry.site/ds
 -- fastn.auto-import: lets-auth.fifthtry.site as lets-auth
 -- fastn.auto-import: lets-talk.fifthtry.site as lets-talk
--- fastn.auto-import: lets-talk.fifthtry.site/assets
-
--- fastn.dynamic-urls:
-
-# Meeting
-url: /meeting/<string:meeting-id>/
-document: meeting.ftd
 
 ;; TODO: add more migrations (cdp tables that store meeting/sessions)
 
