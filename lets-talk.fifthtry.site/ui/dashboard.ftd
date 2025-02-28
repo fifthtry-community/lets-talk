@@ -130,11 +130,11 @@ align-content: left
 		placement: horizontal
 		
 		-- ds.label-text: Joined at:
-		value: $format-date(d=$session-box.session.joined_at)
+		value: $lets-talk.format-date(d=$session-box.session.joined_at)
 		placement: horizontal
 
 		-- ds.label-text: Left at:
-		value: $format-date(d=$session-box.session.left_at)
+		value: $lets-talk.format-date(d=$session-box.session.left_at)
 		placement: horizontal
 
 		/-- ds.row:
@@ -149,12 +149,12 @@ align-content: left
 		align-content: left
 
 			-- ds.copy-small: Joined at:
-			-- ds.copy-small: $format-date(d=$session-box.session.joined_at)
+			-- ds.copy-small: $lets-talk.format-date(d=$session-box.session.joined_at)
 		-- end: ds.row
 
 		/-- ds.row:
 			-- ds.copy-small: Left at:
-			-- ds.copy-small: $format-date(d=$session-box.session.left_at)
+			-- ds.copy-small: $lets-talk.format-date(d=$session-box.session.left_at)
 		-- end: ds.row
 
 	-- end: ds.column
@@ -191,10 +191,4 @@ color: $ds.colors.error.text
 -- end: create-meeting-btn
 
 
-
--- string format-date(d):
-string d:
-js: $assets.files.js.build.js
-
-UTCDateStringToFormattedString(d)
 

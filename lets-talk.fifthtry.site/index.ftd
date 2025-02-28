@@ -1,6 +1,9 @@
 -- import: lets-talk.fifthtry.site/ui/dashboard as _
 export: dashboard-page
 
+-- import: lets-talk.fifthtry.site/ui/meeting-page as _
+export: meeting-page
+
 -- import: lets-talk.fifthtry.site/ui/components/grid as _
 export: grid
 
@@ -10,7 +13,10 @@ export: footer-badge
 -- import: lets-talk.fifthtry.site/dummy
 
 -- import: lets-talk.fifthtry.site/state as _
-export: participant, self, participants, inside-meeting
+export: initialize-meeting
+
+-- import: lets-talk.fifthtry.site/utils as _
+export: format-date
 
 
 -- import: fastn/processors as pr
@@ -57,6 +63,10 @@ decimal duration:
 ;;; The host name will be picked if this value is empty
 -- string who-can-create-meetings: $ftd.empty
 
+;;; Override this variable in your website package.
+;;; If this is null, /<app-url>/meeting/ will be used
+;; $ftd.app-url does not work so we can't use it here otherwise we wouldn't need `optional` here
+-- optional string meeting-page-url:
 
 -- component banner:
 body content:

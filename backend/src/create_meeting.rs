@@ -57,7 +57,7 @@ fn create_meeting(
         Some(user.name.as_str())
     };
 
-    let preset = config.preset_host;
+    let preset = config.preset_host.clone();
 
     ft_sdk::println!("Using preset: {preset} to create meeting");
 
@@ -73,10 +73,11 @@ fn create_meeting(
 
     // lets-talk.fifthtry.site/meeting.ftd
     let app_url = crate::temp_fix_app_url(app_url);
-    let meeting_page_url = app_url.join(&scheme, &host, "meeting")?;
+
+    let meeting_page_url = config.get_meeting_page_url(&scheme, &host, &app_url)?;
 
     Ok(
-        ft_sdk::form::redirect(format!("{meeting_page_url}{}", meeting.data.id))?
+        ft_sdk::form::redirect(format!("{meeting_page_url}?meeting-id={}", meeting.data.id))?
             .with_cookie(session_cookie),
     )
 }

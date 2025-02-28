@@ -1,13 +1,29 @@
-;; All this state is mutated by `talk-app` web component
+-- import: lets-talk.fifthtry.site/assets
 
-;; Show setup screen (edit name, audio/video settings etc) when this is false
-;; Otherwise show the main meeting screen
+;;; Global meeting variables
+;;; This data is used to help you build custom UI.
+;;;
+;;; All the data is supposed to be readonly here. This should be only mutated
+;;; by the `build.js` javascript file.
+;;;
+;;; `initialize-meeting` component should be called in every meeting page to
+;;; initialize the state. This component is responsible for updating the variables
+;;; in this file as well as initializing the `DyteClient` which is used by the
+;;; default dyte-ui. Nothing will work without it!
+
+;;; Show setup screen (edit name, audio/video settings etc) when this is false
+;;; Otherwise show the main meeting screen
 -- boolean $inside-meeting: false
 
 ;; TODO: differentiate pinned participants, participants and, screen sharing participants
+;;; List of participants in a meeting.
+;;; `participant.id` should be used as id for the `ftd.video` element when
+;;; you're rendering a UI based on this data otherwise you won't see the video
+;;; feed.
 -- participant list $participants:
 
-;; This is null when [inside-meeting] is false
+;;; Details about yourself in the meeting
+;;; This is null **only** when [inside-meeting] is false
 -- optional participant $self:
 
 ;; TODO: support profile picture
@@ -16,3 +32,24 @@ string id:
 string name:
 boolean mute:
 boolean video:
+
+
+-- component initialize-meeting:
+string meeting-id:
+
+-- talk-app:
+mid: $initialize-meeting.meeting-id
+
+-- end: initialize-meeting
+
+
+;; WARN: Variables passed as params to this component are the only ones that'll
+;; be mutated by the javascript file. Update the component signature if you
+;; introduce a new variable in this file.
+;;; Initialize dyte sdk
+-- web-component talk-app:
+optional string mid:
+boolean $inside-meeting: $inside-meeting
+participant $self: $self
+participant list $participants: $participants
+js: $assets.files.js.build.js

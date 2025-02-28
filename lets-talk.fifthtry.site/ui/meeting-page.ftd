@@ -1,0 +1,12 @@
+-- import: lets-talk.fifthtry.site/assets
+
+-- component meeting-page:
+
+-- dyte-meeting:
+
+-- end: meeting-page
+
+
+;;; Meeting UI (repackaged from @dytesdk/ui-kit)
+-- web-component dyte-meeting:
+js: $assets.files.js.build.js

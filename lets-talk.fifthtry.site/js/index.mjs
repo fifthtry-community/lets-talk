@@ -14,7 +14,6 @@ class Talk extends HTMLElement {
 
     async connectedCallback() {
         const data = window.ftd.component_data(this);
-        window.data = data; // WARN: debugging only, remove before merging
         const mid = data.mid.get();
 
         const endpoint_url = ftd.app_url_ex("/talk/session/", "lets-talk");
@@ -39,8 +38,7 @@ class Talk extends HTMLElement {
             authToken: token,
         });
 
-        window.meeting = this.meeting; // WARN: debug only, remove before merging
-        document.querySelector("dyte-setup-screen").meeting = this.meeting;
+        document.querySelector("dyte-meeting").meeting = this.meeting;
 
         this.meeting.self.on("roomJoined", () => {
             const self = {
