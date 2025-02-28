@@ -1,0 +1,7 @@
+-- import: lets-talk.fifthtry.site/assets
+
+-- string format-date(d):
+string d:
+js: $assets.files.js.build.js
+
+UTCDateStringToFormattedString(d)
