@@ -10,7 +10,7 @@ height: fill-container
 
 -- ds.row:
 width: fill-container
-height.fixed.percent: 28
+height.fixed.percent: 18
 wrap: true
 
 -- participant-tile:
@@ -41,8 +41,7 @@ lets-talk.participant p:
 -- ftd.column:
 classes: equal-basis
 css: $assets.files.assets.styles.utils.css
-height: fill-container
-min-width.fixed.calc: 30%
+width.fixed.calc: 30%
 border-color: green
 border-width.px: 1
 
