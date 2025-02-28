@@ -30,8 +30,9 @@
 -- record participant:
 string id:
 string name:
-boolean mute:
+boolean mic:
 boolean video:
+boolean screen:
 
 
 -- component initialize-meeting:
