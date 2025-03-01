@@ -52,7 +52,7 @@ margin: $ds.spaces.vertical-gap.zero
 		;; import the date-time web-component from the calendar.js file.
 		-- web-component date-time-picker:
 		caption date string:	
-		js: $assets.files.calendar.js
+		js: $assets.files.js.calendar.js
 
 		-- end: ds.column
 		
