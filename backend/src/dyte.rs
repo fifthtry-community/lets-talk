@@ -9,7 +9,7 @@ pub fn sessions() -> Result<DyteResponse<DyteSessions>, ft_sdk::Error> {
     )
 }
 
-/// Get all particpants of a session
+/// Get all participants of a session
 #[inline]
 pub fn participants(session_id: &str) -> Result<DyteResponse<DyteParticipants>, ft_sdk::Error> {
     let url = format!("/sessions/{session_id}/participants");
@@ -36,7 +36,7 @@ pub fn add_participant(
     }
 
     call_dyte::<DyteAddParticipant>(
-        &format!("/meetings/{}/participants", meeting_id),
+        &format!("/meetings/{meeting_id}/participants"),
         http::Method::POST,
         body,
     )
@@ -76,12 +76,12 @@ fn call_dyte<D: DyteData>(
     })?;
 
     let key = base64::engine::general_purpose::STANDARD
-        .encode(format!("{}:{}", dyte_org_id, dyte_api_key));
+        .encode(format!("{dyte_org_id}:{dyte_api_key}"));
 
-    let authorization_header = format!("Basic {}", key);
+    let authorization_header = format!("Basic {key}");
 
     let url = format!("https://api.dyte.io/v2{path}");
-    let body = bytes::Bytes::from(serde_json::to_vec(body).unwrap());
+    let body = bytes::Bytes::from(serde_json::to_vec(body)?);
 
     let client = http::Request::builder();
 
@@ -104,8 +104,8 @@ fn call_dyte<D: DyteData>(
 pub struct Username(String);
 
 impl Username {
-    pub fn new<S: AsRef<str>>(username: S, host: &ft_sdk::Host) -> Self {
-        Self(format!("{}__{}", host.without_port(), username.as_ref()))
+    pub fn new<S: std::fmt::Display>(username: S, host: &ft_sdk::Host) -> Self {
+        Self(format!("{}__{username}", host.without_port()))
     }
 
     pub fn as_str(&self) -> &str {

@@ -1,7 +1,7 @@
 #[derive(Debug, Default, Clone, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "kebab-case")]
-/// Read logged in user data from request
-/// Return error if user is not logged in
+/// Read logged-in user data from request
+/// Return error if the user is not logged in
 pub struct RequiredUser {
     #[serde(skip)]
     #[expect(unused)]
@@ -14,8 +14,8 @@ pub struct RequiredUser {
 
 #[derive(Debug, Default, Clone, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "kebab-case")]
-/// Read logged in user data from request
-/// Return default if user is not logged in: is_logged_in = false
+/// Read logged-in user data from request
+/// Return default if the user is not logged in: is_logged_in = false
 pub struct OptionalUser {
     #[serde(skip)]
     #[expect(unused)]
@@ -120,11 +120,11 @@ fn get_allowed_emails_or_host(
         .as_slice()
     {
         // foo.bar.gov.in -> bar.gov.in
-        [.., _subdomain, domain, ext1, ext2] => Some(format!("{}.{}.{}", domain, ext1, ext2)),
+        [.., _subdomain, domain, ext1, ext2] => Some(format!("{domain}.{ext1}.{ext2}")),
         // meet.fifthtry.com -> fifthtry.com
-        [.., _subdomain, domain, ext] => Some(format!("{}.{}", domain, ext)),
+        [.., _subdomain, domain, ext] => Some(format!("{domain}.{ext}")),
         // fifthtry.com/talk/
-        [host, ext] => Some(format!("{}.{}", host, ext)),
+        [host, ext] => Some(format!("{host}.{ext}")),
         _ => None,
     };
 
@@ -136,7 +136,7 @@ fn get_allowed_emails_or_host(
 
 #[derive(Debug, PartialEq)]
 pub enum AuthorizationError {
-    /// The logged in user is not in `who-can-create-meetings` ftd variable
+    /// The logged-in user is not in `who-can-create-meetings` ftd variable
     Unauthorized,
     /// The `who-can-create-meetings` ftd variable is empty
     EmptyWhitelist,
@@ -188,7 +188,7 @@ mod tests {
 
     #[test]
     fn test_is_special() {
-        // unverfied user with require_verification = false
+        // unverified user with require_verification = false
         let user = user_not_verified("test@mail.com");
         let config = config_without_verification("mail.com");
         let host = ft_sdk::Host("meet.fifthtry.com".to_string());

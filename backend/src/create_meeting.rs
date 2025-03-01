@@ -40,8 +40,7 @@ fn create_meeting(
                     }
                 };
                 format!(
-                    "Verify your email to create a meeting. Check your email{}.",
-                    link_text
+                    "Verify your email to create a meeting. Check your email{link_text}.",
                 )
             }
         };

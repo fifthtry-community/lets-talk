@@ -16,7 +16,7 @@ fn create_session_cookie(
     host: &ft_sdk::Host,
     secure: bool,
 ) -> Result<http::HeaderValue, ft_sdk::Error> {
-    let val = format!("{}:{}", meeting_id, token);
+    let val = format!("{meeting_id}:{token}");
     let cookie = cookie::Cookie::build((TALK_TOKEN_COOKIE, val))
         .domain(host.without_port())
         // TODO: make this so that only mountpoint can access the cookie

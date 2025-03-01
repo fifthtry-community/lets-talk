@@ -37,7 +37,7 @@ fn session(
     ));
 }
 
-/// Add the logged in user as participant to the meeting and create a session, or,
+/// Add the logged-in user as participant to the meeting and create a session, or,
 /// Use provided name and create guest user if not logged in
 #[ft_sdk::form]
 fn session_new(
@@ -64,7 +64,7 @@ fn session_new(
         // _guest presets are allowed to change their name
         format!("{preset}_guest")
     } else {
-        // Name is taken from user's account name and they're not allowed to change it
+        // Name is taken from user's account name, and they're not allowed to change it
         preset
     };
 
