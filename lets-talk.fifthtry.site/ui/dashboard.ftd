@@ -1,4 +1,5 @@
 -- import: lets-talk.fifthtry.site/actions/create-meeting
+-- import: lets-talk.fifthtry.site/actions/schedule-meeting
 
 -- component dashboard-page:
 caption title:
@@ -42,6 +43,16 @@ margin: $ds.spaces.vertical-gap.zero
 		icon: video-camera
 
 		-- end: ds.row
+		;; TODO: Add a similar button in mobile section as well
+		-- create-meeting-btn: Schedule a meeting
+		;; $on-click$: $create-meeting.new-instant()
+		$on-click$: $schedule-meeting.schedule()
+		icon: calendar
+
+		;; import the date-time web-component from the calendar.js file.
+		-- web-component date-time-picker:
+		caption date string:	
+		js: $assets.files.js.calendar.js
 
 		-- end: ds.column
 		
