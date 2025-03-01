@@ -9,8 +9,6 @@
 fn session(
     ft_sdk::Cookie(token): ft_sdk::Cookie<{ crate::TALK_TOKEN_COOKIE }>,
     meeting_id: ft_sdk::Query<"meeting-id", String>,
-    scheme: crate::HTTPSScheme,
-    host: ft_sdk::Host,
     app_url: ft_sdk::AppUrl,
 ) -> ft_sdk::processor::Result {
     ft_sdk::println!("======= in session handler ======");
@@ -28,13 +26,11 @@ fn session(
         }
     }
 
-    // NOTE: remove this when https://github.com/fastn-stack/ft-sdk/pull/63 is released
-    let app_url = crate::temp_fix_app_url(app_url);
     // talk -> talk.wasm
-    let create_new_session_url = app_url.join(&scheme, &host, "talk/session/new")?;
-    return ft_sdk::processor::temporary_redirect(format!(
+    let create_new_session_url = app_url.join("talk/session/new")?;
+    ft_sdk::processor::temporary_redirect(format!(
         "{create_new_session_url}?meeting-id={meeting_id}"
-    ));
+    ))
 }
 
 /// Add the logged-in user as participant to the meeting and create a session, or,
@@ -46,7 +42,6 @@ fn session_new(
     host: ft_sdk::Host,
     config: crate::Config,
     app_url: ft_sdk::AppUrl,
-    scheme: crate::HTTPSScheme,
 ) -> ft_sdk::form::Result {
     ft_sdk::println!("======= in session new handler ======");
     let (username, name, is_guest) = if user.is_logged_in {
@@ -83,8 +78,6 @@ fn session_new(
         config.secure_sessions,
     )?;
 
-    // lets-talk.fifthtry.site/meeting.ftd
-    let app_url = crate::temp_fix_app_url(app_url);
     let meeting_page_url = config.get_meeting_page_url(&scheme, &host, &app_url)?;
     Ok(
         ft_sdk::form::redirect(format!("{meeting_page_url}?meeting-id={meeting_id}"))?
