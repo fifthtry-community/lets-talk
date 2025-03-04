@@ -1,0 +1,8 @@
+-- ftd.string-field $meeting-title: title
+value: New Meeting
+
+-- void schedule():
+ftd.string-field title: $meeting-title
+string action_url: $ftd.app-url(path=/talk/schedule-meeting/)
+
+ftd.submit_form(action_url, title)

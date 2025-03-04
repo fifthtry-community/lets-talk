@@ -1,4 +1,5 @@
 -- import: lets-talk.fifthtry.site/actions/create-meeting
+-- import: lets-talk.fifthtry.site/actions/schedule-meeting
 
 -- component dashboard-page:
 caption title:
@@ -42,7 +43,29 @@ margin: $ds.spaces.vertical-gap.zero
 		icon: video-camera
 
 		-- end: ds.row
+		;; TODO: Add a similar button in mobile section as well
+		-- create-meeting-btn: Schedule a meeting
+		$on-click$: $ftd.toggle($a=$show_calendar) 
+		icon: calendar
 
+		;; import the date-time web-component from the calendar.js file.
+		-- ftd.column:
+		if: {show_calendar}
+		-- date-time-picker:
+		start-value: 20250303T120000
+		end-value: 20250303T010000
+		$on-change$: $ftd.set-string($a=$value, v=$VALUE)
+
+		-- create-meeting-btn: Create meeting
+		$on-click$: $schedule-meeting.schedule()
+		icon: video-camera
+
+		-- ftd.text: $value
+		-- ftd.text: $value
+
+		-- end: ftd.column
+
+		
 		-- end: ds.column
 		
 		-- past-sessions:
@@ -164,10 +187,7 @@ align-content: left
 -- end: session-box
 
 
-
-
-
-
+-- boolean $show_calendar: false
 
 -- component create-meeting-btn:
 caption title:
@@ -190,7 +210,14 @@ color: $ds.colors.error.text
 
 -- end: create-meeting-btn
 
+-- web-component date-time-picker:
+string start-value: 
+string end-value:
+js: $assets.files.js.calender.js
 
+;; -- string $start-date: 20250303T120000
+;; -- string $end-date: 20250303T010000
+-- string $value: 20250303T120000
 
 -- string format-date(d):
 string d:

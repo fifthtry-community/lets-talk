@@ -6,6 +6,7 @@ mod dyte;
 mod uuid;
 
 mod create_meeting;
+mod schedule_meeting;
 mod session;
 mod token;
 
