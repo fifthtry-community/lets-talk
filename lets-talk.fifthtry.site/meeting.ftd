@@ -8,5 +8,6 @@ $processor$: pr.request-data
 
 -- lets-talk.initialize-meeting:
 meeting-id: $meeting-id
+init-audio: false ;; audio is handled by default meeting-page. Remove this from your own implementation of meeting-page!
 
 -- lets-talk.meeting-page:

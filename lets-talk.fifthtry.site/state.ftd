@@ -47,13 +47,31 @@ boolean video:
 boolean screen:
 
 
+;;; Read module docs to learn more
 -- component initialize-meeting:
 string meeting-id:
+boolean init-audio: true
+
+-- ftd.row:
 
 -- talk-app:
 mid: $initialize-meeting.meeting-id
 
+-- initialize-sound:
+if: { initialize-meeting.init-audio }
+
+-- end: ftd.row
+
 -- end: initialize-meeting
+
+;; WARN: Should not be used with the default meeting-page shipped with this
+;; package. That page already handles participant's audio output
+;;; Setup sound
+-- component initialize-sound:
+
+-- dyte-participants-audio:
+
+-- end: initialize-sound
 
 
 ;; WARN: Variables passed as params to this component are the only ones that'll
@@ -69,6 +87,8 @@ participant $self: $self
 participant list $participants: $participants
 js: $assets.files.js.build.js
 
+-- web-component dyte-participants-audio:
+js: $assets.files.js.build.js
 
 ;; FUNCTIONS
 
