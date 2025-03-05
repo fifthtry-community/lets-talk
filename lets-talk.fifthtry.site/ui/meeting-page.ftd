@@ -11,7 +11,6 @@
 
 ;; Variables in `lets-talk.fifthtry.site/state` should help you if you're trying to build your own meeting page.
 ;; `lets-talk.fifthtry.site/components/video-tile` can be used to display video feed of a user
-;; TODO: solve sound of all users. A component like `state#initialize-sound` should exist`
 
 
 ;;; Meeting UI (repackaged from @dytesdk/ui-kit)

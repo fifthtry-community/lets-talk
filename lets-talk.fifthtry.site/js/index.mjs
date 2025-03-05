@@ -46,9 +46,18 @@ class Talk extends HTMLElement {
         this.data.meeting_initialized.set(true)
 
         try {
+            // NOTE: The component handles events itself so we don't need to update it manually
+            document.querySelector("dyte-participants-audio").meeting = window.meeting;
+        } catch (e) {
+            console.info("dyte-participant-audio component not found. Ignoring");
+            console.info(e);
+        }
+
+        try {
             document.querySelector("dyte-meeting").meeting = window.meeting;
         } catch (e) {
-            console.info("dyte-meeting not found. Ignoring");
+            console.info("dyte-meeting component not found. Ignoring");
+            console.info(e);
         }
 
         window.meeting.self.on("*", (event, ...args) => {
