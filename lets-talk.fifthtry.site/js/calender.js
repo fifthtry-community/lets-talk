@@ -1,11 +1,13 @@
-<<<<<<< HEAD
 (function () {
     class DateTimePicker extends HTMLElement {
         constructor() {
             super();
             this.attachShadow({ mode: "open" });
             this._selectedStartDate = new Date();
-            this._selectedEndDate = new Date();
+            // Set end date 30 minutes after start date
+            this._selectedEndDate = new Date(
+                this._selectedStartDate.getTime() + 30 * 60000
+            ); // 30 minutes in milliseconds
             this._onChangeCallback = null;
             this.render();
         }
@@ -173,25 +175,25 @@
             return `${hours}:${minutes}`;
         }
 
-        // Format date as ISO but with local time (instead of UTC)
-        getLocalISOString(date) {
-            const year = date.getFullYear();
-            const month = String(date.getMonth() + 1).padStart(2, "0");
-            const day = String(date.getDate()).padStart(2, "0");
-            const hours = String(date.getHours()).padStart(2, "0");
-            const minutes = String(date.getMinutes()).padStart(2, "0");
-            const seconds = String(date.getSeconds()).padStart(2, "0");
-            const ms = String(date.getMilliseconds()).padStart(3, "0");
+        // Rename and modify this method to use UTC
+        getUTCISOString(date) {
+            const year = date.getUTCFullYear();
+            const month = String(date.getUTCMonth() + 1).padStart(2, "0");
+            const day = String(date.getUTCDate()).padStart(2, "0");
+            const hours = String(date.getUTCHours()).padStart(2, "0");
+            const minutes = String(date.getUTCMinutes()).padStart(2, "0");
+            const seconds = String(date.getUTCSeconds()).padStart(2, "0");
+            const ms = String(date.getUTCMilliseconds()).padStart(3, "0");
 
             return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${ms}`;
         }
 
-        // Convert the date to desired string format
+        // Modify this method to use UTC
         formatDateToString(date) {
-            // Get local ISO string first
-            const localIso = this.getLocalISOString(date);
+            // Get UTC ISO string
+            const utcIso = this.getUTCISOString(date);
             // Now remove punctuation as required
-            return localIso
+            return utcIso
                 .replaceAll(".", "")
                 .replaceAll(":", "")
                 .replaceAll("-", "");
@@ -282,110 +284,6 @@
 
         render() {
             this.shadowRoot.innerHTML = `
-=======
-class DateTimePicker extends HTMLElement {
-    constructor() {
-        super();
-        this.attachShadow({ mode: "open" });
-        this._selectedDate = new Date();
-        this._outputFormat = "iso"; // Default format: ISO string
-        this._onChangeCallback = null;
-        this.render();
-    }
-
-    static get observedAttributes() {
-        return ["value", "min-date", "max-date", "format"];
-    }
-
-    attributeChangedCallback(name, oldValue, newValue) {
-        if (name === "value" && newValue) {
-            this._selectedDate = new Date(newValue);
-            this.updateInputs();
-        }
-        if (name === "format" && newValue) {
-            this._outputFormat = newValue;
-        }
-    }
-
-    connectedCallback() {
-        this.shadowRoot
-            .querySelector(".date-input")
-            .addEventListener("change", (e) => {
-                const newDate = new Date(
-                    e.target.value + "T" + this.getTimeString()
-                );
-                this.setDateTime(newDate);
-            });
-
-        this.shadowRoot
-            .querySelector(".time-input")
-            .addEventListener("change", (e) => {
-                const date = this.getDateString();
-                const newDate = new Date(date + "T" + e.target.value);
-                this.setDateTime(newDate);
-            });
-    }
-
-    getDateString() {
-        return this._selectedDate.toISOString().split("T")[0];
-    }
-
-    getTimeString() {
-        return this._selectedDate.toTimeString().substring(0, 5);
-    }
-
-    // Convert the date to desired string format
-    formatDateToString(date) {
-        switch (this._outputFormat) {
-            case "iso":
-                return date.toISOString();
-            case "short":
-                return `${this.getDateString()} ${this.getTimeString()}`;
-            case "locale":
-                return date.toLocaleString();
-            case "date-only":
-                return this.getDateString();
-            case "time-only":
-                return this.getTimeString();
-            default:
-                return date.toISOString();
-        }
-    }
-
-    setDateTime(date) {
-        this._selectedDate = date;
-        this.updateInputs();
-
-        const formattedDate = this.formatDateToString(this._selectedDate);
-
-        if (this._onChangeCallback) {
-            this._onChangeCallback(formattedDate);
-        }
-
-        this.dispatchEvent(
-            new CustomEvent("change", {
-                detail: {
-                    value: formattedDate,
-                    rawDate: this._selectedDate,
-                },
-                bubbles: true,
-            })
-        );
-    }
-
-    updateInputs() {
-        const dateInput = this.shadowRoot.querySelector(".date-input");
-        const timeInput = this.shadowRoot.querySelector(".time-input");
-
-        if (dateInput && timeInput) {
-            dateInput.value = this.getDateString();
-            timeInput.value = this.getTimeString();
-        }
-    }
-
-    render() {
-        this.shadowRoot.innerHTML = `
->>>>>>> ea08cde7f6562f69a045aafced65dbf2a4d1b786
         <style>
           :host {
             display: inline-block;
@@ -419,7 +317,6 @@ class DateTimePicker extends HTMLElement {
         </style>
         <div class="container">
           <div class="input-group">
-<<<<<<< HEAD
             <label>Start Date</label>
             <input type="date" class="date-input" value="${this.getStartDateString()}">
             <label>End Date</label>
@@ -476,51 +373,3 @@ class DateTimePicker extends HTMLElement {
     // Register the web component
     customElements.define("date-time-picker", DateTimePicker);
 })();
-
-// Example usage:
-// <date-time-picker start_value="2025-02-28T15:30:00" end_value="2025-02-28T16:30:00"></date-time-picker>
-=======
-            <label>Date</label>
-            <input type="date" class="date-input" value="${this.getDateString()}">
-          </div>
-          <div class="input-group">
-            <label>Time</label>
-            <input type="time" class="time-input" value="${this.getTimeString()}">
-          </div>
-        </div>
-      `;
-    }
-
-    get value() {
-        return this.formatDateToString(this._selectedDate);
-    }
-
-    set value(newValue) {
-        if (newValue instanceof Date) {
-            this._selectedDate = new Date(newValue);
-        } else {
-            this._selectedDate = new Date(newValue);
-        }
-        this.updateInputs();
-    }
-
-    // Allow setting the output format
-    set format(formatType) {
-        this._outputFormat = formatType;
-    }
-
-    get format() {
-        return this._outputFormat;
-    }
-
-    onChange(callback) {
-        this._onChangeCallback = callback;
-    }
-}
-
-// Register the web component
-customElements.define("date-time-picker", DateTimePicker);
-
-// Example usage:
-// <date-time-picker value="2025-02-28T15:30:00" format="short"></date-time-picker>
->>>>>>> ea08cde7f6562f69a045aafced65dbf2a4d1b786

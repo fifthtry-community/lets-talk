@@ -45,17 +45,8 @@ margin: $ds.spaces.vertical-gap.zero
 		-- end: ds.row
 		;; TODO: Add a similar button in mobile section as well
 		-- create-meeting-btn: Schedule a meeting
-
 		$on-click$: $ftd.toggle($a=$show_calendar) 
 		icon: calendar
-		;; $on-click$: $create-meeting.new-instant()
-		$on-click$: $schedule-meeting.schedule()
-		icon: calendar
-
-		;; import the date-time web-component from the calendar.js file.
-		-- web-component date-time-picker:
-		caption date string:	
-		js: $assets.files.js.calendar.js
 
 		;; import the date-time web-component from the calendar.js file.
 		-- ftd.column:
@@ -224,8 +215,6 @@ string start-value:
 string end-value:
 js: $assets.files.js.calender.js
 
-;; -- string $start-date: 20250303T120000
-;; -- string $end-date: 20250303T010000
 -- string $value: 20250303T120000
 
 -- string format-date(d):
