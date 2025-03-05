@@ -2,6 +2,6 @@
 
 -- string format-date(d):
 string d:
-js: $assets.files.js.build.js
+js: $assets.files.js.functions.js
 
 UTCDateStringToFormattedString(d)

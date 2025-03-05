@@ -2,8 +2,6 @@ import DyteClient from "@dytesdk/web-core";
 import { defineCustomElements as defineDyteCustomElements } from "@dytesdk/ui-kit/loader";
 
 class Talk extends HTMLElement {
-    /** @type {DyteClient} */
-    meeting;
     data;
 
     constructor() {
@@ -37,14 +35,23 @@ class Talk extends HTMLElement {
             throw new Error("Token not provided. Quitting");
         }
 
-        this.meeting = await DyteClient.init({
+        const meeting = await DyteClient.init({
             authToken: token,
         });
 
-        window.meeting = this.meeting;
-        document.querySelector("dyte-meeting").meeting = this.meeting;
+        console.info("initialized meeting: ", meeting);
 
-        this.meeting.self.on("*", (event, ...args) => {
+        window.meeting = meeting;
+
+        this.data.meeting_initialized.set(true)
+
+        try {
+            document.querySelector("dyte-meeting").meeting = window.meeting;
+        } catch (e) {
+            console.info("dyte-meeting not found. Ignoring");
+        }
+
+        window.meeting.self.on("*", (event, ...args) => {
             if (event === "mediaScoreUpdate") return;
 
             console.info("self update: ", event, args);
@@ -52,17 +59,27 @@ class Talk extends HTMLElement {
 
             if (event == "roomJoined") {
                 this.data.inside_meeting.set(true);
+                this.data.meeting_title.set(window.meeting.meta.meetingTitle);
+
+                try {
+                    const id = window.meeting.self.id;
+                    console.info(`Setting video stream for self#${id}`);
+                    document.querySelector(`video[id='${id}']`).srcObject = new MediaStream([meeting.self.videoTrack]);
+                } catch (e) {
+                    console.error("Error setting video stream: ", e);
+                }
             }
             if (event === "roomLeft") {
                 this.data.inside_meeting.set(false);
             }
         });
 
-        this.meeting.participants.joined.on("*", (event, ...args) => {
+        window.meeting.participants.joined.on("*", (event, ...args) => {
             if (event === "mediaScoreUpdate") return;
 
             console.info("participant update: ", event, args);
             this.updateParticipantsList();
+            this.refreshParticipantVideoStreams();
         });
 
         // TODO: listen for pinned and waiting participants and update their lists
@@ -71,11 +88,11 @@ class Talk extends HTMLElement {
     /** Updates this.data.self */
     updateSelf() {
         const self = {
-            id: this.meeting.self.id,
-            name: this.meeting.self.name,
-            mic: this.meeting.self.audioEnabled,
-            video: this.meeting.self.videoEnabled,
-            screen: this.meeting.self.screenShareEnabled,
+            id: window.meeting.self.id,
+            name: window.meeting.self.name,
+            mic: window.meeting.self.audioEnabled,
+            video: window.meeting.self.videoEnabled,
+            screen: window.meeting.self.screenShareEnabled,
         }
 
         this.data.self.set(fastn.recordInstance(self));
@@ -85,7 +102,9 @@ class Talk extends HTMLElement {
     // TODO(siddhantk232): This can be optimized
     updateParticipantsList() {
         this.data.participants.clearAll();
-        for (const [_id, p] of this.meeting.participants.joined) {
+        /** @type {DyteClient} */
+        const meeting = window.meeting;
+        for (const [_id, p] of meeting.participants.joined) {
             this.data.participants.push(fastn.recordInstance({
                 id: p.id,
                 name: p.name,
@@ -95,19 +114,25 @@ class Talk extends HTMLElement {
             }))
         }
     }
+
+    refreshParticipantVideoStreams() {
+        /** @type {DyteClient} */
+        const meeting = window.meeting;
+        for (const p of meeting.participants.joined.toArray()) {
+            try {
+                console.info(`Setting video stream for participant#${p.id}`);
+                document.querySelector(`video[id='${p.id}']`).srcObject = new MediaStream([p.videoTrack]);
+            } catch (e) {
+                console.info("Error setting video stream: ", e);
+            }
+        }
+    }
 }
 
-function UTCDateStringToFormattedString(dateString) {
-    const date = new Date(dateString.get());
-    const formatted = new Intl.DateTimeFormat('en-US', {
-        dateStyle: 'medium',
-        timeStyle: 'short',
-    }).format(date);
-
-    return formatted;
+if (!window.customElements.get('talk-app')) {
+    customElements.define('talk-app', Talk);
 }
 
-window.UTCDateStringToFormattedString = UTCDateStringToFormattedString;
-
-customElements.define('talk-app', Talk);
-defineDyteCustomElements();
+if (!window.customElements.get('dyte-meeting')) {
+    defineDyteCustomElements();
+}

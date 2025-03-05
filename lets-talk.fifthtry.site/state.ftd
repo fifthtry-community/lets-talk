@@ -4,16 +4,28 @@
 ;;; This data is used to help you build custom UI.
 ;;;
 ;;; All the data is supposed to be readonly here. This should be only mutated
-;;; by the `build.js` javascript file.
+;;; by the javascript file.
 ;;;
 ;;; `initialize-meeting` component should be called in every meeting page to
-;;; initialize the state. This component is responsible for updating the variables
-;;; in this file as well as initializing the `DyteClient` which is used by the
-;;; default dyte-ui. Nothing will work without it!
+;;; initialize the state. This component will:
+;;;
+;;; - Updating state variables in this file.
+;;; - Request a meeting token from the serve for the current user.
+;;; - Initialize global `window.meeting` so that functions like `join-meeting` can work.
+;;;
+;;; Nothing will work without it! You should call `initalized-meeting` in your meeting-page
+
+;;; Indicates if the javascript file is loaded and the `window.meeting` is available
+;;; Functions like `join-meeting` won't work if this is false
+-- boolean $meeting-initialized: false
 
 ;;; Show setup screen (edit name, audio/video settings etc) when this is false
 ;;; Otherwise show the main meeting screen
 -- boolean $inside-meeting: false
+
+;;; Meeting title
+;;; This is null **only** when [inside-meeting] is false
+-- optional string $meeting-title:
 
 ;; TODO: differentiate pinned participants, participants and, screen sharing participants
 ;;; List of participants in a meeting.
@@ -51,6 +63,16 @@ mid: $initialize-meeting.meeting-id
 -- web-component talk-app:
 optional string mid:
 boolean $inside-meeting: $inside-meeting
+boolean $meeting-initialized: $meeting-initialized
+optional string $meeting-title: $meeting-title
 participant $self: $self
 participant list $participants: $participants
 js: $assets.files.js.build.js
+
+
+;; FUNCTIONS
+
+-- void join-meeting():
+js: $assets.files.js.functions.js
+
+joinMeeting()
