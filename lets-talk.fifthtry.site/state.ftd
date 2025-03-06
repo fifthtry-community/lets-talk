@@ -111,3 +111,13 @@ leaveMeeting()
 js: $assets.files.js.functions.js
 
 endMeeting()
+
+-- void toggle-mic():
+js: $assets.files.js.functions.js
+
+toggleMic()
+
+-- void toggle-video():
+js: $assets.files.js.functions.js
+
+toggleVideo()

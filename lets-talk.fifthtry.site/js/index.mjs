@@ -69,14 +69,6 @@ class Talk extends HTMLElement {
             if (event == "roomJoined") {
                 this.data.inside_meeting.set(true);
                 this.data.meeting_title.set(window.meeting.meta.meetingTitle);
-
-                try {
-                    const id = window.meeting.self.id;
-                    console.info(`Setting video stream for self#${id}`);
-                    document.querySelector(`video[id='${id}']`).srcObject = new MediaStream([meeting.self.videoTrack]);
-                } catch (e) {
-                    console.error("Error setting video stream: ", e);
-                }
             }
             if (event === "roomLeft") {
                 this.data.inside_meeting.set(false);
@@ -113,6 +105,14 @@ class Talk extends HTMLElement {
         }
 
         this.data.self.set(fastn.recordInstance(self));
+
+        try {
+            const id = window.meeting.self.id;
+            console.info(`Setting video stream for self#${id}`);
+            document.querySelector(`video[id='${id}']`).srcObject = new MediaStream([window.meeting.self.videoTrack]);
+        } catch (e) {
+            console.error("Error setting video stream: ", e);
+        }
     }
 
     /** Recreate this.data.participants list */
