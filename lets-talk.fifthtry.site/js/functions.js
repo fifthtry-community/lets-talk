@@ -46,3 +46,35 @@ window.endMeeting = async function endMeeting() {
         console.error("Meeting not initialized. Can't join!");
     }
 }
+
+window.toggleMic = async function toggleMic() {
+    /** @type DyteClient */
+    const meeting = window.meeting;
+    if (meeting) {
+        console.info("toggle mic");
+        const audioEnabled = meeting.self.audioEnabled;
+        if (audioEnabled) {
+            await meeting.self.disableAudio();
+        } else {
+            await meeting.self.enableAudio();
+        }
+    } else {
+        console.error("Meeting not initialized. Can't join!");
+    }
+}
+
+window.toggleVideo = async function toggleVideo() {
+    /** @type DyteClient */
+    const meeting = window.meeting;
+    if (meeting) {
+        console.info("toggle mic");
+        const videoEnabled = meeting.self.videoEnabled;
+        if (videoEnabled) {
+            await meeting.self.disableVideo();
+        } else {
+            await meeting.self.enableVideo();
+        }
+    } else {
+        console.error("Meeting not initialized. Can't join!");
+    }
+}
