@@ -13,68 +13,74 @@ window.UTCDateStringToFormattedString = function UTCDateStringToFormattedString(
  */
 
 window.joinMeeting = async function joinMeeting() {
+    if (!window.meeting) { 
+        console.error("Meeting not initialized. Ignoring.");
+        return;
+    }
+
     /** @type DyteClient */
     const meeting = window.meeting;
-    if (meeting) {
-        console.info("Joining meeting");
-        await meeting.join();
-    } else {
-        console.error("Meeting not initialized. Can't join!");
-    }
+    console.info("Joining meeting");
+    await meeting.join();
 }
 
 window.leaveMeeting = async function leaveMeeting() {
+    if (!window.meeting) { 
+        console.error("Meeting not initialized. Ignoring.");
+        return;
+    }
+
     /** @type DyteClient */
     const meeting = window.meeting;
-    if (meeting) {
-        console.info("leaving meeting");
-        await meeting.leaveRoom();
-    } else {
-        console.error("Meeting not initialized. Can't join!");
-    }
+    console.info("leaving meeting");
+    await meeting.leaveRoom();
 }
 
 /** Kick all participants and leave the meeting */
 window.endMeeting = async function endMeeting() {
+    if (!window.meeting) { 
+        console.error("Meeting not initialized. Ignoring.");
+        return;
+    }
+
     /** @type DyteClient */
     const meeting = window.meeting;
-    if (meeting) {
-        console.info("leaving meeting");
-        await meeting.participants.kickAll();
-        await meeting.leaveRoom();
-    } else {
-        console.error("Meeting not initialized. Can't join!");
-    }
+    console.info("leaving meeting");
+    await meeting.participants.kickAll();
+    await meeting.leaveRoom();
 }
 
 window.toggleMic = async function toggleMic() {
+    if (!window.meeting) { 
+        console.error("Meeting not initialized. Ignoring.");
+        return;
+    }
+
     /** @type DyteClient */
     const meeting = window.meeting;
-    if (meeting) {
-        console.info("toggle mic");
-        const audioEnabled = meeting.self.audioEnabled;
-        if (audioEnabled) {
-            await meeting.self.disableAudio();
-        } else {
-            await meeting.self.enableAudio();
-        }
+    console.info("toggle mic");
+    const audioEnabled = meeting.self.audioEnabled;
+    if (audioEnabled) {
+        await meeting.self.disableAudio();
     } else {
-        console.error("Meeting not initialized. Can't join!");
+        await meeting.self.enableAudio();
     }
 }
 
 window.toggleVideo = async function toggleVideo() {
+    if (!window.meeting) { 
+        console.error("Meeting not initialized. Ignoring.");
+        return;
+    }
+
     /** @type DyteClient */
     const meeting = window.meeting;
-    if (meeting) {
-        console.info("toggle mic");
-        const videoEnabled = meeting.self.videoEnabled;
-        if (videoEnabled) {
-            await meeting.self.disableVideo();
-        } else {
-            await meeting.self.enableVideo();
-        }
+
+    console.info("toggle mic");
+    const videoEnabled = meeting.self.videoEnabled;
+    if (videoEnabled) {
+        await meeting.self.disableVideo();
     } else {
-        console.error("Meeting not initialized. Can't join!");
+        await meeting.self.enableVideo();
     }
 }
