@@ -101,3 +101,13 @@ js: $assets.files.js.build.js
 js: $assets.files.js.functions.js
 
 joinMeeting()
+
+-- void leave-meeting():
+js: $assets.files.js.functions.js
+
+leaveMeeting()
+
+-- void end-meeting():
+js: $assets.files.js.functions.js
+
+endMeeting()

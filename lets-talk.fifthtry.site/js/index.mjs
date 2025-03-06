@@ -80,6 +80,8 @@ class Talk extends HTMLElement {
             }
             if (event === "roomLeft") {
                 this.data.inside_meeting.set(false);
+                // when I leave the room, clear the participants list
+                this.data.participants.clearAll();
             }
         });
 
