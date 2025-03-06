@@ -91,6 +91,12 @@ class Talk extends HTMLElement {
             this.refreshParticipantVideoStreams();
         });
 
+        if (this.data.auto_join?.get()) {
+            console.info("Auto-joining meeting. Set auto-join in initialize-meeting to false to disable this");
+            await window.meeting.join();
+            console.info("Joined meeting");
+        }
+
         // TODO: listen for pinned and waiting participants and update their lists
     }
 

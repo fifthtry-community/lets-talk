@@ -48,14 +48,18 @@ boolean screen:
 
 
 ;;; Read module docs to learn more
+;;; `auto-join: true` don't show waiting area. The name/video/audio config can
+;;; be set later. Set this to `false` if you want to create a waiting area view.
 -- component initialize-meeting:
 string meeting-id:
 boolean init-audio: true
+boolean auto-join: true
 
 -- ftd.row:
 
 -- talk-app:
 mid: $initialize-meeting.meeting-id
+auto-join: $initialize-meeting.auto-join
 
 -- initialize-sound:
 if: { initialize-meeting.init-audio }
@@ -85,6 +89,7 @@ boolean $meeting-initialized: $meeting-initialized
 optional string $meeting-title: $meeting-title
 participant $self: $self
 participant list $participants: $participants
+boolean auto-join:
 js: $assets.files.js.build.js
 
 -- web-component dyte-participants-audio:
