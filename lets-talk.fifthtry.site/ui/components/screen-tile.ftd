@@ -1,0 +1,20 @@
+-- import: lets-talk.fifthtry.site/state
+
+;;; Creates a `ftd.video` that is capable of rendering user's screen share
+;;; Can also be used for `state#self` since that is also of type `state#participant`
+-- component screen-tile:
+state.participant user:
+
+-- ftd.video:
+id: $make-id(id = $screen-tile.user.id)
+src: $ftd.empty
+autoplay: true ;; This is required! otherwise the MediaStream set by javascript won't play
+controls: false
+width.fixed.px: 400
+
+-- end: screen-tile
+
+-- string make-id(id):
+string id:
+
+"screen-" + id
