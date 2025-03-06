@@ -76,11 +76,29 @@ window.toggleVideo = async function toggleVideo() {
     /** @type DyteClient */
     const meeting = window.meeting;
 
-    console.info("toggle mic");
+    console.info("toggle video");
     const videoEnabled = meeting.self.videoEnabled;
     if (videoEnabled) {
         await meeting.self.disableVideo();
     } else {
         await meeting.self.enableVideo();
+    }
+}
+
+window.toggleScreenShare = async function toggleScreenShare() {
+    if (!window.meeting) { 
+        console.error("Meeting not initialized. Ignoring.");
+        return;
+    }
+
+    /** @type DyteClient */
+    const meeting = window.meeting;
+
+    console.info("toggle screen share");
+    const screenShareEnabled = meeting.self.screenShareEnabled;
+    if (screenShareEnabled) {
+        await meeting.self.disableScreenShare();
+    } else {
+        await meeting.self.enableScreenShare()
     }
 }

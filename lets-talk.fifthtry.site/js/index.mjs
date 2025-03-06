@@ -96,22 +96,40 @@ class Talk extends HTMLElement {
 
     /** Updates this.data.self */
     updateSelf() {
+        /** @type {DyteClient} */
+        const meeting = window.meeting;
+
         const self = {
-            id: window.meeting.self.id,
-            name: window.meeting.self.name,
-            mic: window.meeting.self.audioEnabled,
-            video: window.meeting.self.videoEnabled,
-            screen: window.meeting.self.screenShareEnabled,
+            id: meeting.self.id,
+            name: meeting.self.name,
+            mic: meeting.self.audioEnabled,
+            video: meeting.self.videoEnabled,
+            screen: meeting.self.screenShareEnabled,
         }
 
         this.data.self.set(fastn.recordInstance(self));
 
-        try {
-            const id = window.meeting.self.id;
-            console.info(`Setting video stream for self#${id}`);
-            document.querySelector(`video[id='${id}']`).srcObject = new MediaStream([window.meeting.self.videoTrack]);
-        } catch (e) {
-            console.error("Error setting video stream: ", e);
+        if (meeting.self.videoEnabled) {
+            try {
+                const id = meeting.self.id;
+                console.info(`Setting video stream for self#${id}`);
+                // NOTE: audio of everyone is handled by dyte-participants-audio component
+                const stream = new MediaStream([window.meeting.self.videoTrack]);
+                document.querySelector(`video[id='${id}']`).srcObject = stream;
+            } catch (e) {
+                console.error("Error setting video stream: ", e);
+            }
+        }
+
+        if (meeting.self.screenShareEnabled) {
+            try {
+                const id = meeting.self.id;
+                console.info(`Setting screen stream for self#${id}`);
+                const stream = new MediaStream([meeting.self.screenShareTracks.video]);
+                document.querySelector(`video[id='screen-${id}']`).srcObject = stream;
+            } catch (e) {
+                console.error("Error setting screen share stream: ", e);
+            }
         }
     }
 
@@ -137,10 +155,24 @@ class Talk extends HTMLElement {
         const meeting = window.meeting;
         for (const p of meeting.participants.joined.toArray()) {
             try {
-                console.info(`Setting video stream for participant#${p.id}`);
-                document.querySelector(`video[id='${p.id}']`).srcObject = new MediaStream([p.videoTrack]);
+                if (p.videoEnabled) {
+                    console.info(`Setting video stream for participant#${p.id}`);
+                    // NOTE: audio of everyone is handled by dyte-participants-audio component
+                    const stream = new MediaStream([p.videoTrack]);
+                    document.querySelector(`video[id='${p.id}']`).srcObject = stream;
+                }
             } catch (e) {
                 console.info("Error setting video stream: ", e);
+            }
+
+            try {
+                if (p.screenShareEnabled) {
+                    console.info(`Setting screen share stream for participant#${p.id}`);
+                    const stream = new MediaStream([p.screenShareTracks.video]);
+                    document.querySelector(`video[id='screen-${p.id}']`).srcObject = stream;
+                }
+            } catch (e) {
+                console.info("Error setting screen share stream: ", e);
             }
         }
     }

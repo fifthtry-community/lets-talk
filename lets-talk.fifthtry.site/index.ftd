@@ -7,6 +7,9 @@ export: meeting-page
 -- import: lets-talk.fifthtry.site/ui/components/video-tile as _
 export: video-tile
 
+-- import: lets-talk.fifthtry.site/ui/components/screen-tile as _
+export: screen-tile
+
 -- import: lets-talk.fifthtry.site/badge as _
 export: footer-badge
 

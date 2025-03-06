@@ -121,3 +121,8 @@ toggleMic()
 js: $assets.files.js.functions.js
 
 toggleVideo()
+
+-- void toggle-screen-share():
+js: $assets.files.js.functions.js
+
+toggleScreenShare()
