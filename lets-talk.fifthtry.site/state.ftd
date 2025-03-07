@@ -112,17 +112,32 @@ js: $assets.files.js.functions.js
 
 endMeeting()
 
--- void toggle-mic():
+-- void enable-mic():
 js: $assets.files.js.functions.js
 
-toggleMic()
+enableMic()
 
--- void toggle-video():
+-- void disable-mic():
 js: $assets.files.js.functions.js
 
-toggleVideo()
+disableMic()
 
--- void toggle-screen-share():
+-- void enable-video():
 js: $assets.files.js.functions.js
 
-toggleScreenShare()
+enableVideo()
+
+-- void disable-video():
+js: $assets.files.js.functions.js
+
+disableVideo()
+
+-- void enable-screen-share():
+js: $assets.files.js.functions.js
+
+enableScreenShare()
+
+-- void disable-screen-share():
+js: $assets.files.js.functions.js
+
+disableScreenShare()

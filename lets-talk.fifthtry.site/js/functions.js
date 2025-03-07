@@ -50,7 +50,7 @@ window.endMeeting = async function endMeeting() {
     await meeting.leaveRoom();
 }
 
-window.toggleMic = async function toggleMic() {
+window.disableMic = async function disableMic() {
     if (!window.meeting) { 
         console.error("Meeting not initialized. Ignoring.");
         return;
@@ -58,16 +58,33 @@ window.toggleMic = async function toggleMic() {
 
     /** @type DyteClient */
     const meeting = window.meeting;
-    console.info("toggle mic");
+    console.info("disable mic");
     const audioEnabled = meeting.self.audioEnabled;
     if (audioEnabled) {
         await meeting.self.disableAudio();
+    } else {
+        console.info("Mic already disabled");
+    }
+}
+
+window.enableMic = async function enableMic() {
+    if (!window.meeting) { 
+        console.error("Meeting not initialized. Ignoring.");
+        return;
+    }
+
+    /** @type DyteClient */
+    const meeting = window.meeting;
+    console.info("enable mic");
+    const audioEnabled = meeting.self.audioEnabled;
+    if (audioEnabled) {
+        console.info("Mic already enabled");
     } else {
         await meeting.self.enableAudio();
     }
 }
 
-window.toggleVideo = async function toggleVideo() {
+window.disableVideo = async function disableVideo() {
     if (!window.meeting) { 
         console.error("Meeting not initialized. Ignoring.");
         return;
@@ -76,16 +93,35 @@ window.toggleVideo = async function toggleVideo() {
     /** @type DyteClient */
     const meeting = window.meeting;
 
-    console.info("toggle video");
+    console.info("disable video");
     const videoEnabled = meeting.self.videoEnabled;
     if (videoEnabled) {
         await meeting.self.disableVideo();
+    } else {
+        console.info("Video already disabled");
+    }
+}
+
+window.enableVideo = async function enableVideo() {
+    if (!window.meeting) { 
+        console.error("Meeting not initialized. Ignoring.");
+        return;
+    }
+
+    /** @type DyteClient */
+    const meeting = window.meeting;
+
+    console.info("enable video");
+    const videoEnabled = meeting.self.videoEnabled;
+    if (videoEnabled) {
+        console.info("Video already enabled");
     } else {
         await meeting.self.enableVideo();
     }
 }
 
-window.toggleScreenShare = async function toggleScreenShare() {
+
+window.disableScreenShare = async function disableScreenShare() {
     if (!window.meeting) { 
         console.error("Meeting not initialized. Ignoring.");
         return;
@@ -94,10 +130,28 @@ window.toggleScreenShare = async function toggleScreenShare() {
     /** @type DyteClient */
     const meeting = window.meeting;
 
-    console.info("toggle screen share");
+    console.info("disable screen share");
     const screenShareEnabled = meeting.self.screenShareEnabled;
     if (screenShareEnabled) {
         await meeting.self.disableScreenShare();
+    } else {
+        console.info("Screen share already disabled");
+    }
+}
+
+window.enableScreenShare = async function enableScreenShare() {
+    if (!window.meeting) { 
+        console.error("Meeting not initialized. Ignoring.");
+        return;
+    }
+
+    /** @type DyteClient */
+    const meeting = window.meeting;
+
+    console.info("enable screen share");
+    const screenShareEnabled = meeting.self.screenShareEnabled;
+    if (screenShareEnabled) {
+        console.info("Screen share already enabled");
     } else {
         await meeting.self.enableScreenShare()
     }
