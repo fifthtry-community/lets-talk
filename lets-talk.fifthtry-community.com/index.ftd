@@ -9,28 +9,31 @@ margin: $ds.spaces.vertical-gap.zero
 - Visit [https://fifthtry.com/featured/](https://fifthtry.com/featured/) and
   use the "Let's Talk Template" to create your site.
 
-- Once the site is created, configure the environment variables by going to the
-  "Settings" page and navigating to the "Environments" section.
+- You can visit your website domain now. It'll ask you to login/signup with a
+  new account. After doing that, you can update the `lets-talk.ftd` to allow
+  yourself to create new meeting urls.
 
-- The `LETS_TALK_ALLOWED_EMAIL_DOMAINS` environment variable determines which
-  users can create meetings on your website. For example, if this variable is
-  set to `fifthtry.com`, anyone with a "fifthtry.com" email address, such as
-  "siddhant@fifthtry.com," will be allowed to create meetings.
-
-  You can include multiple email domains by separating them with a comma (",").
-  For example, if you want to allow "john_doe@gmail.com" and users from
-  "fifthtry.com," set the value of this variable to `john_doe@gmail.com,
-  fifthtry.com`.
-
-- After setting the environment variables, you can visit your website, create
-  an account, and start a new meeting! 
-
+- Read the comments inside `lets-talk.ftd` file to learn more about who can
+  create new meetings.
 
 -- ds.heading-small: Ask for help!
 
 Use the following methods to reach us if you face any issues:
 
 - #lets-talk on Discord: https://discord.gg/UTWzYAuYNa
-- lets-talk Github Discussions https://github.com/fifthtry-community/lets-talk/discussions
+- lets-talk Github Discussions https://github.com/fifthtry-community/lets-talk/discussions/
+
+-- ds.heading-small: Breaking Changes
+
+`lets-talk` is under active development. We post about breaking changes and new
+features on the above mentioned channels.
+
+-- ds.heading-small: Show your support
+
+You can star the following repositories to show your support (requires a github
+account):
+
+- https://github.com/fastn-stack/fastn/
+- https://github.com/fifthtry-community/lets-talk/
 
 -- end: ds.page
