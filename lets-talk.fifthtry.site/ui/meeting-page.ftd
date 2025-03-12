@@ -3,16 +3,16 @@
 -- import: lets-talk.fifthtry.site/storybook/dummy-state
 -- import: lets-talk.fifthtry.site/assets
 
--- component page:
+-- component meeting-page:
 module state: dummy-state
 
--- ds.page: $page.state.meeting-title
+-- ds.page: $meeting-page.state.meeting-title
 margin: $ds.spaces.vertical-gap.zero
 inset: $ds.spaces.inset-square.zero
 
 -- lets-talk.meeting-header:
-meeting-title: $page.state.meeting-title
-participant-count: $page.state.participant-count
+meeting-title: $meeting-page.state.meeting-title
+participant-count: $meeting-page.state.participant-count
 
 -- ftd.column:
 id: main-area
@@ -30,10 +30,13 @@ self: $meeting-page.state.self
 -- end: ftd.column
 
 -- lets-talk.control-bar:
+if: { meeting-page.state.self != NULL }
+state: $meeting-page.state
+self: $meeting-page.state.self
 
 -- end: ds.page
 
--- end: page
+-- end: meeting-page
 
 
 -- decimal get-main-area-width():
