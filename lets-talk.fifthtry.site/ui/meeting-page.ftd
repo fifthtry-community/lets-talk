@@ -1,6 +1,7 @@
 -- import: fastn/processors as pr
 
 -- import: lets-talk.fifthtry.site/storybook/dummy-state
+-- import: lets-talk.fifthtry.site/assets
 
 -- component page:
 module state: dummy-state
@@ -14,10 +15,31 @@ inset: $ds.spaces.inset-square.zero
 meeting-title: $page.state.meeting-title
 participant-count: $page.state.participant-count
 
+-- ftd.column:
+id: main-area
+height: fill-container
+width: fill-container
+align-content: center
+
 -- lets-talk.grid:
+height: $get-main-area-height()
+width: $get-main-area-width()
+
+-- end: ftd.column
 
 -- lets-talk.control-bar:
 
 -- end: ds.page
 
 -- end: page
+
+
+-- decimal get-main-area-width():
+js: $assets.files.assets.calc.js
+
+getMainAreaWidth()
+
+-- decimal get-main-area-height():
+js: $assets.files.assets.calc.js
+
+getMainAreaHeight()
