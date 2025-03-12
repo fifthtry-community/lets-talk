@@ -20,13 +20,11 @@ screen : false
 
 -- integer participant-count: $length(a = $participants)
 
--- optional participant $self: $dummy-self
-
--- participant dummy-self:
+-- optional participant $self:
 id     : fjklsdlfj-djfklsfjkld-fsdjfksdfjlk
 name   : Siddhant
-mic    : false
-video  : false
+mic    : true
+video  : true
 screen : false
 
 -- record participant:

@@ -1,3 +1,5 @@
+-- import: lets-talk.fifthtry.site/storybook/dummy-state
+
 -- component control-bar:
 module state: dummy-state
 
@@ -5,38 +7,38 @@ module state: dummy-state
 inset: $ds.spaces.inset-square.medium
 
 -- ds.icon-button:
-;;if: { !footer.state.self.mic }
+if: { !control-bar.state.self.mic }
 kind: danger
 icon: $assets.files.assets.unmute.svg
-;;$on-click$: $footer.state.enable-mic()
-
-/-- ds.icon-button:
-if: { footer.state.self.mic }
-kind: secondary
-icon: $assets.files.assets.mute.svg
-$on-click$: $footer.state.disable-mic()
+$on-click$: $control-bar.state.enable-mic()
 
 -- ds.icon-button:
-;;if: { !state.self.video }
-;;$on-click$: $state.enable-video()
+if: { control-bar.state.self.mic }
+kind: secondary
+icon: $assets.files.assets.mute.svg
+$on-click$: $control-bar.state.disable-mic()
+
+-- ds.icon-button:
+if: { !control-bar.state.self.video }
+$on-click$: $control-bar.state.enable-video()
 kind: danger
 icon: $assets.files.assets.no-video.svg
 
-/-- ds.icon-button:
-if: { state.self.video }
-$on-click$: $state.disable-video()
+-- ds.icon-button:
+if: { control-bar.state.self.video }
+$on-click$: $control-bar.state.disable-video()
 kind: secondary
 icon: $assets.files.assets.video.svg
 
 -- ds.icon-button:
-;;if: { !state.self.screen }
-;;$on-click$: $state.enable-screen-share()
+if: { !control-bar.state.self.screen }
+$on-click$: $control-bar.state.enable-screen-share()
 kind: secondary
 icon: $assets.files.assets.share.svg
 
-/-- ds.icon-button:
-if: { state.self.screen }
-$on-click$: $state.disable-screen-share()
+-- ds.icon-button:
+if: { control-bar.state.self.screen }
+$on-click$: $control-bar.state.disable-screen-share()
 icon: $assets.files.assets.share.svg
 
 -- ds.icon-button:

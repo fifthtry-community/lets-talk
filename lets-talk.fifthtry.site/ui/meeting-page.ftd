@@ -1,13 +1,6 @@
 -- import: fastn/processors as pr
 
--- import: lets-talk.fifthtry.site/ui/components/video-tile
--- import: lets-talk.fifthtry.site/ui/components/screen-tile
-
 -- import: lets-talk.fifthtry.site/storybook/dummy-state
-
--- import: design-system.fifthtry.site as ds
-
-
 
 -- component page:
 module state: dummy-state
