@@ -26,6 +26,7 @@ $processor$: pr.toc
   - Logged In: /storybook/dashboard/
 
 - Components:
+  - Meeting UI: /storybook/meeting-ui/
   - 1-1 Meeting: /storybook/1-1-meeting/
   - 3 People Meeting: /storybook/3-meeting/
   - 6 People Meeting: /storybook/6-meeting/
