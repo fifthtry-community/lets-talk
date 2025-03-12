@@ -1,7 +1,7 @@
 -- import: lets-talk.fifthtry.site/ui/dashboard as _
 export: dashboard-page
 
--- import: lets-talk.fifthtry.site/ui/meeting-page as _
+-- import: lets-talk.fifthtry.site/ui/dyte-meeting-page as _
 export: meeting-page
 
 -- import: lets-talk.fifthtry.site/ui/components/video-tile as _
