@@ -1,41 +1,31 @@
--- import: lets-talk.fifthtry.site/assets
-
+;; WARN: width and height are buggy. See calc.js file for more context
+;; Don't rely on them yet
 -- component grid:
+decimal width:
+decimal height:
 
--- ftd.column:
-height.fixed.calc: 100vh - 130px
-width: fill-container
-align-content: center
-padding.px: 24
+-- ds.column:
 
--- ds.row:
-spacing: $ds.spaces.horizontal-gap.extra-small
-width: hug-content
+    -- ds.row:
+    spacing: $ds.spaces.horizontal-gap.extra-small
+    width: hug-content
 
--- ftd.text: Width:
+    -- ftd.text: Width:
+    -- ftd.decimal: $grid.width
+    -- ftd.text: px
 
--- ftd.text: 0
-js: $assets.files.assets.calc.js
-id: width
+    -- end: ds.row
 
--- ftd.text: px
+    -- ds.row:
+    spacing: $ds.spaces.horizontal-gap.extra-small
+    width: hug-content
 
--- end: ds.row
+    -- ftd.text: Height:
+    -- ftd.decimal: $grid.height
+    -- ftd.text: px
 
--- ds.row:
-spacing: $ds.spaces.horizontal-gap.extra-small
-width: hug-content
+    -- end: ds.row
 
--- ftd.text: Height:
-
--- ftd.text: 0
-js: $assets.files.assets.calc.js
-id: height
-
--- ftd.text: px
-
--- end: ds.row
-
--- end: ftd.column
+-- end: ds.column
 
 -- end: grid

@@ -1,26 +1,9 @@
-function updateSize() {
-            const width = window.innerWidth;
-            const height = window.innerHeight;
-            
-            document.getElementById('width').textContent = width;
-            document.getElementById('height').textContent = height;
+function getMainAreaWidth() {
+    // FIXME: This does not work. This function is called before ftd.column with #main-area is rendered so it can't find it :(
+    // return document.getElementById("main-area").clientWidth;
+    return 1000;
+}
 
-            localStorage.setItem('pageWidth', width);
-            localStorage.setItem('pageHeight', height);
-        }
-
-        function loadStoredSize() {
-            const storedWidth = localStorage.getItem('pageWidth');
-            const storedHeight = localStorage.getItem('pageHeight');
-
-            if (storedWidth && storedHeight) {
-                document.getElementById('width').textContent = storedWidth;
-                document.getElementById('height').textContent = storedHeight;
-            }
-        }
-
-        window.addEventListener('resize', updateSize);
-        window.addEventListener('load', () => {
-            loadStoredSize();
-            updateSize();
-        });
+function getMainAreaHeight() {
+    return 193;
+}
