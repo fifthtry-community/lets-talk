@@ -146,6 +146,6 @@ disableScreenShare()
 
 
 -- integer length(a):
-state.participant list a:
+participant list a:
 
-ftd.len(a)
+ftd.len(a) + 1
