@@ -1,10 +1,10 @@
 -- import: lets-talk.fifthtry.site/ui/meeting-page
 -- import: lets-talk.fifthtry.site/storybook/dummy-state
 
--- meeting-page.page:
+-- meeting-page.meeting-page:
 state: dummy-state
 
--- end: meeting-page.page
+-- end: meeting-page.meeting-page
 
 
 /-- lets-talk.grid:
