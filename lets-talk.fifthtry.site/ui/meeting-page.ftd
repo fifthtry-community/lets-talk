@@ -1,18 +1,167 @@
--- import: lets-talk.fifthtry.site/assets
+-- import: fastn/processors as pr
 
--- component meeting-page:
+-- import: lets-talk.fifthtry.site/ui/components/video-tile
+-- import: lets-talk.fifthtry.site/ui/components/screen-tile
 
-;;; - Shows a "setup screen" where you can edit display name and media settings if you're not inside a meeting
-;;; - Once joined a meeting UI will be displayed
-;;; You can show the above two UI conditionally using lets-talk.fifthtry.site/state#inside-meeting variable
--- dyte-meeting:
+-- import: lets-talk.fifthtry.site/storybook/dummy-state
 
--- end: meeting-page
-
-;; Variables in `lets-talk.fifthtry.site/state` should help you if you're trying to build your own meeting page.
-;; `lets-talk.fifthtry.site/components/video-tile` can be used to display video feed of a user
+-- import: design-system.fifthtry.site as ds
 
 
-;;; Meeting UI (repackaged from @dytesdk/ui-kit)
--- web-component dyte-meeting:
-js: $assets.files.js.build.js
+
+-- component page:
+module state: dummy-state
+children ui:
+
+-- ds.page: $page.state.meeting-title
+margin: $ds.spaces.vertical-gap.zero
+inset: $ds.spaces.inset-square.zero
+
+-- header:
+
+-- main-area:
+
+-- footer:
+
+-- end: ds.page
+
+-- end: page
+
+
+-- component header:
+module state: dummy-state
+
+-- ds.row:
+spacing: $ds.spaces.horizontal-gap.space-between
+inset: $ds.spaces.inset-square.medium
+
+-- ftd.image:
+src: $assets.files.assets.logo.svg
+width.fixed.px: 80
+height.fixed.px: 40
+
+-- ds.copy-regular: $header.state.meeting-title
+
+-- ds.row:
+spacing: $ds.spaces.horizontal-gap.small
+width: hug-content
+inset: $ds.spaces.inset-wide.medium-zero
+
+-- ftd.image:
+src: $assets.files.assets.participant.svg
+width.fixed.px: 24
+
+-- ftd.integer: $length(a = $header.state.participant)
+
+-- end: ds.row
+
+-- end: ds.row
+
+-- end: header
+
+
+
+
+
+
+-- component main-area:
+
+-- ftd.column:
+height.fixed.calc: 100vh - 130px
+width: fill-container
+align-content: center
+padding.px: 24
+
+-- ds.row:
+spacing: $ds.spaces.horizontal-gap.extra-small
+width: hug-content
+
+-- ftd.text: Width:
+
+-- ftd.text: 0
+js: $assets.files.assets.calc.js
+id: width
+
+-- ftd.text: px
+
+-- end: ds.row
+
+-- ds.row:
+spacing: $ds.spaces.horizontal-gap.extra-small
+width: hug-content
+
+-- ftd.text: Height:
+
+-- ftd.text: 0
+js: $assets.files.assets.calc.js
+id: height
+
+-- ftd.text: px
+
+-- end: ds.row
+
+-- end: ftd.column
+
+-- end: main-area
+
+
+
+
+
+
+
+-- component footer:
+module state: dummy-state
+
+-- ds.row:
+inset: $ds.spaces.inset-square.medium
+
+-- ds.icon-button:
+;;if: { !footer.state.self.mic }
+kind: danger
+icon: $assets.files.assets.unmute.svg
+;;$on-click$: $footer.state.enable-mic()
+
+/-- ds.icon-button:
+if: { footer.state.self.mic }
+kind: secondary
+icon: $assets.files.assets.mute.svg
+$on-click$: $footer.state.disable-mic()
+
+-- ds.icon-button:
+;;if: { !state.self.video }
+;;$on-click$: $state.enable-video()
+kind: danger
+icon: $assets.files.assets.no-video.svg
+
+/-- ds.icon-button:
+if: { state.self.video }
+$on-click$: $state.disable-video()
+kind: secondary
+icon: $assets.files.assets.video.svg
+
+-- ds.icon-button:
+;;if: { !state.self.screen }
+;;$on-click$: $state.enable-screen-share()
+kind: secondary
+icon: $assets.files.assets.share.svg
+
+/-- ds.icon-button:
+if: { state.self.screen }
+$on-click$: $state.disable-screen-share()
+icon: $assets.files.assets.share.svg
+
+-- ds.icon-button:
+kind: danger
+icon: $assets.files.assets.disconnect.svg
+
+-- end: ds.row
+
+-- end: footer
+
+
+
+-- integer length(a):
+dummy-state.participant list a:
+
+ftd.len(a)

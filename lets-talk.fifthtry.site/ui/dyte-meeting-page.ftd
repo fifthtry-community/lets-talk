@@ -1,0 +1,18 @@
+-- import: lets-talk.fifthtry.site/assets
+
+-- component meeting-page:
+
+;;; - Shows a "setup screen" where you can edit display name and media settings if you're not inside a meeting
+;;; - Once joined a meeting UI will be displayed
+;;; You can show the above two UI conditionally using lets-talk.fifthtry.site/state#inside-meeting variable
+-- dyte-meeting:
+
+-- end: meeting-page
+
+;; Variables in `lets-talk.fifthtry.site/state` should help you if you're trying to build your own meeting page.
+;; `lets-talk.fifthtry.site/components/video-tile` can be used to display video feed of a user
+
+
+;;; Meeting UI (repackaged from @dytesdk/ui-kit)
+-- web-component dyte-meeting:
+js: $assets.files.js.build.js
