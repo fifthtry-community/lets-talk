@@ -1,30 +1,48 @@
+-- import: lets-talk.fifthtry.site/state
+
 ;; WARN: width and height are buggy. See calc.js file for more context
 ;; Don't rely on them yet
 -- component grid:
 decimal width:
 decimal height:
+state.participant list participants:
+state.participant self:
 
 -- ds.column:
 
-    -- ds.row:
-    spacing: $ds.spaces.horizontal-gap.extra-small
-    width: hug-content
-
-    -- ftd.text: Width:
-    -- ftd.decimal: $grid.width
-    -- ftd.text: px
-
-    -- end: ds.row
+    -- ftd.desktop:
 
     -- ds.row:
     spacing: $ds.spaces.horizontal-gap.extra-small
     width: hug-content
 
-    -- ftd.text: Height:
-    -- ftd.decimal: $grid.height
-    -- ftd.text: px
+    -- lets-talk.video-tile:
+    user: $grid.self
+
+    -- lets-talk.video-tile:
+    user: $p
+    for: p in $grid.participants
 
     -- end: ds.row
+
+    -- end: ftd.desktop
+
+    -- ftd.mobile:
+
+    -- ds.column:
+    spacing: $ds.spaces.horizontal-gap.extra-small
+    width: hug-content
+
+    -- lets-talk.video-tile:
+    user: $grid.self
+
+    -- lets-talk.video-tile:
+    user: $p
+    for: p in $grid.participants
+
+    -- end: ds.column
+
+    -- end: ftd.mobile
 
 -- end: ds.column
 

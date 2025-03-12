@@ -5,7 +5,6 @@
 
 -- component page:
 module state: dummy-state
-children ui:
 
 -- ds.page: $page.state.meeting-title
 margin: $ds.spaces.vertical-gap.zero
@@ -22,8 +21,11 @@ width: fill-container
 align-content: center
 
 -- lets-talk.grid:
+if: { meeting-page.state.self != NULL }
 height: $get-main-area-height()
 width: $get-main-area-width()
+participants: $meeting-page.state.participants
+self: $meeting-page.state.self
 
 -- end: ftd.column
 
