@@ -1,0 +1,31 @@
+-- component meeting-header:
+string meeting-title:
+integer participant-count:
+
+-- ds.row:
+spacing: $ds.spaces.horizontal-gap.space-between
+inset: $ds.spaces.inset-square.medium
+
+-- ftd.image:
+src: $ds.site-logo
+width.fixed.px: 80
+height.fixed.px: 40
+
+-- ds.copy-regular: $meeting-header.meeting-title
+
+-- ds.row:
+spacing: $ds.spaces.horizontal-gap.small
+width: hug-content
+inset: $ds.spaces.inset-wide.medium-zero
+
+-- ftd.image:
+src: $assets.files.assets.participant.svg
+width.fixed.px: 24
+
+-- ftd.integer: $meeting-header.participant-count
+
+-- end: ds.row
+
+-- end: ds.row
+
+-- end: meeting-header

@@ -1,68 +1,41 @@
 -- import: lets-talk.fifthtry.site/assets
 
 -- component grid:
-lets-talk.participant self:
-lets-talk.participant list participants:
 
 -- ftd.column:
+height.fixed.calc: 100vh - 130px
 width: fill-container
-height: fill-container
+align-content: center
+padding.px: 24
 
 -- ds.row:
-width: fill-container
-height.fixed.percent: 18
-wrap: true
+spacing: $ds.spaces.horizontal-gap.extra-small
+width: hug-content
 
--- participant-tile:
-p: $participant
-for: participant in $grid.participants
+-- ftd.text: Width:
+
+-- ftd.text: 0
+js: $assets.files.assets.calc.js
+id: width
+
+-- ftd.text: px
 
 -- end: ds.row
 
--- ftd.column:
-anchor: parent
-bottom.px: 10
-right.px: 10
-z-index: 10
+-- ds.row:
+spacing: $ds.spaces.horizontal-gap.extra-small
+width: hug-content
 
-;; -- participant-tile:
-;; p: $grid.self
+-- ftd.text: Height:
 
--- end: ftd.column
+-- ftd.text: 0
+js: $assets.files.assets.calc.js
+id: height
+
+-- ftd.text: px
+
+-- end: ds.row
 
 -- end: ftd.column
 
 -- end: grid
-
-
--- component participant-tile:
-lets-talk.participant p:
-
--- ftd.column:
-classes: equal-basis
-css: $assets.files.assets.styles.utils.css
-width.fixed.calc: 30%
-border-color: green
-border-width.px: 1
-
--- ftd.text: $participant-tile.p.name
-
--- ftd.row:
-anchor: parent
-bottom.px: 8
-right.px: 8
-spacing.fixed.px: 8
-
--- ds.phosphor-icon-button:
-icon: microphone-slash
-if: { !$participant-tile.p.mute }
-
--- ds.phosphor-icon-button:
-icon: video-camera-slash
-if: { !$participant-tile.p.video }
-
--- end: ftd.row
-
--- end: ftd.column
-
--- end: participant-tile

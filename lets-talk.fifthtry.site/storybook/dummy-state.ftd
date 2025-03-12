@@ -1,13 +1,33 @@
--- import: lets-talk.fifthtry.site/assets
-
--- boolean $meeting-initialized: false
--- boolean $inside-meeting: true
-
--- optional string $meeting-title: Meeting title
+-- optional string $meeting-title: Weekly Planning
 
 -- participant list $participants:
 
--- optional participant $self:
+-- participant:
+id     : fjklsdlfj-djfklsfjkld-fsdjfksdfjlk
+name   : John
+mic    : true
+video  : true
+screen : false
+
+-- participant:
+id     : fjklsdlfj-djfklsfjkld-fsdjfksdfjlk
+name   : April
+mic    : false
+video  : false
+screen : false
+
+-- end: $participants
+
+-- integer participant-count: $length(a = $participants)
+
+-- optional participant $self: $dummy-self
+
+-- participant dummy-self:
+id     : fjklsdlfj-djfklsfjkld-fsdjfksdfjlk
+name   : Siddhant
+mic    : false
+video  : false
+screen : false
 
 -- record participant:
 string id:
@@ -17,97 +37,46 @@ boolean video:
 boolean screen:
 
 
-;;; Read module docs to learn more
-;;; `auto-join: true` don't show waiting area. The name/video/audio config can
-;;; be set later. Set this to `false` if you want to create a waiting area view.
--- component initialize-meeting:
-string meeting-id:
-boolean init-audio: true
-boolean auto-join: true
-
--- ftd.row:
-
--- talk-app:
-mid: $initialize-meeting.meeting-id
-auto-join: $initialize-meeting.auto-join
-
--- initialize-sound:
-if: { initialize-meeting.init-audio }
-
--- end: ftd.row
-
--- end: initialize-meeting
-
-;; WARN: Should not be used with the default meeting-page shipped with this
-;; package. That page already handles participant's audio output
-;;; Setup sound
--- component initialize-sound:
-
--- dyte-participants-audio:
-
--- end: initialize-sound
-
-
-;; WARN: Variables passed as params to this component are the only ones that'll
-;; be mutated by the javascript file. Update the component signature if you
-;; introduce a new variable in this file.
-;;; Initialize dyte sdk
--- web-component talk-app:
-optional string mid:
-boolean $inside-meeting: $inside-meeting
-boolean $meeting-initialized: $meeting-initialized
-optional string $meeting-title: $meeting-title
-participant $self: $self
-participant list $participants: $participants
-boolean auto-join:
-js: $assets.files.js.build.js
-
--- web-component dyte-participants-audio:
-js: $assets.files.js.build.js
-
 ;; FUNCTIONS
 
 -- void join-meeting():
-js: $assets.files.js.functions.js
 
-joinMeeting()
+console.log("join-meeting")
 
 -- void leave-meeting():
-js: $assets.files.js.functions.js
 
-leaveMeeting()
+console.log("leave-meeting")
 
 -- void end-meeting():
-js: $assets.files.js.functions.js
 
-endMeeting()
+console.log("end-meeting")
 
 -- void enable-mic():
-js: $assets.files.js.functions.js
 
-enableMic()
+console.log("enable-mic")
 
 -- void disable-mic():
-js: $assets.files.js.functions.js
 
-disableMic()
+console.log("disable-mic")
 
 -- void enable-video():
-js: $assets.files.js.functions.js
 
-enableVideo()
+console.log("enable-video")
 
 -- void disable-video():
-js: $assets.files.js.functions.js
 
-disableVideo()
+console.log("disable-video")
 
 -- void enable-screen-share():
-js: $assets.files.js.functions.js
 
-enableScreenShare()
+console.log("enable-screen-share")
 
 -- void disable-screen-share():
-js: $assets.files.js.functions.js
 
-disableScreenShare()
+console.log("disable-screen-share")
+
+
+-- integer length(a):
+participant list a:
+
+ftd.len(a)
