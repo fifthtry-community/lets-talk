@@ -11,6 +11,7 @@ provided-via: lets-talk.fifthtry.site/ds
 
 ;; this is a system: alias must be ds
 -- fastn.auto-import: lets-talk.fifthtry.site/ds
+-- fastn.auto-import: lets-talk.fifthtry.site/assets
 -- fastn.auto-import: lets-auth.fifthtry.site as lets-auth
 -- fastn.auto-import: lets-talk.fifthtry.site as lets-talk
 
