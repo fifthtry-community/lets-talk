@@ -66,6 +66,11 @@ class Talk extends HTMLElement {
             console.info("self update: ", event, args);
             this.updateSelf();
 
+            setTimeout(() => {
+                this.refreshSelfVideoFeed();
+                this.refreshParticipantVideoStreams();
+            }, 0);
+
             if (event == "roomJoined") {
                 this.data.inside_meeting.set(true);
                 this.data.meeting_title.set(window.meeting.meta.meetingTitle);
@@ -82,7 +87,10 @@ class Talk extends HTMLElement {
 
             console.info("participant update: ", event, args);
             this.updateParticipantsList();
-            this.refreshParticipantVideoStreams();
+            setTimeout(() => {
+                this.refreshSelfVideoFeed();
+                this.refreshParticipantVideoStreams(); 
+            }, 0);
         });
 
         if (this.data.auto_join?.get()) {
@@ -108,29 +116,6 @@ class Talk extends HTMLElement {
         }
 
         this.data.self.set(fastn.recordInstance(self));
-
-        if (meeting.self.videoEnabled) {
-            try {
-                const id = meeting.self.id;
-                console.info(`Setting video stream for self#${id}`);
-                // NOTE: audio of everyone is handled by dyte-participants-audio component
-                const stream = new MediaStream([window.meeting.self.videoTrack]);
-                document.querySelector(`video[id='${id}']`).srcObject = stream;
-            } catch (e) {
-                console.error("Error setting video stream: ", e);
-            }
-        }
-
-        if (meeting.self.screenShareEnabled) {
-            try {
-                const id = meeting.self.id;
-                console.info(`Setting screen stream for self#${id}`);
-                const stream = new MediaStream([meeting.self.screenShareTracks.video]);
-                document.querySelector(`video[id='screen-${id}']`).srcObject = stream;
-            } catch (e) {
-                console.error("Error setting screen share stream: ", e);
-            }
-        }
     }
 
     /** Recreate this.data.participants list */
@@ -173,6 +158,31 @@ class Talk extends HTMLElement {
                 }
             } catch (e) {
                 console.info("Error setting screen share stream: ", e);
+            }
+        }
+    }
+
+    refreshSelfVideoFeed() {
+        if (meeting.self.videoEnabled) {
+            try {
+                const id = meeting.self.id;
+                console.info(`Setting video stream for self#${id}`);
+                // NOTE: audio of everyone is handled by dyte-participants-audio component
+                const stream = new MediaStream([window.meeting.self.videoTrack]);
+                document.querySelector(`video[id='${id}']`).srcObject = stream;
+            } catch (e) {
+                console.error("Error setting video stream: ", e);
+            }
+        }
+
+        if (meeting.self.screenShareEnabled) {
+            try {
+                const id = meeting.self.id;
+                console.info(`Setting screen stream for self#${id}`);
+                const stream = new MediaStream([meeting.self.screenShareTracks.video]);
+                document.querySelector(`video[id='screen-${id}']`).srcObject = stream;
+            } catch (e) {
+                console.error("Error setting screen share stream: ", e);
             }
         }
     }
