@@ -8,6 +8,7 @@ system-is-confidential: false
 provided-via: lets-talk.fifthtry.site/ds
 
 -- fastn.dependency: lets-auth.fifthtry.site
+-- fastn.dependency: svg-icons.fifthtry.site
 
 ;; this is a system: alias must be ds
 -- fastn.auto-import: lets-talk.fifthtry.site/ds

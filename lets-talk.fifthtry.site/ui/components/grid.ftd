@@ -1,4 +1,5 @@
 -- import: lets-talk.fifthtry.site/state
+-- import: lets-talk.fifthtry.site/assets
 
 ;; WARN: width and height are buggy. See calc.js file for more context
 ;; Don't rely on them yet
@@ -9,6 +10,8 @@ state.participant list participants:
 state.participant self:
 
 -- ds.column:
+classes: grid
+css: $assets.files.assets.styles.grid.css
 
     -- ftd.desktop:
 
