@@ -1,4 +1,5 @@
 -- import: lets-talk.fifthtry.site/assets
+-- import: svg-icons.fifthtry.site/phosphor
 
 -- component meeting-header:
 string meeting-title:
@@ -20,14 +21,17 @@ spacing: $ds.spaces.horizontal-gap.small
 width: hug-content
 inset: $ds.spaces.inset-wide.medium-zero
 
--- ftd.image:
-src: $assets.files.assets.participant.svg
-width.fixed.px: 24
+-- phosphor.regular: users
 
--- ftd.integer: $meeting-header.participant-count
+-- ds.copy-small: $to-string(a=$meeting-header.participant-count)
 
 -- end: ds.row
 
 -- end: ds.row
 
 -- end: meeting-header
+
+-- string to-string(a):
+integer a:
+
+a

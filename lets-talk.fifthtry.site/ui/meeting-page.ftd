@@ -14,20 +14,12 @@ inset: $ds.spaces.inset-square.zero
 meeting-title: $meeting-page.state.meeting-title
 participant-count: $meeting-page.state.participant-count
 
--- ftd.column:
-id: main-area
-height: fill-container
-width: fill-container
-align-content: center
-
 -- lets-talk.grid:
 if: { meeting-page.state.self != NULL }
 height: $get-main-area-height()
 width: $get-main-area-width()
 participants: $meeting-page.state.participants
 self: $meeting-page.state.self
-
--- end: ftd.column
 
 -- lets-talk.control-bar:
 if: { meeting-page.state.self != NULL }
