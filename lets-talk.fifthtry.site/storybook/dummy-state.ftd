@@ -1,5 +1,7 @@
 -- optional string $meeting-title: Weekly Planning
 
+-- boolean $inside-meeting: false
+
 -- participant list $participants:
 
 -- participant:

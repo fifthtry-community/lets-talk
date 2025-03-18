@@ -3,12 +3,20 @@
 -- import: lets-talk.fifthtry.site/storybook/dummy-state
 -- import: lets-talk.fifthtry.site/assets
 
+;; NOTE: If you're overriding this component then make sure to call
+;; `lets-talk.initialize-meeting` with a `meeting-id` in your component
+;; definition. Nothing will work without it! Read the state.ftd in this project
+;; root to learn more.
 -- component meeting-page:
 module state: dummy-state
+string meeting-id:
 
 -- ds.page: $meeting-page.state.meeting-title
 margin: $ds.spaces.vertical-gap.zero
 inset: $ds.spaces.inset-square.zero
+
+-- lets-talk.initialize-meeting:
+meeting-id: $meeting-page.meeting-id
 
 -- lets-talk.meeting-header:
 meeting-title: $meeting-page.state.meeting-title
@@ -21,6 +29,9 @@ width: $get-main-area-width()
 participants: $meeting-page.state.participants
 self: $meeting-page.state.self
 
+-- ds.copy-small: Loading...
+if: { !meeting-page.state.inside-meeting }
+
 -- lets-talk.control-bar:
 if: { meeting-page.state.self != NULL }
 state: $meeting-page.state
@@ -31,6 +42,7 @@ self: $meeting-page.state.self
 -- end: meeting-page
 
 
+;; FIXME: these functions do not work yet. They give hardcoded values in calc.js
 -- decimal get-main-area-width():
 js: $assets.files.assets.calc.js
 

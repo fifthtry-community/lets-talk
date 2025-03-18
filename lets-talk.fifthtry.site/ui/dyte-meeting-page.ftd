@@ -1,11 +1,21 @@
 -- import: lets-talk.fifthtry.site/assets
 
 -- component meeting-page:
+string meeting-id:
 
 ;;; - Shows a "setup screen" where you can edit display name and media settings if you're not inside a meeting
 ;;; - Once joined a meeting UI will be displayed
 ;;; You can show the above two UI conditionally using lets-talk.fifthtry.site/state#inside-meeting variable
--- dyte-meeting:
+-- ftd.container:
+
+    -- lets-talk.initialize-meeting:
+    meeting-id: $meeting-page.meeting-id
+    auto-join: false
+    init-audio: false
+
+    -- dyte-meeting:
+
+-- end: ftd.container
 
 -- end: meeting-page
 
