@@ -1,6 +1,6 @@
 -- import: fastn/processors as pr
 
--- import: lets-talk.fifthtry.site/storybook/dummy-state
+-- import: lets-talk.fifthtry.site/state
 -- import: lets-talk.fifthtry.site/assets
 
 ;; NOTE: If you're overriding this component then make sure to call
@@ -8,7 +8,7 @@
 ;; definition. Nothing will work without it! Read the state.ftd in this project
 ;; root to learn more.
 -- component meeting-page:
-module state: dummy-state
+module state: state
 string meeting-id:
 
 -- ds.page: $meeting-page.state.meeting-title
