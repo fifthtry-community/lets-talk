@@ -9,6 +9,7 @@ module state: dummy-state
 
 -- ds.row:
 inset: $ds.spaces.inset-square.medium
+height.fixed.vh: 8
 
 -- ds.phosphor-icon-button:
 if: { !control-bar.self.mic }
@@ -34,16 +35,17 @@ $on-click$: $control-bar.state.disable-video()
 kind: secondary
 icon: camera
 
-/-- ds.icon-button:
+-- ds.phosphor-icon-button:
 if: { !control-bar.self.screen }
 $on-click$: $control-bar.state.enable-screen-share()
 kind: secondary
-icon: $assets.files.assets.share.svg
+icon: monitor-arrow-up
 
-/-- ds.icon-button:
+-- ds.phosphor-icon-button:
 if: { control-bar.self.screen }
 $on-click$: $control-bar.state.disable-screen-share()
-icon: $assets.files.assets.share.svg
+icon: monitor-arrow-up
+kind: primary
 
 -- ds.phosphor-icon-button:
 icon: phone-slash

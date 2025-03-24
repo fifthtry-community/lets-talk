@@ -7,6 +7,7 @@ integer participant-count:
 -- ds.row:
 spacing: $ds.spaces.horizontal-gap.space-between
 inset: $ds.spaces.inset-square.medium
+height.fixed.vh: 8
 
 -- ftd.image:
 src: $ds.site-logo

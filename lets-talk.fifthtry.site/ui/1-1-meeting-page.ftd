@@ -1,0 +1,287 @@
+-- import: fastn/processors as pr
+-- import: lets-talk.fifthtry.site/storybook/dummy-state
+
+-- import: lets-talk.fifthtry.site/state
+-- import: lets-talk.fifthtry.site/assets
+
+-- boolean $share-screen: false
+-- boolean $open-chat: false
+
+;; NOTE: If you're overriding this component then make sure to call
+;; `lets-talk.initialize-meeting` with a `meeting-id` in your component
+;; definition. Nothing will work without it! Read the state.ftd in this project
+;; root to learn more.
+-- component 1-1-meeting-page:
+module state: state
+string meeting-id:
+
+-- ds.page: $1-1-meeting-page.state.meeting-title
+margin: $ds.spaces.vertical-gap.zero
+inset: $ds.spaces.inset-square.zero
+spacing: $ds.spaces.vertical-gap.zero
+
+-- lets-talk.initialize-meeting:
+meeting-id: $1-1-meeting-page.meeting-id
+
+-- lets-talk.meeting-header:
+meeting-title: $1-1-meeting-page.state.meeting-title
+participant-count: $1-1-meeting-page.state.participant-count
+
+-- grid:
+
+-- ds.copy-small: Loading...
+if: { !1-1-meeting-page.state.inside-meeting }
+
+-- chat:
+if: { open-chat }
+
+-- control-bar:
+if: { 1-1-meeting-page.state.self != NULL }
+state: $1-1-meeting-page.state
+self: $1-1-meeting-page.state.self
+
+-- end: ds.page
+
+-- end: 1-1-meeting-page
+
+
+
+
+-- component grid:
+
+-- ds.column:
+classes: grid
+css: $assets.files.assets.styles.grid.css
+inset: $ds.spaces.inset-wide.medium-zero
+
+    -- ftd.desktop:
+
+    -- ds.column:
+    inset: $ds.spaces.inset-square.zero
+    margin: $ds.spaces.vertical-gap.zero
+
+    -- ftd.video:
+    if: { share-screen }
+    src: $assets.files.assets.video.mp4
+    width: fill-container
+    height.fixed.calc: 100vh - 32vh
+    controls: false
+    background.solid: pink
+
+    -- ds.row:
+
+    -- ftd.video:
+    src: $assets.files.assets.video.mp4
+    width: fill-container
+    width.fixed.px if { share-screen }: 100
+    height.fixed.px if { share-screen }: 100
+    height.fixed.calc if { !share-screen }: 100vh - 16vh
+    border-radius.px if { share-screen }: 12
+    controls: false
+    background.solid if { !share-screen }: $inherited.colors.background.step-1
+
+    -- ftd.video:
+    src: $assets.files.assets.video.mp4
+    width.fixed.px: 160
+    height.fixed.px: 160
+    width.fixed.px if { share-screen }: 100
+    height.fixed.px if { share-screen }: 100
+    controls: false
+    anchor if { !share-screen }: parent
+    right.px if { !share-screen }: 0
+    bottom.px if { !share-screen }: 0
+    z-index if { !share-screen }: 5
+    border-radius.px: 12
+
+    -- end: ds.row
+
+    -- end: ds.column
+
+    -- end: ftd.desktop
+
+    -- ftd.mobile:
+
+    -- ds.column:
+    inset: $ds.spaces.inset-square.zero
+    margin: $ds.spaces.vertical-gap.zero
+
+    -- ftd.video:
+    if: { share-screen }
+    src: $assets.files.assets.video.mp4
+    width: fill-container
+    height.fixed.calc: 100vh - 34vh
+    controls: false
+    background.solid: pink
+
+    -- ds.row:
+
+	-- ftd.video:
+    src: $assets.files.assets.video.mp4
+    width: fill-container
+    width.fixed.px if { share-screen }: 100
+    height.fixed.px if { share-screen }: 100
+    height.fixed.calc if { !share-screen }: 100vh - 16vh
+    border-radius.px if { share-screen }: 12
+    controls: false
+    background.solid: $inherited.colors.background.step-1
+
+    -- ftd.video:
+    src: $assets.files.assets.video.mp4
+    width.fixed.px: 160
+    height.fixed.px: 160
+    width.fixed.px if { share-screen }: 100
+    height.fixed.px if { share-screen }: 100
+    controls: false
+    anchor if { !share-screen }: parent
+    right.px if { !share-screen }: 0
+    bottom.px if { !share-screen }: 0
+    z-index if { !share-screen }: 5
+    border-radius.px: 12
+
+    -- end: ds.row
+
+    -- end: ds.column
+
+    -- end: ftd.mobile
+
+-- end: ds.column
+
+-- end: grid
+
+
+
+
+
+
+
+
+
+-- component chat:
+
+-- ftd.column:
+anchor: parent
+right.px: 20
+right.px if { ftd.device == "mobile" }: 8
+top.px: 20
+background.solid: $inherited.colors.background.step-2
+z-index: 99999999999
+width.fixed.percent: 24
+width.fixed.percent if { ftd.device == "mobile" }: 96
+padding.px: 24
+border-radius.px: 4
+min-height.fixed.vh: 96
+
+-- ds.row:
+spacing: $ds.spaces.horizontal-gap.space-between
+border: $ds.borders.bottom.small
+radius: $ds.radius.zero
+
+-- ds.copy-regular: Chat
+color: $inherited.colors.text-strong
+
+-- phosphor.bold: x
+size: 18
+color: white
+$on-click$: $ftd.toggle($a = $open-chat)
+
+-- end: ds.row
+
+-- end: ftd.column
+
+-- end: chat
+
+
+
+
+
+
+
+
+
+-- component control-bar:
+state.participant self:
+module state: dummy-state
+
+-- ds.row:
+inset: $ds.spaces.inset-square.medium
+height.fixed.vh: 8
+
+-- ds.phosphor-icon-button:
+if: { !control-bar.self.mic }
+kind: secondary
+icon: microphone-slash
+$on-click$: $control-bar.state.enable-mic()
+
+-- ds.phosphor-icon-button:
+if: { control-bar.self.mic }
+kind: secondary
+icon: microphone
+$on-click$: $control-bar.state.disable-mic()
+
+-- ds.phosphor-icon-button:
+if: { !control-bar.self.video }
+$on-click$: $control-bar.state.enable-video()
+kind: secondary
+icon: camera-slash
+
+-- ds.phosphor-icon-button:
+if: { control-bar.self.video }
+$on-click$: $control-bar.state.disable-video()
+kind: secondary
+icon: camera
+
+/-- ds.phosphor-icon-button:
+if: { !control-bar.self.screen }
+$on-click$: $control-bar.state.enable-screen-share()
+kind: secondary
+icon: monitor-arrow-up
+
+/-- ds.phosphor-icon-button:
+if: { control-bar.self.screen }
+$on-click$: $control-bar.state.disable-screen-share()
+icon: monitor-arrow-up
+kind: primary
+
+-- ds.phosphor-icon-button:
+$on-click$: $ftd.toggle($a = $share-screen)
+icon: monitor-arrow-up
+kind: primary
+kind if { !share-screen }: secondary
+
+-- ds.phosphor-icon-button:
+$on-click$: $ftd.toggle($a = $open-chat)
+icon: chat-circle
+kind: primary
+kind if { !open-chat }: secondary
+
+-- ds.phosphor-icon-button:
+icon: phone-slash
+kind: danger
+$on-click$: $control-bar.state.leave-meeting()
+
+-- end: ds.row
+
+-- end: control-bar
+
+
+
+
+
+
+
+
+
+
+
+
+
+;; FIXME: these functions do not work yet. They give hardcoded values in calc.js
+-- decimal get-main-area-width():
+js: $assets.files.assets.calc.js
+
+getMainAreaWidth()
+
+-- decimal get-main-area-height():
+js: $assets.files.assets.calc.js
+
+getMainAreaHeight()
