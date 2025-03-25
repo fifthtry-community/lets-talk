@@ -246,9 +246,9 @@ dependencies = [
 
 [[package]]
 name = "ft-sdk"
-version = "0.5.0"
+version = "0.6.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e41046587125e0234fa2ffe0ed9669bb3097c7597f71b3649ff146e66d6c5f31"
+checksum = "0b75aefc35d929de702ddb7d34f624bb40e11a4bc335369ccb5a509d3698b0f4"
 dependencies = [
  "anyhow",
  "bytes",
@@ -269,9 +269,9 @@ dependencies = [
 
 [[package]]
 name = "ft-sys"
-version = "0.2.1"
+version = "0.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b70eab6702e9f32349c3241614021c95fa7eed2748df1f35c8c630584c3936ca"
+checksum = "c2bc1c1e53ce9915be4601f647e4c2b27906357b26226f208d130ad10aa72c30"
 dependencies = [
  "bytes",
  "chrono",
