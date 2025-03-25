@@ -75,8 +75,8 @@ fn call_dyte<D: DyteData>(
         ft_sdk::anyhow!("DYTE_API_KEY is not set. Please set it in the environment variables")
     })?;
 
-    let key = base64::engine::general_purpose::STANDARD
-        .encode(format!("{dyte_org_id}:{dyte_api_key}"));
+    let key =
+        base64::engine::general_purpose::STANDARD.encode(format!("{dyte_org_id}:{dyte_api_key}"));
 
     let authorization_header = format!("Basic {key}");
 
