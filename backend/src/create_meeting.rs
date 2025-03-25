@@ -19,12 +19,10 @@ fn create_meeting(
                     .to_string()
             }
             AuthorizationError::RequiresVerification => {
-                let verification_link = lets_auth_app_url.join(
-                    format!(
-                        "/backend/resend-confirmation-email/?email={email}",
-                        email = user.email
-                    ),
-                );
+                let verification_link = lets_auth_app_url
+                    .join("/backend/resend-confirmation-email/")
+                    .map(|url| format!("{url}?email={email}", email = user.email));
+
                 let link_text = match verification_link {
                     Ok(v) => format!(
                         " or [click here]({}) to get a new email",
@@ -64,7 +62,7 @@ fn create_meeting(
         config.secure_sessions,
     )?;
 
-    let meeting_page_url = config.get_meeting_page_url(&scheme, &host, &app_url)?;
+    let meeting_page_url = config.meeting_page_url(&app_url)?;
 
     Ok(
         ft_sdk::form::redirect(format!("{meeting_page_url}?meeting-id={}", meeting.data.id))?

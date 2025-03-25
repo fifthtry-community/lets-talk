@@ -1,4 +1,8 @@
+#![allow(clippy::derive_partial_eq_without_eq, clippy::get_first)]
 #![deny(unused_crate_dependencies)]
+#![warn(clippy::used_underscore_binding)]
+#![forbid(unsafe_code)]
+
 extern crate self as lets_talk;
 
 mod auth;
@@ -42,15 +46,11 @@ pub(crate) struct Config {
 }
 
 impl Config {
-    fn get_meeting_page_url(
-        &self,
-        scheme: &crate::HTTPSScheme,
-        host: &ft_sdk::Host,
-        app_url: &ft_sdk::AppUrl,
-    ) -> ft_sdk::Result<String> {
+    /// Use the configured meeting page URL, or, fallback to the lets-talk app's /meeting/ URL
+    fn meeting_page_url(&self, app_url: &ft_sdk::AppUrl) -> ft_sdk::Result<String> {
         match self.meeting_page_url {
             Some(ref url) => Ok(url.clone()),
-            None => app_url.join(scheme, host, "meeting"),
+            None => app_url.join("meeting"),
         }
     }
 }

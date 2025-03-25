@@ -78,7 +78,7 @@ fn session_new(
         config.secure_sessions,
     )?;
 
-    let meeting_page_url = config.get_meeting_page_url(&scheme, &host, &app_url)?;
+    let meeting_page_url = config.meeting_page_url(&app_url)?;
     Ok(
         ft_sdk::form::redirect(format!("{meeting_page_url}?meeting-id={meeting_id}"))?
             .with_cookie(session_cookie),
