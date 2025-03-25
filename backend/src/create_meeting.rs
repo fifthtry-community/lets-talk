@@ -35,9 +35,7 @@ fn create_meeting(
                         "".to_string()
                     }
                 };
-                format!(
-                    "Verify your email to create a meeting. Check your email{link_text}.",
-                )
+                format!("Verify your email to create a meeting. Check your email{link_text}.")
             }
         };
 
