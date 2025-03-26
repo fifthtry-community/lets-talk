@@ -28,6 +28,8 @@ meeting-title: $1-1-meeting-page.state.meeting-title
 participant-count: $1-1-meeting-page.state.participant-count
 
 -- grid.one-one:
+participants: $1-1-meeting-page.state.participants
+self: $1-1-meeting-page.state.self
 
 -- ds.copy-small: Loading...
 if: { !1-1-meeting-page.state.inside-meeting }
@@ -89,7 +91,7 @@ $on-click$: $control-bar.state.disable-screen-share()
 icon: monitor-arrow-up
 kind: primary
 
--- ds.phosphor-icon-button:
+/-- ds.phosphor-icon-button:
 $on-click$: $ftd.toggle($a = $grid.share-screen)
 icon: monitor-arrow-up
 kind: primary

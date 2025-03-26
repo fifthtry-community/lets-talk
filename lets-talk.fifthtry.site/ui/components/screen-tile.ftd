@@ -4,13 +4,19 @@
 ;;; Can also be used for `state#self` since that is also of type `state#participant`
 -- component screen-tile:
 state.participant user:
+optional ftd.resizing width:
+optional ftd.resizing height:
+optional ftd.background background:
 
 -- ftd.video:
 id: $make-id(id = $screen-tile.user.id)
 src: $ftd.empty
 autoplay: true ;; This is required! otherwise the MediaStream set by javascript won't play
 controls: false
-width.fixed.px: 400
+width if { screen-tile.width }: $screen-tile.width
+width.fixed.px if { !screen-tile.width }: 400
+height if { screen-tile.height }: $screen-tile.height
+background if { screen-tile.background }: $screen-tile.background
 
 -- end: screen-tile
 
