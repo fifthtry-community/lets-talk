@@ -54,15 +54,10 @@ css: $assets.files.assets.styles.grid.css
 -- end: simple
 
 
-;;; An active participant is the one who's sharing their screen
-;;; If multiple participants are sharing their screen then we show a list and
-;;; then the user can click on one of them which will set this `active-participant`
-;;; value to associated participant.
--- optional state.participant active-participant:
-
 ;;; A grid suitable for 1:1 video meetings with support for an additional
 ;;; screen sharing view
 -- component one-one:
+optional state.participant active-participant:
 state.participant list participants:
 state.participant self:
 integer participant-count:
@@ -79,8 +74,8 @@ inset: $ds.spaces.inset-wide.medium-zero
     margin: $ds.spaces.vertical-gap.zero
 
     -- lets-talk.screen-tile:
-    user: $active-participant
-    if: { active-participant }
+    user: $one-one.active-participant
+    if: { one-one.active-participant }
     width: fill-container
     height.fixed.calc: 100vh - 32vh
     background.solid: black
@@ -91,22 +86,22 @@ inset: $ds.spaces.inset-wide.medium-zero
     if: { one-one.participant-count - 1 > 0 }
     user: $one-one.participants.0
     width: fill-container
-    height.fixed.calc if { !active-participant }: 100vh - 16vh
-    width.fixed.px if { active-participant }: 177
-    height.fixed.px if { active-participant }: 100
-    border-radius.px if { active-participant }: 12
+    height.fixed.calc if { !one-one.active-participant }: 100vh - 16vh
+    width.fixed.px if { one-one.active-participant }: 177
+    height.fixed.px if { one-one.active-participant }: 100
+    border-radius.px if { one-one.active-participant }: 12
     background.solid: black
 
     -- lets-talk.video-tile:
     user: $one-one.self
     width.fixed.px: 284
     height.fixed.px: 160
-    width.fixed.px if { active-participant }: 177
-    height.fixed.px if { active-participant }: 100
-    anchor if { !active-participant }: parent
-    right.px if { !active-participant }: 0
-    bottom.px if { !active-participant }: 0
-    z-index if { !active-participant }: 5
+    width.fixed.px if { one-one.active-participant }: 177
+    height.fixed.px if { one-one.active-participant }: 100
+    anchor if { !one-one.active-participant }: parent
+    right.px if { !one-one.active-participant }: 0
+    bottom.px if { !one-one.active-participant }: 0
+    z-index if { !one-one.active-participant }: 5
     border-radius.px: 12
     background.solid: $inherited.colors.background.step-1
 
@@ -123,8 +118,8 @@ inset: $ds.spaces.inset-wide.medium-zero
     margin: $ds.spaces.vertical-gap.zero
 
     -- lets-talk.screen-tile:
-    user: $active-participant
-    if: { active-participant }
+    user: $one-one.active-participant
+    if: { one-one.active-participant }
     width: fill-container
     height.fixed.calc: 100vh - 34vh
     background.solid: black
@@ -135,22 +130,22 @@ inset: $ds.spaces.inset-wide.medium-zero
     if: { one-one.participant-count - 1 > 0 }
     user: $one-one.participants.0
     width: fill-container
-    width.fixed.px if { active-participant }: 177
-    height.fixed.px if { active-participant }: 100
-    border-radius.px if { active-participant }: 12
-    height.fixed.calc if { !active-participant }: 100vh - 16vh
+    width.fixed.px if { one-one.active-participant }: 177
+    height.fixed.px if { one-one.active-participant }: 100
+    border-radius.px if { one-one.active-participant }: 12
+    height.fixed.calc if { !one-one.active-participant }: 100vh - 16vh
     background.solid: black
 
     -- lets-talk.video-tile:
     user: $one-one.self
     width.fixed.px: 160
     height.fixed.px: 160
-    width.fixed.px if { active-participant }: 177
-    height.fixed.px if { active-participant }: 100
-    anchor if { !active-participant }: parent
-    right.px if { !active-participant }: 0
-    bottom.px if { !active-participant }: 0
-    z-index if { !active-participant }: 5
+    width.fixed.px if { one-one.active-participant }: 177
+    height.fixed.px if { one-one.active-participant }: 100
+    anchor if { !one-one.active-participant }: parent
+    right.px if { !one-one.active-participant }: 0
+    bottom.px if { !one-one.active-participant }: 0
+    z-index if { !one-one.active-participant }: 5
     border-radius.px: 12
     background.solid: $inherited.colors.background.step-1
 

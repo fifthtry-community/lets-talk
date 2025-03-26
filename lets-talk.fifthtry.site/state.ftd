@@ -41,6 +41,12 @@
 ;;; This is null **only** when [inside-meeting] is false
 -- optional participant $self:
 
+;;; An active participant is the one who's sharing their screen
+;;; If multiple participants are sharing their screen then we show a list and
+;;; then the user can click on one of them which will set this `active-participant`
+;;; value to associated participant.
+-- optional participant $active-participant:
+
 ;; TODO: support profile picture
 -- record participant:
 string id:
@@ -92,6 +98,8 @@ boolean $meeting-initialized: $meeting-initialized
 optional string $meeting-title: $meeting-title
 participant $self: $self
 participant list $participants: $participants
+participant list $participants: $participants
+optional participant $active-participant: $active-participant
 boolean auto-join:
 js: $assets.files.js.build.js
 
