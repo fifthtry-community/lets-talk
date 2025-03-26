@@ -1,11 +1,11 @@
 -- import: fastn/processors as pr
 -- import: lets-talk.fifthtry.site/storybook/dummy-state
 
+-- import: lets-talk.fifthtry.site/ui/components/grid
+-- import: lets-talk.fifthtry.site/ui/components/context-box
+
 -- import: lets-talk.fifthtry.site/state
 -- import: lets-talk.fifthtry.site/assets
-
--- boolean $share-screen: false
--- boolean $open-chat: false
 
 ;; NOTE: If you're overriding this component then make sure to call
 ;; `lets-talk.initialize-meeting` with a `meeting-id` in your component
@@ -27,13 +27,12 @@ meeting-id: $1-1-meeting-page.meeting-id
 meeting-title: $1-1-meeting-page.state.meeting-title
 participant-count: $1-1-meeting-page.state.participant-count
 
--- grid:
+-- grid.one-one:
 
 -- ds.copy-small: Loading...
 if: { !1-1-meeting-page.state.inside-meeting }
 
--- chat:
-if: { open-chat }
+-- context-box.simple:
 
 -- control-bar:
 if: { 1-1-meeting-page.state.self != NULL }
@@ -43,158 +42,6 @@ self: $1-1-meeting-page.state.self
 -- end: ds.page
 
 -- end: 1-1-meeting-page
-
-
-
-
--- component grid:
-
--- ds.column:
-classes: grid
-css: $assets.files.assets.styles.grid.css
-inset: $ds.spaces.inset-wide.medium-zero
-
-    -- ftd.desktop:
-
-    -- ds.column:
-    inset: $ds.spaces.inset-square.zero
-    margin: $ds.spaces.vertical-gap.zero
-
-    -- ftd.video:
-    if: { share-screen }
-    src: $assets.files.assets.video.mp4
-    width: fill-container
-    height.fixed.calc: 100vh - 32vh
-    controls: false
-    background.solid: pink
-
-    -- ds.row:
-
-    -- ftd.video:
-    src: $assets.files.assets.video.mp4
-    width: fill-container
-    width.fixed.px if { share-screen }: 100
-    height.fixed.px if { share-screen }: 100
-    height.fixed.calc if { !share-screen }: 100vh - 16vh
-    border-radius.px if { share-screen }: 12
-    controls: false
-    background.solid if { !share-screen }: $inherited.colors.background.step-1
-
-    -- ftd.video:
-    src: $assets.files.assets.video.mp4
-    width.fixed.px: 160
-    height.fixed.px: 160
-    width.fixed.px if { share-screen }: 100
-    height.fixed.px if { share-screen }: 100
-    controls: false
-    anchor if { !share-screen }: parent
-    right.px if { !share-screen }: 0
-    bottom.px if { !share-screen }: 0
-    z-index if { !share-screen }: 5
-    border-radius.px: 12
-
-    -- end: ds.row
-
-    -- end: ds.column
-
-    -- end: ftd.desktop
-
-    -- ftd.mobile:
-
-    -- ds.column:
-    inset: $ds.spaces.inset-square.zero
-    margin: $ds.spaces.vertical-gap.zero
-
-    -- ftd.video:
-    if: { share-screen }
-    src: $assets.files.assets.video.mp4
-    width: fill-container
-    height.fixed.calc: 100vh - 34vh
-    controls: false
-    background.solid: pink
-
-    -- ds.row:
-
-	-- ftd.video:
-    src: $assets.files.assets.video.mp4
-    width: fill-container
-    width.fixed.px if { share-screen }: 100
-    height.fixed.px if { share-screen }: 100
-    height.fixed.calc if { !share-screen }: 100vh - 16vh
-    border-radius.px if { share-screen }: 12
-    controls: false
-    background.solid: $inherited.colors.background.step-1
-
-    -- ftd.video:
-    src: $assets.files.assets.video.mp4
-    width.fixed.px: 160
-    height.fixed.px: 160
-    width.fixed.px if { share-screen }: 100
-    height.fixed.px if { share-screen }: 100
-    controls: false
-    anchor if { !share-screen }: parent
-    right.px if { !share-screen }: 0
-    bottom.px if { !share-screen }: 0
-    z-index if { !share-screen }: 5
-    border-radius.px: 12
-
-    -- end: ds.row
-
-    -- end: ds.column
-
-    -- end: ftd.mobile
-
--- end: ds.column
-
--- end: grid
-
-
-
-
-
-
-
-
-
--- component chat:
-
--- ftd.column:
-anchor: parent
-right.px: 20
-right.px if { ftd.device == "mobile" }: 8
-top.px: 20
-background.solid: $inherited.colors.background.step-2
-z-index: 99999999999
-width.fixed.percent: 24
-width.fixed.percent if { ftd.device == "mobile" }: 96
-padding.px: 24
-border-radius.px: 4
-min-height.fixed.vh: 96
-
--- ds.row:
-spacing: $ds.spaces.horizontal-gap.space-between
-border: $ds.borders.bottom.small
-radius: $ds.radius.zero
-
--- ds.copy-regular: Chat
-color: $inherited.colors.text-strong
-
--- phosphor.bold: x
-size: 18
-color: white
-$on-click$: $ftd.toggle($a = $open-chat)
-
--- end: ds.row
-
--- end: ftd.column
-
--- end: chat
-
-
-
-
-
-
 
 
 
@@ -243,16 +90,16 @@ icon: monitor-arrow-up
 kind: primary
 
 -- ds.phosphor-icon-button:
-$on-click$: $ftd.toggle($a = $share-screen)
+$on-click$: $ftd.toggle($a = $grid.share-screen)
 icon: monitor-arrow-up
 kind: primary
-kind if { !share-screen }: secondary
+kind if { !grid.share-screen }: secondary
 
 -- ds.phosphor-icon-button:
-$on-click$: $ftd.toggle($a = $open-chat)
+$on-click$: $ftd.toggle($a = $context-box.open)
 icon: chat-circle
 kind: primary
-kind if { !open-chat }: secondary
+kind if { !context-box.open }: secondary
 
 -- ds.phosphor-icon-button:
 icon: phone-slash
@@ -262,18 +109,6 @@ $on-click$: $control-bar.state.leave-meeting()
 -- end: ds.row
 
 -- end: control-bar
-
-
-
-
-
-
-
-
-
-
-
-
 
 ;; FIXME: these functions do not work yet. They give hardcoded values in calc.js
 -- decimal get-main-area-width():
