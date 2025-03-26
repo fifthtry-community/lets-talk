@@ -106,15 +106,7 @@ class Talk extends HTMLElement {
     updateSelf() {
         /** @type {DyteClient} */
         const meeting = window.meeting;
-
-        const self = {
-            id: meeting.self.id,
-            name: meeting.self.name,
-            mic: meeting.self.audioEnabled,
-            video: meeting.self.videoEnabled,
-            screen: meeting.self.screenShareEnabled,
-        }
-
+        const self = makeParticipant(meeting.self);
         this.data.self.set(fastn.recordInstance(self));
     }
 
@@ -125,13 +117,7 @@ class Talk extends HTMLElement {
         /** @type {DyteClient} */
         const meeting = window.meeting;
         for (const [_id, p] of meeting.participants.joined) {
-            this.data.participants.push(fastn.recordInstance({
-                id: p.id,
-                name: p.name,
-                mic: p.audioEnabled,
-                video: p.videoEnabled,
-                screen: p.screenShareEnabled,
-            }))
+            this.data.participants.push(fastn.recordInstance(makeParticipant(p)));
         }
     }
 
@@ -186,6 +172,25 @@ class Talk extends HTMLElement {
             }
         }
     }
+
+/**
+ * @typedef {import('@dytesdk/web-core').DyteParticipant} DyteParticipant
+ * @typedef {import('@dytesdk/web-core').DyteSelf} DyteSelf
+ *
+ * @typedef {{id: string, name: string, mic: boolean, video: boolean, screen: boolean}} LetsTalkParticipant
+ */
+
+/** @param {DyteParticipant | DyteSelf} p
+ *  @returns {LetsTalkParticipant}
+ * */
+function makeParticipant(p) {
+    return {
+        id: p.id,
+        name: p.name,
+        mic: p.audioEnabled,
+        video: p.videoEnabled,
+        screen: p.screenShareEnabled,
+    };
 }
 
 if (!window.customElements.get('talk-app')) {
