@@ -149,12 +149,15 @@ class Talk extends HTMLElement {
     }
 
     refreshSelfVideoFeed() {
+        /** @type {DyteClient} */
+        const meeting = window.meeting;
+
         if (meeting.self.videoEnabled) {
             try {
                 const id = meeting.self.id;
                 console.info(`Setting video stream for self#${id}`);
                 // NOTE: audio of everyone is handled by dyte-participants-audio component
-                const stream = new MediaStream([window.meeting.self.videoTrack]);
+                const stream = new MediaStream([meeting.self.videoTrack]);
                 document.querySelector(`video[id='${id}']`).srcObject = stream;
             } catch (e) {
                 console.error("Error setting video stream: ", e);
