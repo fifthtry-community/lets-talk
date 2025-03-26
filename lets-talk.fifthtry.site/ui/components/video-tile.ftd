@@ -4,12 +4,32 @@
 ;;; Can also be used for `state#self` since that is also of type `state#participant`
 -- component video-tile:
 state.participant user:
+optional ftd.resizing width:
+optional ftd.resizing height:
+optional ftd.background background:
+optional ftd.anchor anchor:
+optional ftd.length top:
+optional ftd.length bottom:
+optional ftd.length left:
+optional ftd.length right:
+optional ftd.length border-radius:
+optional integer z-index:
 
 -- ftd.video:
 id: $video-tile.user.id
 src: $ftd.empty
 autoplay: true ;; This is required! otherwise the MediaStream set by javascript won't play
 controls: false
-width.fixed.px: 400
+width if { video-tile.width }: $video-tile.width
+width.fixed.px if { !video-tile.width }: 400
+height if { video-tile.height }: $video-tile.height
+background if { video-tile.background }: $video-tile.background
+anchor if { video-tile.anchor }: $video-tile.anchor
+top if { video-tile.top }: $video-tile.top
+bottom if { video-tile.bottom }: $video-tile.bottom
+left if { video-tile.left }: $video-tile.left
+right if { video-tile.right }: $video-tile.right
+z-index if { video-tile.z-index }: $video-tile.z-index
+border-radius if { video-tile.border-radius }: $video-tile.border-radius
 
 -- end: video-tile

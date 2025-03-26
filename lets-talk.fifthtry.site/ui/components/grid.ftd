@@ -65,6 +65,7 @@ css: $assets.files.assets.styles.grid.css
 -- component one-one:
 state.participant list participants:
 state.participant self:
+integer participant-count:
 
 -- ds.column:
 classes: grid
@@ -79,35 +80,35 @@ inset: $ds.spaces.inset-wide.medium-zero
 
     -- lets-talk.screen-tile:
     user: $active-participant
-    if: { active-participant != NULL }
+    if: { active-participant }
     width: fill-container
     height.fixed.calc: 100vh - 32vh
     background.solid: black
 
     -- ds.row:
 
-    -- ftd.video:
-    src: $assets.files.assets.video.mp4
+    -- lets-talk.video-tile:
+    if: { one-one.participant-count - 1 > 0 }
+    user: $one-one.participants.0
     width: fill-container
-    width.fixed.px if { active-participant }: 100
-    height.fixed.px if { active-participant }: 100
     height.fixed.calc if { !active-participant }: 100vh - 16vh
-    border-radius.px if { active-participant }: 12
-    controls: false
-    background.solid if { !active-participant }: $inherited.colors.background.step-1
-
-    -- ftd.video:
-    src: $assets.files.assets.video.mp4
-    width.fixed.px: 160
-    height.fixed.px: 160
-    width.fixed.px if { active-participant }: 100
+    width.fixed.px if { active-participant }: 177
     height.fixed.px if { active-participant }: 100
-    controls: false
+    border-radius.px if { active-participant }: 12
+    background.solid: black
+
+    -- lets-talk.video-tile:
+    user: $one-one.self
+    width.fixed.px: 284
+    height.fixed.px: 160
+    width.fixed.px if { active-participant }: 177
+    height.fixed.px if { active-participant }: 100
     anchor if { !active-participant }: parent
     right.px if { !active-participant }: 0
     bottom.px if { !active-participant }: 0
     z-index if { !active-participant }: 5
     border-radius.px: 12
+    background.solid: $inherited.colors.background.step-1
 
     -- end: ds.row
 
@@ -121,38 +122,37 @@ inset: $ds.spaces.inset-wide.medium-zero
     inset: $ds.spaces.inset-square.zero
     margin: $ds.spaces.vertical-gap.zero
 
-    -- ftd.video:
+    -- lets-talk.screen-tile:
+    user: $active-participant
     if: { active-participant }
-    src: $assets.files.assets.video.mp4
     width: fill-container
     height.fixed.calc: 100vh - 34vh
-    controls: false
-    background.solid: pink
+    background.solid: black
 
     -- ds.row:
 
-	-- ftd.video:
-    src: $assets.files.assets.video.mp4
+    -- lets-talk.video-tile:
+    if: { one-one.participant-count - 1 > 0 }
+    user: $one-one.participants.0
     width: fill-container
-    width.fixed.px if { active-participant }: 100
+    width.fixed.px if { active-participant }: 177
     height.fixed.px if { active-participant }: 100
-    height.fixed.calc if { !active-participant }: 100vh - 16vh
     border-radius.px if { active-participant }: 12
-    controls: false
-    background.solid: $inherited.colors.background.step-1
+    height.fixed.calc if { !active-participant }: 100vh - 16vh
+    background.solid: black
 
-    -- ftd.video:
-    src: $assets.files.assets.video.mp4
+    -- lets-talk.video-tile:
+    user: $one-one.self
     width.fixed.px: 160
     height.fixed.px: 160
-    width.fixed.px if { active-participant }: 100
+    width.fixed.px if { active-participant }: 177
     height.fixed.px if { active-participant }: 100
-    controls: false
     anchor if { !active-participant }: parent
     right.px if { !active-participant }: 0
     bottom.px if { !active-participant }: 0
     z-index if { !active-participant }: 5
     border-radius.px: 12
+    background.solid: $inherited.colors.background.step-1
 
     -- end: ds.row
 
