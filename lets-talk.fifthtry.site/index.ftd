@@ -13,9 +13,6 @@ export: screen-tile
 -- import: lets-talk.fifthtry.site/ui/components/control-bar as _
 export: control-bar
 
--- import: lets-talk.fifthtry.site/ui/components/grid as _
-export: grid
-
 -- import: lets-talk.fifthtry.site/ui/components/meeting-header as _
 export: meeting-header
 

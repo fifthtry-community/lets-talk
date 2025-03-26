@@ -3,7 +3,9 @@
 
 ;; WARN: width and height are buggy. See calc.js file for more context
 ;; Don't rely on them yet
--- component grid:
+;;; A simple grid that lays out video tiles in a single row
+;;; Every tile has a fixed size
+-- component simple:
 decimal width:
 decimal height:
 state.participant list participants:
@@ -20,11 +22,11 @@ css: $assets.files.assets.styles.grid.css
     width: hug-content
 
     -- lets-talk.video-tile:
-    user: $grid.self
+    user: $simple.self
 
     -- lets-talk.video-tile:
     user: $p
-    for: p in $grid.participants
+    for: p in $simple.participants
 
     -- end: ds.row
 
@@ -37,11 +39,11 @@ css: $assets.files.assets.styles.grid.css
     width: hug-content
 
     -- lets-talk.video-tile:
-    user: $grid.self
+    user: $simple.self
 
     -- lets-talk.video-tile:
     user: $p
-    for: p in $grid.participants
+    for: p in $simple.participants
 
     -- end: ds.column
 
@@ -49,4 +51,109 @@ css: $assets.files.assets.styles.grid.css
 
 -- end: ds.column
 
--- end: grid
+-- end: simple
+
+-- boolean $share-screen: false
+
+;;; A grid suitable for 1:1 video meetings with support for an additional
+;;; screen sharing view
+-- component one-one:
+
+-- ds.column:
+classes: grid
+css: $assets.files.assets.styles.grid.css
+inset: $ds.spaces.inset-wide.medium-zero
+
+    -- ftd.desktop:
+
+    -- ds.column:
+    inset: $ds.spaces.inset-square.zero
+    margin: $ds.spaces.vertical-gap.zero
+
+    -- ftd.video:
+    if: { share-screen }
+    src: $assets.files.assets.video.mp4
+    width: fill-container
+    height.fixed.calc: 100vh - 32vh
+    controls: false
+    background.solid: pink
+
+    -- ds.row:
+
+    -- ftd.video:
+    src: $assets.files.assets.video.mp4
+    width: fill-container
+    width.fixed.px if { share-screen }: 100
+    height.fixed.px if { share-screen }: 100
+    height.fixed.calc if { !share-screen }: 100vh - 16vh
+    border-radius.px if { share-screen }: 12
+    controls: false
+    background.solid if { !share-screen }: $inherited.colors.background.step-1
+
+    -- ftd.video:
+    src: $assets.files.assets.video.mp4
+    width.fixed.px: 160
+    height.fixed.px: 160
+    width.fixed.px if { share-screen }: 100
+    height.fixed.px if { share-screen }: 100
+    controls: false
+    anchor if { !share-screen }: parent
+    right.px if { !share-screen }: 0
+    bottom.px if { !share-screen }: 0
+    z-index if { !share-screen }: 5
+    border-radius.px: 12
+
+    -- end: ds.row
+
+    -- end: ds.column
+
+    -- end: ftd.desktop
+
+    -- ftd.mobile:
+
+    -- ds.column:
+    inset: $ds.spaces.inset-square.zero
+    margin: $ds.spaces.vertical-gap.zero
+
+    -- ftd.video:
+    if: { share-screen }
+    src: $assets.files.assets.video.mp4
+    width: fill-container
+    height.fixed.calc: 100vh - 34vh
+    controls: false
+    background.solid: pink
+
+    -- ds.row:
+
+	-- ftd.video:
+    src: $assets.files.assets.video.mp4
+    width: fill-container
+    width.fixed.px if { share-screen }: 100
+    height.fixed.px if { share-screen }: 100
+    height.fixed.calc if { !share-screen }: 100vh - 16vh
+    border-radius.px if { share-screen }: 12
+    controls: false
+    background.solid: $inherited.colors.background.step-1
+
+    -- ftd.video:
+    src: $assets.files.assets.video.mp4
+    width.fixed.px: 160
+    height.fixed.px: 160
+    width.fixed.px if { share-screen }: 100
+    height.fixed.px if { share-screen }: 100
+    controls: false
+    anchor if { !share-screen }: parent
+    right.px if { !share-screen }: 0
+    bottom.px if { !share-screen }: 0
+    z-index if { !share-screen }: 5
+    border-radius.px: 12
+
+    -- end: ds.row
+
+    -- end: ds.column
+
+    -- end: ftd.mobile
+
+-- end: ds.column
+
+-- end: one-one

@@ -3,6 +3,8 @@
 -- import: lets-talk.fifthtry.site/state
 -- import: lets-talk.fifthtry.site/assets
 
+-- import: lets-talk.fifthtry.site/ui/components/grid
+
 ;; NOTE: If you're overriding this component then make sure to call
 ;; `lets-talk.initialize-meeting` with a `meeting-id` in your component
 ;; definition. Nothing will work without it! Read the state.ftd in this project
@@ -22,7 +24,7 @@ meeting-id: $meeting-page.meeting-id
 meeting-title: $meeting-page.state.meeting-title
 participant-count: $meeting-page.state.participant-count
 
--- lets-talk.grid:
+-- grid.simple:
 if: { meeting-page.state.self != NULL }
 height: $get-main-area-height()
 width: $get-main-area-width()
