@@ -73,12 +73,42 @@ inset: $ds.spaces.inset-wide.medium-zero
     inset: $ds.spaces.inset-square.zero
     margin: $ds.spaces.vertical-gap.zero
 
+    ;; TODO: on mobile, make it a column
+    ;; buttons should be thin and the icon and text should appear in the same row
+    ;; the video screen should follow right after it
+    ;; the button container will have full width but 8vh height
+    -- ds.row:
+    if: { one-one.active-participant }
+    height.fixed.calc: 100vh - 32vh
+    align-content: top-center
+
+    -- ds.column:
+    width.fixed.vw: 6
+    min-width.fixed.px: 96
+    height: fill-container
+    inset: $ds.spaces.inset-square.zero
+    align-content: top-center
+
+    -- ds.phosphor-icon-button: Meenu
+    width: full
+    icon: monitor
+    icon-size: 32
+
+    -- ds.phosphor-icon-button: Siddhant
+    width: full
+    icon: monitor
+    icon-size: 32
+    kind: secondary
+
+    -- end: ds.column
+
     -- lets-talk.screen-tile:
     user: $one-one.active-participant
-    if: { one-one.active-participant }
     width: fill-container
-    height.fixed.calc: 100vh - 32vh
+    height: fill-container
     background.solid: black
+
+    -- end: ds.row
 
     -- ds.row:
 
