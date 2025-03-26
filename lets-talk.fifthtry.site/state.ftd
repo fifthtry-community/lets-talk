@@ -34,6 +34,7 @@
 ;;; feed.
 -- participant list $participants:
 
+;;; Number of participants (including self!) in the meeting
 -- integer participant-count: $length(a = $participants)
 
 ;;; Details about yourself in the meeting

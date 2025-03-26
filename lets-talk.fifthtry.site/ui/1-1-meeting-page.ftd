@@ -30,6 +30,7 @@ participant-count: $1-1-meeting-page.state.participant-count
 -- grid.one-one:
 participants: $1-1-meeting-page.state.participants
 self: $1-1-meeting-page.state.self
+participant-count: $1-1-meeting-page.state.participant-count
 
 -- ds.copy-small: Loading...
 if: { !1-1-meeting-page.state.inside-meeting }
