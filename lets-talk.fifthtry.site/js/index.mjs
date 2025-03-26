@@ -65,6 +65,8 @@ class Talk extends HTMLElement {
 
             console.info("self update: ", event, args);
             this.updateSelf();
+            this.updateActiveParticipant();
+            this.maybeClearActiveParticipant();
 
             setTimeout(() => {
                 this.refreshSelfVideoFeed();
@@ -87,9 +89,12 @@ class Talk extends HTMLElement {
 
             console.info("participant update: ", event, args);
             this.updateParticipantsList();
+            this.updateActiveParticipant();
+            this.maybeClearActiveParticipant();
+
             setTimeout(() => {
                 this.refreshSelfVideoFeed();
-                this.refreshParticipantVideoStreams(); 
+                this.refreshParticipantVideoStreams();
             }, 0);
         });
 
@@ -175,6 +180,70 @@ class Talk extends HTMLElement {
             }
         }
     }
+
+    /**
+     * Set the first participant with video enabled
+     *
+     * we check on `meeting.self` too. The UI can choose to not show your
+     * screen share to yourself and instead show a button to stop sharing
+     * based on:
+     * ```js
+     * if (activeParticipant.id === self.id) { showStopSharingButton()  }
+     * else { showScreenShareFeed()  }
+     * ```
+     */
+    updateActiveParticipant() {
+        // don't set if it's already set
+        if (this.data.active_participant.get()) {
+            console.info("Active participant already set. Ignoring");
+            return;
+        }
+
+        /** @type {DyteClient} */
+        const meeting = window.meeting;
+
+        for (const p of meeting.participants.joined.toArray()) {
+            if (p.screenShareEnabled) {
+                console.info(`Setting active participant#${p.id}`);
+                this.data.active_participant.set(fastn.recordInstance(makeParticipant(p)));
+                return;
+            }
+        }
+
+        console.info("No participant with video enabled found. Checking self");
+
+        if (meeting.self.screenShareEnabled) {
+            console.info(`Setting self as active participant#${meeting.self.id}`);
+            this.data.active_participant.set(fastn.recordInstance(makeParticipant(meeting.self)));
+        }
+    }
+
+    /** Clear active participant if no one is sharing their screen */
+    maybeClearActiveParticipant() {
+        if (!this.data.active_participant.get()) {
+            console.info("Active participant already clear. Ignoring");
+            return;
+        }
+
+        /** @type {DyteClient} */
+        const meeting = window.meeting;
+
+        for (const p of meeting.participants.joined.toArray()) {
+            if (p.screenShareEnabled) {
+                console.info(`Active participant#${p.id} found. Ignoring`);
+                return;
+            }
+        }
+
+        if (meeting.self.screenShareEnabled) {
+            console.info(`Self is active participant#${meeting.self.id}. Ignoring`);
+            return;
+        }
+
+        console.info("Clearing active participant");
+        this.data.active_participant.set(null);
+    }
+}
 
 /**
  * @typedef {import('@dytesdk/web-core').DyteParticipant} DyteParticipant
