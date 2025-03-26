@@ -53,11 +53,18 @@ css: $assets.files.assets.styles.grid.css
 
 -- end: simple
 
--- boolean $share-screen: false
+
+;;; An active participant is the one who's sharing their screen
+;;; If multiple participants are sharing their screen then we show a list and
+;;; then the user can click on one of them which will set this `active-participant`
+;;; value to associated participant.
+-- optional state.participant active-participant:
 
 ;;; A grid suitable for 1:1 video meetings with support for an additional
 ;;; screen sharing view
 -- component one-one:
+state.participant list participants:
+state.participant self:
 
 -- ds.column:
 classes: grid
@@ -70,37 +77,36 @@ inset: $ds.spaces.inset-wide.medium-zero
     inset: $ds.spaces.inset-square.zero
     margin: $ds.spaces.vertical-gap.zero
 
-    -- ftd.video:
-    if: { share-screen }
-    src: $assets.files.assets.video.mp4
+    -- lets-talk.screen-tile:
+    user: $active-participant
+    if: { active-participant != NULL }
     width: fill-container
     height.fixed.calc: 100vh - 32vh
-    controls: false
-    background.solid: pink
+    background.solid: black
 
     -- ds.row:
 
     -- ftd.video:
     src: $assets.files.assets.video.mp4
     width: fill-container
-    width.fixed.px if { share-screen }: 100
-    height.fixed.px if { share-screen }: 100
-    height.fixed.calc if { !share-screen }: 100vh - 16vh
-    border-radius.px if { share-screen }: 12
+    width.fixed.px if { active-participant }: 100
+    height.fixed.px if { active-participant }: 100
+    height.fixed.calc if { !active-participant }: 100vh - 16vh
+    border-radius.px if { active-participant }: 12
     controls: false
-    background.solid if { !share-screen }: $inherited.colors.background.step-1
+    background.solid if { !active-participant }: $inherited.colors.background.step-1
 
     -- ftd.video:
     src: $assets.files.assets.video.mp4
     width.fixed.px: 160
     height.fixed.px: 160
-    width.fixed.px if { share-screen }: 100
-    height.fixed.px if { share-screen }: 100
+    width.fixed.px if { active-participant }: 100
+    height.fixed.px if { active-participant }: 100
     controls: false
-    anchor if { !share-screen }: parent
-    right.px if { !share-screen }: 0
-    bottom.px if { !share-screen }: 0
-    z-index if { !share-screen }: 5
+    anchor if { !active-participant }: parent
+    right.px if { !active-participant }: 0
+    bottom.px if { !active-participant }: 0
+    z-index if { !active-participant }: 5
     border-radius.px: 12
 
     -- end: ds.row
@@ -116,7 +122,7 @@ inset: $ds.spaces.inset-wide.medium-zero
     margin: $ds.spaces.vertical-gap.zero
 
     -- ftd.video:
-    if: { share-screen }
+    if: { active-participant }
     src: $assets.files.assets.video.mp4
     width: fill-container
     height.fixed.calc: 100vh - 34vh
@@ -128,10 +134,10 @@ inset: $ds.spaces.inset-wide.medium-zero
 	-- ftd.video:
     src: $assets.files.assets.video.mp4
     width: fill-container
-    width.fixed.px if { share-screen }: 100
-    height.fixed.px if { share-screen }: 100
-    height.fixed.calc if { !share-screen }: 100vh - 16vh
-    border-radius.px if { share-screen }: 12
+    width.fixed.px if { active-participant }: 100
+    height.fixed.px if { active-participant }: 100
+    height.fixed.calc if { !active-participant }: 100vh - 16vh
+    border-radius.px if { active-participant }: 12
     controls: false
     background.solid: $inherited.colors.background.step-1
 
@@ -139,13 +145,13 @@ inset: $ds.spaces.inset-wide.medium-zero
     src: $assets.files.assets.video.mp4
     width.fixed.px: 160
     height.fixed.px: 160
-    width.fixed.px if { share-screen }: 100
-    height.fixed.px if { share-screen }: 100
+    width.fixed.px if { active-participant }: 100
+    height.fixed.px if { active-participant }: 100
     controls: false
-    anchor if { !share-screen }: parent
-    right.px if { !share-screen }: 0
-    bottom.px if { !share-screen }: 0
-    z-index if { !share-screen }: 5
+    anchor if { !active-participant }: parent
+    right.px if { !active-participant }: 0
+    bottom.px if { !active-participant }: 0
+    z-index if { !active-participant }: 5
     border-radius.px: 12
 
     -- end: ds.row
