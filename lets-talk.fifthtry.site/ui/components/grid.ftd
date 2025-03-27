@@ -76,10 +76,6 @@ inset: $ds.spaces.inset-wide.medium-zero
     inset: $ds.spaces.inset-square.zero
     margin: $ds.spaces.vertical-gap.zero
 
-    ;; TODO: on mobile, make it a column
-    ;; buttons should be thin and the icon and text should appear in the same row
-    ;; the video screen should follow right after it
-    ;; the button container will have full width but 8vh height
     -- ds.row:
     if: { one-one.active-participant }
     height.fixed.calc: 100vh - 32vh
@@ -140,12 +136,28 @@ inset: $ds.spaces.inset-wide.medium-zero
     inset: $ds.spaces.inset-square.zero
     margin: $ds.spaces.vertical-gap.zero
 
-    -- lets-talk.screen-tile:
-    user: $one-one.active-participant
+    -- ds.column:
     if: { one-one.active-participant }
+    height.fixed.calc: 100vh - 32vh
+    align-content: top-center
+
+    -- lets-talk.screen-share-switch:
+    active-participant: $one-one.active-participant
+    participants: $one-one.participants
+    self: $one-one.self
+
+    -- lets-talk.screen-tile:
+    if: { one-one.active-participant.id != one-one.self.id }
+    user: $one-one.active-participant
     width: fill-container
-    height.fixed.calc: 100vh - 34vh
+    height: fill-container
     background.solid: black
+
+    -- lets-talk.self-screen-share:
+    if: { one-one.active-participant.id == one-one.self.id }
+    state: $one-one.state
+
+    -- end: ds.column
 
     -- ds.row:
 
