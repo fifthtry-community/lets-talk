@@ -1,17 +1,19 @@
--- boolean $open: false
+-- import: lets-talk.fifthtry.site/storybook/dummy-state
 
-;; TODO: add props to take `ui` children
 ;;; A simple context box that can render any component in a modal on your meeting page
--- component simple:
+-- component context-box:
+module state: dummy-state
+caption title: Context Box
+children content:
 
 -- ftd.column:
-if: { open }
+if: { context-box.state.context-box-open }
 anchor: parent
 right.px: 20
 right.px if { ftd.device == "mobile" }: 8
 top.px: 20
 background.solid: $inherited.colors.background.step-2
-z-index: 99999999999
+z-index: 9999
 width.fixed.percent: 24
 width.fixed.percent if { ftd.device == "mobile" }: 96
 padding.px: 24
@@ -20,19 +22,42 @@ min-height.fixed.vh: 96
 
 -- ds.row:
 spacing: $ds.spaces.horizontal-gap.space-between
+inset: $ds.spaces.inset-wide.small
 border: $ds.borders.bottom.small
 radius: $ds.radius.zero
 
--- ds.copy-regular: Chat
+-- ds.copy-regular: $context-box.title
 color: $inherited.colors.text-strong
 
--- phosphor.bold: x
-size: 18
-color: white
-$on-click$: $ftd.toggle($a = $open)
+-- ds.phosphor-icon-button:
+icon: x
+icon-size: 18
+kind: secondary
+$on-click$: $ftd.toggle($a = $context-box.state.context-box-open)
 
 -- end: ds.row
 
+-- ftd.column:
+children: $context-box.content
+
 -- end: ftd.column
 
--- end: simple
+-- end: ftd.column
+
+-- end: context-box
+
+
+-- component context-box-body:
+
+-- ds.column:
+
+-- ds.heading-small: Your content can appear here!
+
+-- ds.copy-small:
+
+Override `lets-talk.context-box-body` in your `lets-talk.ftd` file to change
+the content of this modal.
+
+-- end: ds.column
+
+-- end: context-box-body

@@ -56,6 +56,10 @@ boolean video:
 boolean screen:
 
 
+;;; Set this to `true` to render `context-box` modal component on your meeting page.
+-- boolean $context-box-open: false
+
+
 ;;; Read module docs to learn more
 ;;; `auto-join: true` don't show waiting area. The name/video/audio config can
 ;;; be set later. Set this to `false` if you want to create a waiting area view.

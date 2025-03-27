@@ -6,6 +6,8 @@
 -- component control-bar:
 state.participant self:
 module state: dummy-state
+boolean show-context-box-toggle: false
+string context-box-icon: scroll
 
 -- ds.row:
 inset: $ds.spaces.inset-square.medium
@@ -46,6 +48,13 @@ if: { control-bar.self.screen }
 $on-click$: $control-bar.state.disable-screen-share()
 icon: monitor-arrow-up
 kind: primary
+
+-- ds.phosphor-icon-button:
+if: { control-bar.show-context-box-toggle }
+$on-click$: $ftd.toggle($a = $control-bar.state.context-box-open)
+icon: $control-bar.context-box-icon
+kind: primary
+kind if { !control-bar.state.context-box-open }: secondary
 
 -- ds.phosphor-icon-button:
 icon: phone-slash
