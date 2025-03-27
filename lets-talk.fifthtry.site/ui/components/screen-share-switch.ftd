@@ -13,11 +13,11 @@ state.participant self:
     align-content: top-center
 
     ;; Render a button for self also if it's sharing screen
-    -- participant-button:
+    -- participant-button: You
     p: $screen-share-switch.self
     active-participant: $screen-share-switch.active-participant
 
-    -- participant-button:
+    -- participant-button: $p.name
     p: $p
     active-participant: $screen-share-switch.active-participant
     for: p in $screen-share-switch.participants
@@ -27,15 +27,16 @@ state.participant self:
 -- end: screen-share-switch
 
 -- component participant-button:
+caption name:
 state.participant p:
 state.participant active-participant:
 
     -- ftd.container:
 
-    ;; - Show "You" if yo're you
+    ;; TODO:
     ;; - add on-click
     ;; - show nothing if I click on my screen. maybe show a button
-    -- ds.phosphor-icon-button: $participant-button.p.name
+    -- ds.phosphor-icon-button: $participant-button.name
     if: { participant-button.p.screen }
     width: full
     icon: monitor
