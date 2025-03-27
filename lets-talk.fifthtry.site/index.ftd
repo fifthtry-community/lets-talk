@@ -52,6 +52,7 @@ An email to verify your account has been sent to your registered email address.
 -- lets-talk.dashboard-page: Dashboard
 past-sessions: $dummy.sessions
 
+-- ftd.image-src site-logo: $ds.site-logo
 
 -- record session:
 string id:

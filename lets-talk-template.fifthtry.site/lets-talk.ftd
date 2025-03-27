@@ -1,6 +1,8 @@
 -- import: lets-talk.fifthtry.site as o
 export: *
 
+-- import: lets-talk-template.fifthtry.site/assets
+
 ;; Line starting with ";;" are comments. Changing/Removing them will not do anything.
 
 
@@ -24,3 +26,5 @@ export: *
 ;;; New account signup must be verified before they're able to create meetings.
 ;;; WARN: Changing "true" to "false" is a security risk and should never be done ideally.
 -- boolean require-verified-accounts: true
+
+-- ftd.image-src site-logo: $assets.files.assets.logo.svg
