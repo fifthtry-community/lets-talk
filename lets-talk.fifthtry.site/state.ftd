@@ -158,3 +158,11 @@ disableScreenShare()
 participant list a:
 
 ftd.len(a) + 1
+
+;; NOTE: the __args__ hack because active_participant is not prefixed with it
+;; in the output. `p` does have this prefix
+-- void set-active-participant(p):
+participant p:
+participant active_participant: $active-participant
+
+__args__.active_participant.set(p)
