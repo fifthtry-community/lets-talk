@@ -13,6 +13,9 @@ export: screen-tile
 -- import: lets-talk.fifthtry.site/ui/components/control-bar as _
 export: control-bar
 
+-- import: lets-talk.fifthtry.site/ui/components/context-box as _
+export: context-box, context-box-body
+
 -- import: lets-talk.fifthtry.site/ui/components/screen-share-switch as _
 export: screen-share-switch
 

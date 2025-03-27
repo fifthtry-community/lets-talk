@@ -1,7 +1,6 @@
 -- import: fastn/processors as pr
 
 -- import: lets-talk.fifthtry.site/ui/components/grid
--- import: lets-talk.fifthtry.site/ui/components/context-box
 
 -- import: lets-talk.fifthtry.site/state
 -- import: lets-talk.fifthtry.site/assets
@@ -13,6 +12,7 @@
 -- component 1-1-meeting-page:
 module state: state
 string meeting-id:
+boolean show-context-box-toggle: true
 
 -- ds.page: $1-1-meeting-page.state.meeting-title
 margin: $ds.spaces.vertical-gap.zero
@@ -39,12 +39,18 @@ if: { !1-1-meeting-page.state.inside-meeting }
 
 ;; by default hidden
 ;; set `context-box.open` to `true` to see this modal appear
--- context-box.simple:
+-- lets-talk.context-box:
+state: $1-1-meeting-page.state
+
+    -- lets-talk.context-box-body:
+
+-- end: lets-talk.context-box
 
 -- lets-talk.control-bar:
 if: { 1-1-meeting-page.state.self != NULL }
 state: $1-1-meeting-page.state
 self: $1-1-meeting-page.state.self
+show-context-box-toggle: $1-1-meeting-page.show-context-box-toggle
 
 -- end: ds.page
 

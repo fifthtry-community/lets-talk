@@ -29,6 +29,15 @@ mic    : true
 video  : true
 screen : false
 
+;;; An active participant is the one who's sharing their screen
+;;; If multiple participants are sharing their screen then we show a list and
+;;; then the user can click on one of them which will set this `active-participant`
+;;; value to associated participant.
+-- optional participant $active-participant:
+
+;;; Set this to `true` to render `context-box` modal component on your meeting page.
+-- boolean $context-box-open: false
+
 -- record participant:
 string id:
 string name:

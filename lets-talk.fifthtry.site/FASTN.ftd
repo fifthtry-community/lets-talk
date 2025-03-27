@@ -14,7 +14,6 @@ provided-via: lets-talk.fifthtry.site/ds
 -- fastn.auto-import: lets-talk.fifthtry.site/ds
 -- fastn.auto-import: lets-auth.fifthtry.site as lets-auth
 -- fastn.auto-import: lets-talk.fifthtry.site as lets-talk
--- fastn.auto-import: svg-icons.fifthtry.site/phosphor as phosphor
 
 ;; TODO: add more migrations (cdp tables that store meeting/sessions)
 
