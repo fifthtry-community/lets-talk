@@ -10,7 +10,7 @@ inset: $ds.spaces.inset-square.medium
 height.fixed.vh: 8
 
 -- ftd.image:
-src: $ds.site-logo
+src: $lets-talk.site-logo
 width.fixed.px: 80
 height.fixed.px: 40
 
