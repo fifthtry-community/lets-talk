@@ -98,6 +98,13 @@ class Talk extends HTMLElement {
             }, 0);
         });
 
+        this.data.active_participant.on_change(() => {
+            setTimeout(() => {
+                this.refreshSelfVideoFeed();
+                this.refreshParticipantVideoStreams();
+            }, 0);
+        })
+
         if (this.data.auto_join?.get()) {
             console.info("Auto-joining meeting. Set auto-join in initialize-meeting to false to disable this");
             await window.meeting.join();

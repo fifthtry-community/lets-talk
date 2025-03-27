@@ -1,6 +1,8 @@
 -- import: lets-talk.fifthtry.site/state
 -- import: lets-talk.fifthtry.site/assets
 
+-- import: lets-talk.fifthtry.site/storybook/dummy-state
+
 ;; WARN: width and height are buggy. See calc.js file for more context
 ;; Don't rely on them yet
 ;;; A simple grid that lays out video tiles in a single row
@@ -58,6 +60,7 @@ css: $assets.files.assets.styles.grid.css
 ;;; screen sharing view
 -- component one-one:
 optional state.participant active-participant:
+module state: dummy-state
 state.participant list participants:
 state.participant self:
 integer participant-count:
@@ -88,10 +91,15 @@ inset: $ds.spaces.inset-wide.medium-zero
     self: $one-one.self
 
     -- lets-talk.screen-tile:
+    if: { one-one.active-participant.id != one-one.self.id }
     user: $one-one.active-participant
     width: fill-container
     height: fill-container
     background.solid: black
+
+    -- lets-talk.self-screen-share:
+    if: { one-one.active-participant.id == one-one.self.id }
+    state: $one-one.state
 
     -- end: ds.row
 
