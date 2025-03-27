@@ -16,6 +16,9 @@ export: control-bar
 -- import: lets-talk.fifthtry.site/ui/components/screen-share-switch as _
 export: screen-share-switch
 
+-- import: lets-talk.fifthtry.site/ui/components/self-screen-share as _
+export: self-screen-share
+
 -- import: lets-talk.fifthtry.site/ui/components/meeting-header as _
 export: meeting-header
 
