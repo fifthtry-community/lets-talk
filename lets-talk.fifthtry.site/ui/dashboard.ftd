@@ -48,20 +48,32 @@ margin: $ds.spaces.vertical-gap.zero
 		$on-click$: $ftd.toggle($a=$show_calendar) 
 		icon: calendar
 
-		;; import the date-time web-component from the calendar.js file.
+		;; ;; import the date-time web-component from the calendar.js file.
 		-- ftd.column:
 		if: {show_calendar}
-		-- date-time-picker:
-		start-value: 20250303T120000
-		end-value: 20250303T010000
-		$on-change$: $ftd.set-string($a=$value, v=$VALUE)
+		-- ftd.integer: $start.dt
+		-- ftd.integer: $end.dt	
+		
+		-- calendar.calender-range:
+			start_dt: $start
+			end_dt: $end
 
-		-- create-meeting-btn: Create meeting
-		$on-click$: $schedule-meeting.schedule()
-		icon: video-camera
+		;; -- date-time-picker:
+		;; start-value: 20250303T120000
+		;; end-value: 20250303T010000
+		;; $on-change$: $ftd.set-string($a=$date, v=$VALUE)
 
-		-- ftd.text: $value
-		-- ftd.text: $value
+		;; -- ftd.text-input:
+		;; placeholder: Attendees
+		;; $on-input$: $ftd.set-string($a=$attendees, v=$VALUE)
+
+		;; -- create-schedule-meeting-btn: Create meeting
+		;; $on-click$: $schedule-meeting.schedule()
+		;; date: $date
+		;; ;; attendies: $attendees
+		;; icon: video-camera
+
+		;; -- ftd.text: $date
 
 		-- end: ftd.column
 
@@ -187,7 +199,13 @@ align-content: left
 -- end: session-box
 
 
+
+
+
+
 -- boolean $show_calendar: false
+
+-- string $attendees: "" 
 
 -- component create-meeting-btn:
 caption title:
@@ -210,12 +228,39 @@ color: $ds.colors.error.text
 
 -- end: create-meeting-btn
 
--- web-component date-time-picker:
-string start-value: 
-string end-value:
-js: $assets.files.js.calender.js
 
--- string $value: 20250303T120000
+-- component create-schedule-meeting-btn:
+caption title:
+string date:
+;; string attendies:
+optional string link:
+string icon:
+optional string error:
+
+-- ds.column:
+align-content: left
+inset: $ds.spaces.inset-square.zero
+-- ds.phosphor-rounded-button: $create-schedule-meeting-btn.title
+icon: $create-schedule-meeting-btn.icon
+
+-- ds.copy-small: $create-schedule-meeting-btn.error
+if: { create-schedule-meeting-btn.error }
+color: $ds.colors.error.text
+
+-- end: ds.column
+
+-- end: create-schedule-meeting-btn
+
+-- datetime.datetime $start: $datetime.now()
+-- datetime.datetime $end: $datetime.now(diff=30)
+
+;; Return error when end time is before start time
+;; -- web-component date-time-picker:
+;; string $start-value: 
+;; string $end-value:
+;; js: $assets.files.js.calender.js
+
+;; -- string $date: 20250303T120000
 
 -- string format-date(d):
 string d:

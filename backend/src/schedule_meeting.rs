@@ -37,6 +37,8 @@
 /// Create a meeting and add the user to it as a participant
 fn schedule_meeting(
     title: ft_sdk::Required<"title">,
+    date: ft_sdk::Required<"date">,
+    // attendies: ft_sdk::Required<"attendies">,
     user: crate::auth::RequiredUser,
     host: ft_sdk::Host,
     config: crate::Config,
@@ -50,17 +52,23 @@ fn schedule_meeting(
     }
 
     let meeting = crate::dyte::create_meeting(&title)?;
-
     let name = if user.name.is_empty() {
         None
     } else {
         Some(user.name.as_str())
     };
 
+    let date_parts: Vec<&str> = date.split('|').collect();
+    let start_date = date_parts[0];
+    let end_date = date_parts[1];
+
+
+
     let preset = config.preset_host;
 
-    ft_sdk::println!("Using preset: {preset} to create meeting");
-
+    ft_sdk::println!("Using preset: {preset} to schedule a meeting");
+    ft_sdk::println!("Scheduled meeting for {date}");
+    // ft_sdk::println!("Attendies for scheduled meeting for {attendies}"); 
     let username = crate::dyte::Username::new(user.username, &host);
     let participant = crate::dyte::add_participant(&meeting.data.id, &preset, name, username)?;
 
@@ -80,3 +88,5 @@ fn schedule_meeting(
             .with_cookie(session_cookie),
     )
 }
+
+// fn create_ics_file()

@@ -8,12 +8,16 @@ system-is-confidential: false
 provided-via: lets-talk.fifthtry.site/ds
 
 -- fastn.dependency: lets-auth.fifthtry.site
+-- fastn.dependency: datetime-v0.fifthtry.site
+-- fastn.dependency: calendar-widget.fifthtry.site
 
 ;; this is a system: alias must be ds
 -- fastn.auto-import: lets-talk.fifthtry.site/ds
 -- fastn.auto-import: lets-auth.fifthtry.site as lets-auth
 -- fastn.auto-import: lets-talk.fifthtry.site as lets-talk
 -- fastn.auto-import: lets-talk.fifthtry.site/assets
+-- fastn.auto-import: datetime-v0.fifthtry.site as datetime
+-- fastn.auto-import: calendar-widget.fifthtry.site as calendar
 
 -- fastn.dynamic-urls:
 
