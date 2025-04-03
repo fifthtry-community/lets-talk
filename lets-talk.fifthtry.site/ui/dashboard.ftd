@@ -64,42 +64,14 @@ margin: $ds.spaces.vertical-gap.zero
 			radius: curved
 			size: medium 
 
+		-- calendar.calender-range:
+			start_dt: $start
+			end_dt: $end
+
+		-- ds.primary-button: Schedule a meeting
+		;; $on-click$: $create-meeting.new-schedule($start, $end, $meeting-title, $attendees)
+
 		-- end: ftd.column
-
-		;; ;; import the date-time web-component from the calendar.js file.
-		;; -- ds.column:
-		;; inset: $ds.spaces.inset-square.zero
-		;; margin: $ds.spaces.vertical-gap.zero
-		;; if: {show_calendar}
-
-		;; -- ftd.integer: $start.dt
-		;; -- ftd.integer: $end.dt	
-		
-		;; -- calendar.calender-range:
-		;; 	start_dt: $start
-		;; 	end_dt: $end
-
-		;; -- date-time-picker:
-		;; start-value: 20250303T120000
-		;; end-value: 20250303T010000
-		;; $on-change$: $ftd.set-string($a=$date, v=$VALUE)
-
-		;; -- ds.text-input:
-		;; placeholder: Attendees Email (seperate by comma)
-		;; radius: curved
-		;; size: large
-		;; $on-input$: $ftd.set-string($a=$attendees, v=$VALUE)
-
-		;; -- create-schedule-meeting-btn: Create meeting
-		;; $on-click$: $schedule-meeting.schedule()
-		;; date: $date
-		;; ;; attendies: $attendees
-		;; icon: video-camera
-
-		;; -- ftd.text: $date
-
-		;; -- end: ds.column
-
 		
 		-- end: ds.column
 		
