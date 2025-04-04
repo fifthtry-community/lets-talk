@@ -69,7 +69,8 @@ margin: $ds.spaces.vertical-gap.zero
 			end_dt: $end
 
 		-- ds.primary-button: Schedule a meeting
-		;; $on-click$: $create-meeting.new-schedule($start, $end, $meeting-title, $attendees)
+		;; $on-click$: $schedule-meeting.schedule(title=$meeting-title, attendees=$attendees)
+		$on-click$: $schedule-meeting.schedule(title=$meeting-title, start_date=$start, end_date=$end, attendees=$attendees)
 
 		-- end: ftd.column
 		

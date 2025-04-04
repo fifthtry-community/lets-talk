@@ -1,16 +1,18 @@
--- ftd.string-field $meeting-title: title
-value: New Meeting
+;; -- ftd.string-field $meeting-title: title
+;; value: New Meeting
 
--- ftd.string-field $date: date
-value: 20250305T171441521 | 20250305T180000000
+;; -- datetime.datetime $start_date: $datetime.now()
+;; -- datetime.datetime $end_date: $datetime.now(diff=30) 
 
 ;; -- ftd.string-field $attendees: attendees
 ;; value: ""
 
--- void schedule():
-ftd.string-field title: $meeting-title
-ftd.string-field date: $date
-;; ftd.string-field attendies: $attendees
+-- void schedule(title, start_date, end_date, attendees):
+string title: "test"
+datetime.datetime start_date: $datetime.now()
+datetime.datetime end_date: $datetime.now(diff=30)
+string attendees: "test"
 string action_url: $ftd.app-url(path=/talk/schedule-meeting/)
 
-ftd.submit_form(action_url, title, date, attendees)
+ftd.submit_form(action_url, title, start_date, end_date, attendees)
+;; ftd.submit_form(action_url, title, attendees)
