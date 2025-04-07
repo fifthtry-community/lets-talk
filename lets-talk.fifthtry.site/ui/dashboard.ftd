@@ -65,12 +65,17 @@ margin: $ds.spaces.vertical-gap.zero
 			size: medium 
 
 		-- calendar.calender-range:
-			start_dt: $start
-			end_dt: $end
+			start_dt: $schedule-meeting.start
+			end_dt: $schedule-meeting.end
+
+		-- ftd.text: $meeting-title
+		-- ftd.text: $attendees
+		-- ftd.integer: $schedule-meeting.meeting-start-time.value
 
 		-- ds.primary-button: Schedule a meeting
-		;; $on-click$: $schedule-meeting.schedule(title=$meeting-title, attendees=$attendees)
-		$on-click$: $schedule-meeting.schedule(title=$meeting-title, start_date=$start, end_date=$end, attendees=$attendees)
+		$on-click$: $schedule-meeting.schedule()
+		;; $on-click$: $schedule-meeting.schedule(title=$meeting-title)
+		;; $on-click$: $schedule-meeting.schedule(title=$meeting-title, attendees=$attendees, start_date=$start, end_date=$end)
 
 		-- end: ftd.column
 		
@@ -201,8 +206,8 @@ align-content: left
 
 -- boolean $show_calendar: false
 
--- string $attendees: "" 
--- string $meeting-title: ""
+-- string $attendees: attendees
+-- string $meeting-title: meeting-title 
 
 -- component create-meeting-btn:
 caption title:

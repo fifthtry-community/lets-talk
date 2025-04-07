@@ -13,7 +13,7 @@ fn create_meeting(
             .error("You are not authorized to create a meeting")
             .into());
     }
-
+    ft_sdk::println!("{}", title);
     let meeting = crate::dyte::create_meeting(&title)?;
 
     let name = if user.name.is_empty() {

@@ -97,8 +97,8 @@
 /// Create a meeting and add the user to it as a participant
 fn schedule_meeting(
     title: ft_sdk::Required<"title">,
-    start_date: ft_sdk::Required<"start_date">,
-    end_date: ft_sdk::Required<"end_date">,
+    start_date: ft_sdk::Required<"start_datetime">,
+    end_date: ft_sdk::Required<"end_datetime">,
     attendees: ft_sdk::Required<"attendees">,
     user: crate::auth::RequiredUser,
     host: ft_sdk::Host,
