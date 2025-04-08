@@ -9,7 +9,7 @@ class Talk extends HTMLElement {
         super();
         // this.style.width = "100%";
         // this.style.height = "100%";
-        this.classList.add('fastn-ignore-global-keyboard'); // TODO(siddhantk232): learn what this means?
+        this.classList.add("fastn-ignore-global-keyboard"); // TODO(siddhantk232): learn what this means?
     }
 
     async connectedCallback() {
@@ -19,7 +19,7 @@ class Talk extends HTMLElement {
         const endpoint_url = ftd.app_url_ex("/talk/session/", "lets-talk");
         const req_url = `${endpoint_url}?meeting-id=${mid}`;
 
-        const res = await fetch(req_url).then(r => r.json());
+        const res = await fetch(req_url).then((r) => r.json());
 
         if (res.redirect) {
             window.location.href = res.redirect;
@@ -44,15 +44,21 @@ class Talk extends HTMLElement {
 
 function UTCDateStringToFormattedString(dateString) {
     const date = new Date(dateString.get());
-    const formatted =  new Intl.DateTimeFormat('en-US', {
-        dateStyle: 'medium',
-        timeStyle: 'short',
+    const formatted = new Intl.DateTimeFormat("en-US", {
+        dateStyle: "medium",
+        timeStyle: "short",
     }).format(date);
 
     return formatted;
 }
 
-window.UTCDateStringToFormattedString = UTCDateStringToFormattedString;
+function convertToMs(datetime) {
+    const input = datetime.get().toObject().dt;
+    return input / 1000000; 
+}
 
-customElements.define('talk-app', Talk);
+window.UTCDateStringToFormattedString = UTCDateStringToFormattedString;
+window.convertToMs = convertToMs;
+
+customElements.define("talk-app", Talk);
 defineDyteCustomElements();
