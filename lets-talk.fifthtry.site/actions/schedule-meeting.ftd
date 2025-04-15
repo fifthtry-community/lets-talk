@@ -4,20 +4,35 @@ value: New Meeting
 -- datetime.datetime $start: $datetime.now()
 -- datetime.datetime $end: $datetime.now(diff=30)
 
+-- string $hello: $toString($start)
+
 -- ftd.integer-field $meeting-start-time: start-time
-value: *$start.dt 
+value: *$start.dt
 
 -- ftd.integer-field $meeting-end-time: end-time
 value: *$end.dt
+
+;; -- ftd.string-field $meeting-start-time: start-time
+;; value: $toString(*$start)
+
+;; -- ftd.string-field $meeting-end-time: end-time
+;; value: $toString(*$end)
 
 -- ftd.string-field $meeting-attendees: attendees
 value: none 
 
 -- void schedule(title):
 ftd.string-field title: $meeting-title
-ftd.integer-field start_datetime: $meeting-start-time
-ftd.integer-field end_datetime: $meeting-end-time
+ftd.integer-field start_datetime: $meeting-end-time
+ftd.integer-field end_datetime: $meeting-start-time
 ftd.string-field attendees: $meeting-attendees
 string action_url: $ftd.app-url(path=/talk/create-meeting/)
 
 ftd.submit_form(action_url, title, start_datetime, end_datetime, attendees)
+
+
+-- string toString(dt):
+datetime.datetime dt:
+js: $assets.files.js.build.js
+
+convertToString(dt)

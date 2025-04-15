@@ -70,7 +70,11 @@ margin: $ds.spaces.vertical-gap.zero
 
 		-- ftd.text: $meeting-title
 		-- ftd.text: $attendees
+		-- ftd.text: String-field Value:	
 		-- ftd.integer: $schedule-meeting.meeting-start-time.value
+		-- ftd.text: datetime.datetime object:	
+		-- ftd.integer: $schedule-meeting.start.dt
+		-- ftd.text: $schedule-meeting.hello
 
 		-- ds.primary-button: Schedule a meeting
 		$on-click$: $schedule-meeting.schedule()
@@ -269,4 +273,3 @@ string d:
 js: $assets.files.js.build.js
 
 UTCDateStringToFormattedString(d)
-

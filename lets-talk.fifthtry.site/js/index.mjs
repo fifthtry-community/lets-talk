@@ -52,13 +52,14 @@ function UTCDateStringToFormattedString(dateString) {
     return formatted;
 }
 
-function convertToMs(datetime) {
-    const input = datetime.get().toObject().dt;
-    return input / 1000000; 
+function convertToString(datetime) {
+    console.log("function called!");
+    const date = datetime.get().toObject().dt;
+    return date.toString();
 }
 
 window.UTCDateStringToFormattedString = UTCDateStringToFormattedString;
-window.convertToMs = convertToMs;
+window.convertToString = convertToString;
 
 customElements.define("talk-app", Talk);
 defineDyteCustomElements();
