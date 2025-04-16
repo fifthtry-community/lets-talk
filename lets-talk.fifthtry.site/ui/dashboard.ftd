@@ -6,7 +6,6 @@ caption title:
 module action: create-meeting
 lets-talk.session list past-sessions:
 
-
 -- ds.site-page: Dashboard
 fastn-badge: false
 margin: $ds.spaces.vertical-gap.zero
@@ -68,18 +67,10 @@ margin: $ds.spaces.vertical-gap.zero
 			start_dt: $schedule-meeting.start
 			end_dt: $schedule-meeting.end
 
-		-- ftd.text: $meeting-title
-		-- ftd.text: $attendees
-		-- ftd.text: String-field Value:	
-		-- ftd.integer: $schedule-meeting.meeting-start-time.value
-		-- ftd.text: datetime.datetime object:	
 		-- ftd.integer: $schedule-meeting.start.dt
-		-- ftd.text: $schedule-meeting.hello
 
 		-- ds.primary-button: Schedule a meeting
 		$on-click$: $schedule-meeting.schedule()
-		;; $on-click$: $schedule-meeting.schedule(title=$meeting-title)
-		;; $on-click$: $schedule-meeting.schedule(title=$meeting-title, attendees=$attendees, start_date=$start, end_date=$end)
 
 		-- end: ftd.column
 		
@@ -259,6 +250,7 @@ color: $ds.colors.error.text
 
 -- datetime.datetime $start: $datetime.now()
 -- datetime.datetime $end: $datetime.now(diff=30)
+
 
 ;; Return error when end time is before start time
 ;; -- web-component date-time-picker:

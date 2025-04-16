@@ -106,6 +106,9 @@ fn schedule_meeting(
     app_url: ft_sdk::AppUrl,
     scheme: crate::HTTPSScheme,
 ) -> ft_sdk::form::Result {
+    ft_sdk::println!("Start Date:");
+    ft_sdk::println!("{}", start_date);    
+    
     if !user.is_special(&config) {
         return Err(title
             .error("You are not authorized to create a meeting")
