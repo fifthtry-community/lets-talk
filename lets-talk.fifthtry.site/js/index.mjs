@@ -53,7 +53,6 @@ function UTCDateStringToFormattedString(dateString) {
 }
 
 function convertToString(datetime) {
-    console.log("function called!");
     const date = datetime.get().toObject().dt;
     return date.toString();
 }

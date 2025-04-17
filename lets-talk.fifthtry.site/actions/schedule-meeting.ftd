@@ -4,19 +4,19 @@ value: New Meeting
 -- datetime.datetime $start: $datetime.now()
 -- datetime.datetime $end: $datetime.now(diff=30)
 
--- ftd.string-field $meeting-start-time: start-time
-value: $toString(dt=*$start)
+-- ftd.string-field $meeting-start-time: start_datetime
+value: $toString(dt=$start)
 
--- ftd.string-field $meeting-end-time: end-time
-value: $toString(dt=*$end)
+-- ftd.string-field $meeting-end-time: end_datetime
+value: $toString(dt=$end)
 
 -- ftd.string-field $meeting-attendees: attendees
 value: none 
 
--- void schedule(title):
+-- void schedule():
 ftd.string-field title: $meeting-title
-ftd.string-field start_datetime: $meeting-end-time
-ftd.string-field end_datetime: $meeting-start-time
+ftd.string-field start_datetime: $meeting-start-time
+ftd.string-field end_datetime: $meeting-end-time
 ftd.string-field attendees: $meeting-attendees
 string action_url: $ftd.app-url(path=/talk/schedule-meeting/)
 

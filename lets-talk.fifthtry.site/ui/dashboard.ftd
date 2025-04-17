@@ -248,17 +248,7 @@ color: $ds.colors.error.text
 
 -- end: create-schedule-meeting-btn
 
--- datetime.datetime $start: $datetime.now()
--- datetime.datetime $end: $datetime.now(diff=30)
-
-
 ;; Return error when end time is before start time
-;; -- web-component date-time-picker:
-;; string $start-value: 
-;; string $end-value:
-;; js: $assets.files.js.calender.js
-
-;; -- string $date: 20250303T120000
 
 -- string format-date(d):
 string d:

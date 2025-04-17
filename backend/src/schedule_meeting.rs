@@ -109,6 +109,9 @@ fn schedule_meeting(
     ft_sdk::println!("Start Date:");
     ft_sdk::println!("{}", start_date);    
     
+    ft_sdk::println!("End Date:");
+    ft_sdk::println!("{}", end_date);    
+        
     if !user.is_special(&config) {
         return Err(title
             .error("You are not authorized to create a meeting")
