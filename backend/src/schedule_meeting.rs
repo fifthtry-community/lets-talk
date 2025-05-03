@@ -1,3 +1,4 @@
+use crate::uuid::gen_uuid_with_xorshift;
 #[ft_sdk::form]
 
 fn schedule_meeting(
@@ -17,15 +18,6 @@ fn schedule_meeting(
     //         .error("You are not authorized to create a meeting")
     //         .into());
     // }
-   
-    let output = return_ics_file("ayush@deolasee.org, somethingelse@gmail.com");    
-    
-    if output.is_err() {
-        // Logic to handle the error
-        ft_sdk::println!("Some Error was encountered");
-    }
-    
-    ft_sdk::println!("Output: {:?}", output);
 
     let meeting = crate::dyte::create_meeting(&title)?;
 
@@ -41,7 +33,7 @@ fn schedule_meeting(
 
     let username = crate::dyte::Username::new(user.username, &host);
     let participant = crate::dyte::add_participant(&meeting.data.id, &preset, name, username)?;
-
+    ft_sdk::println!("Meeting.data.id: {:?}", &meeting.data.id);
     let session_cookie = crate::create_session_cookie(
         &participant.data.token,
         &meeting.data.id,
@@ -52,6 +44,21 @@ fn schedule_meeting(
     // lets-talk.fifthtry.site/meeting.ftd
     let app_url = crate::temp_fix_app_url(app_url);
     let meeting_page_url = app_url.join(&scheme, &host, "meeting")?;
+    let start_date_debug = "20250625T100000Z";
+    let end_date_debug = "20250625T100000Z";
+    let organizer_email = "something@gmail.com";
+    let uuid = gen_uuid_with_xorshift(0.1);
+    let output = return_ics_file(
+        &title, 
+        &meeting_page_url, 
+        "ayush@deolasee.org, somethingelse@gmail.com", 
+        uuid, // Already String
+        start_date_debug.to_string(), 
+        end_date_debug.to_string(), 
+        organizer_email.to_string() 
+    );
+    
+    
     Ok(
         ft_sdk::form::redirect("")?
         // Removed for debugging reasons 
@@ -61,7 +68,7 @@ fn schedule_meeting(
 }
 
 // meeting_name &str, start_date: &str, end_date: &str
-fn return_ics_file(meeting_name: &str, meeting_url: &str, attendees: &str) -> std::io::Result<()> {
+fn return_ics_file(meeting_title: &str, meeting_url: &str, attendees: &str, uid: String, start_datetime: String, end_datetime: String, organizer_email: String) -> std::io::Result<(String)> {
     let mut ics_string = String::new(); 
     let mut attendees_list = Vec::<String>::new();
     for attendee in attendees.split(',') {
@@ -78,9 +85,14 @@ fn return_ics_file(meeting_name: &str, meeting_url: &str, attendees: &str) -> st
         }
     }
 
+
+    format!(
+        "BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:fifthtry/lets-talk\nCALSCALE:GREGORIAN\nMETHOD:REQUEST\nBEGIN:VEVENT\nUID:{uid}\nDISTAMP:{start_datetime}\nSUMMARY:{meeting_title}\nLOCATION:{meeting_url}\nDTSTART:{start_datetime}\nDTEND:{end_datetime}\nORGANIZER:mailto:{organizer_email}\n"
+    ).as_str();
+
     for attendee in attendees_list {
         
         ft_sdk::println!("Attendee: {}", attendee);
     }
-    Ok(())
+    Ok(ics_string)
 }
