@@ -4,6 +4,8 @@ value: New Meeting
 -- datetime.datetime $start: $datetime.now()
 -- datetime.datetime $end: $datetime.now(diff=30)
 
+-- string $hello: Hello world
+
 -- ftd.string-field $meeting-start-time: start_datetime
 value: $toString(dt=$start)
 
@@ -22,6 +24,10 @@ string action_url: $ftd.app-url(path=/talk/schedule-meeting/)
 
 ftd.submit_form(action_url, title, start_datetime, end_datetime, attendees)
 
+-- string someFunction(someText):
+string someText: 
+
+$ftd.set-string($hello, v=$text)
 
 -- string toString(dt):
 datetime.datetime dt:

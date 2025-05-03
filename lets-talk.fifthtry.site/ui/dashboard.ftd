@@ -255,3 +255,13 @@ string d:
 js: $assets.files.js.build.js
 
 UTCDateStringToFormattedString(d)
+
+
+-- void onChangeFunction(start_dt, end_dt):
+datetime.datetime start_dt:
+datetime.datetime end_dt:
+
+string_start_dt = $toString(dt=$start_dt)
+string_end_dt = $toString(dt=$end_dt)
+$ftd.set-string($a=$meeting-start-time, v=string_start_dt)
+$ftd.set-string($a=$meeting-end-time, v=string_end_dt)
