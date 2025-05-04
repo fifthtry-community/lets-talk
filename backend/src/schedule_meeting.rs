@@ -68,9 +68,10 @@ fn schedule_meeting(
 }
 
 // meeting_name &str, start_date: &str, end_date: &str
-fn return_ics_file(meeting_title: &str, meeting_url: &str, attendees: &str, uid: String, start_datetime: String, end_datetime: String, organizer_email: String) -> std::io::Result<(String)> {
+fn return_ics_file(meeting_title: &str, meeting_url: &str, attendees: &str, uid: String, start_datetime: String, end_datetime: String, organizer_email: String) -> std::io::Result<String> {
     let mut ics_string = String::new(); 
     let mut attendees_list = Vec::<String>::new();
+    
     for attendee in attendees.split(',') {
         let attendee = attendee.trim();
         if !attendee.is_empty() {
@@ -86,13 +87,18 @@ fn return_ics_file(meeting_title: &str, meeting_url: &str, attendees: &str, uid:
     }
 
 
-    format!(
+    ics_string.push_str(format!(
         "BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:fifthtry/lets-talk\nCALSCALE:GREGORIAN\nMETHOD:REQUEST\nBEGIN:VEVENT\nUID:{uid}\nDISTAMP:{start_datetime}\nSUMMARY:{meeting_title}\nLOCATION:{meeting_url}\nDTSTART:{start_datetime}\nDTEND:{end_datetime}\nORGANIZER:mailto:{organizer_email}\n"
-    ).as_str();
+    ).as_str());
 
     for attendee in attendees_list {
-        
-        ft_sdk::println!("Attendee: {}", attendee);
+        ics_string.push_str(format!("ATTENDEE;ROLE=REQ-PARTICIPANT;RSVP=TRUE;PARTSTAT=NEEDS-ACTION:mailto:{attendee}\n").as_str());    
     }
+
+    ics_string.push_str(
+        format!(
+        "SEQUENCE:0\nTRANSP:OPAQUE\nEND:VEVENT\nEND:VCALENDAR"
+    ).as_str());
+
     Ok(ics_string)
 }
