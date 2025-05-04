@@ -1,4 +1,5 @@
 use crate::uuid::gen_uuid_with_xorshift;
+use std::env;
 #[ft_sdk::form]
 
 fn schedule_meeting(
@@ -131,17 +132,23 @@ fn send_calender_invite(ics_content: String, organizer_email: &str, attendee_ema
                 ),
         )?;
 
-        // TODO: Need to find a way to securely store and access smtp_username and smtp_password
+        // TODO: Add instructions in README file to export STMP_USERNAME and STMP_PASSWORD as env variables
 
-        // let mailer = SmtpTransport::relay("smtp.gmail.com")? 
-        // .credentials(Credentials::new(
-        //     smtp_username.to_string(),
-        //     smtp_password.to_string(),
-        // ))
-        // .build();
+        let smtp_username = env::var("SMTP_USERNAME")
+            .map_err(|e| std::io::Error::new(std::io::ErrorKind::NotFound, format!("SMTP_USERNAME environment variable not found: {}", e)))?;
+        let smtp_password = env::var("SMTP_PASSWORD")
+            .map_err(|e| std::io::Error::new(std::io::ErrorKind::NotFound, format!("SMTP_PASSWORD environment variable not found: {}", e)))?;
 
-        // Send the email
-        // mailer.send(&email)?;
+
+        let mailer = SmtpTransport::relay("smtp.gmail.com")? 
+        .credentials(Credentials::new(
+            smtp_username.to_string(),
+            smtp_password.to_string(),
+        ))
+        .build();
+
+        Send the email
+        mailer.send(&email)?;
 
     Ok(())
 }
