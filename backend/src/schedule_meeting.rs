@@ -48,11 +48,12 @@ fn schedule_meeting(
     let end_date_debug = "20250625T100000Z";
     let organizer_email = "something@gmail.com";
     let uuid = gen_uuid_with_xorshift(0.1);
+     
     let output = return_ics_file(
         &title, 
         &meeting_page_url, 
-        "ayush@deolasee.org, somethingelse@gmail.com", 
-        uuid, // Already String
+        "ayush@deolasee.org, somethingelse@gmail.com, nothing@nothing", 
+        uuid,
         start_date_debug.to_string(), 
         end_date_debug.to_string(), 
         organizer_email.to_string() 
@@ -86,6 +87,12 @@ fn return_ics_file(meeting_title: &str, meeting_url: &str, attendees: &str, uid:
         }
     }
 
+    if attendees_list.is_empty() && !attendees.trim().is_empty() {
+        return Err(std::io::Error::new(
+           std::io::ErrorKind::InvalidInput,
+           "No valid attendee email addresses provided.",
+       ));
+   }
 
     ics_string.push_str(format!(
         "BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:fifthtry/lets-talk\nCALSCALE:GREGORIAN\nMETHOD:REQUEST\nBEGIN:VEVENT\nUID:{uid}\nDISTAMP:{start_datetime}\nSUMMARY:{meeting_title}\nLOCATION:{meeting_url}\nDTSTART:{start_datetime}\nDTEND:{end_datetime}\nORGANIZER:mailto:{organizer_email}\n"
@@ -101,4 +108,40 @@ fn return_ics_file(meeting_title: &str, meeting_url: &str, attendees: &str, uid:
     ).as_str());
 
     Ok(ics_string)
+}
+
+
+fn send_calender_invite(ics_content: String, organizer_email: &str, attendee_email: &str, meeting_title: &str) -> std::io::Result<()> {
+    let email = Message::builder()
+        .from(organzier_email.parse()?)
+        .to(attendee_email.parse()?)
+        .subject(meeting_title)
+        .multipart(
+            MultiPart::mixed()
+                .singlepart(
+                    SinglePart::builder()
+                        .header(header::ContentType::TEXT_PLAIN)
+                        .body(String::from("Please find attached the calendar invitation for our upcoming meeting."))
+                )
+                .singlepart(
+                    SinglePart::builder()
+                        .header(header::ContentType::parse("text/calendar; method=REQUEST").unwrap())
+                        .header(header::ContentDisposition::attachment("invite.ics"))
+                        .body(ics_content)
+                ),
+        )?;
+
+        // TODO: Need to find a way to securely store and access smtp_username and smtp_password
+
+        // let mailer = SmtpTransport::relay("smtp.gmail.com")? 
+        // .credentials(Credentials::new(
+        //     smtp_username.to_string(),
+        //     smtp_password.to_string(),
+        // ))
+        // .build();
+
+        // Send the email
+        // mailer.send(&email)?;
+
+    Ok(())
 }
