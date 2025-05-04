@@ -133,7 +133,6 @@ fn send_calender_invite(ics_content: String, organizer_email: &str, attendee_ema
         )?;
 
         // TODO: Add instructions in README file to export STMP_USERNAME and STMP_PASSWORD as env variables
-
         let smtp_username = env::var("SMTP_USERNAME")
             .map_err(|e| std::io::Error::new(std::io::ErrorKind::NotFound, format!("SMTP_USERNAME environment variable not found: {}", e)))?;
         let smtp_password = env::var("SMTP_PASSWORD")
