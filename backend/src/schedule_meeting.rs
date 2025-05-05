@@ -1,5 +1,3 @@
-use crate::uuid::gen_uuid_with_xorshift;
-use std::env;
 #[ft_sdk::form]
 
 fn schedule_meeting(
@@ -48,7 +46,7 @@ fn schedule_meeting(
     let start_date_debug = "20250625T100000Z";
     let end_date_debug = "20250625T100000Z";
     let organizer_email = "something@gmail.com";
-    let uuid = gen_uuid_with_xorshift(0.1);
+    let uuid = crate::uuid::gen_uuid_with_xorshift(0.1);
      
     let output = return_ics_file(
         &title, 
@@ -69,7 +67,6 @@ fn schedule_meeting(
     )
 }
 
-// meeting_name &str, start_date: &str, end_date: &str
 fn return_ics_file(meeting_title: &str, meeting_url: &str, attendees: &str, uid: String, start_datetime: String, end_datetime: String, organizer_email: String) -> std::io::Result<String> {
     let mut ics_string = String::new(); 
     let mut attendees_list = Vec::<String>::new();
@@ -133,9 +130,9 @@ fn send_calender_invite(ics_content: String, organizer_email: &str, attendee_ema
         )?;
 
         // TODO: Add instructions in README file to export STMP_USERNAME and STMP_PASSWORD as env variables
-        let smtp_username = env::var("SMTP_USERNAME")
+        let smtp_username = std::env::var("SMTP_USERNAME")
             .map_err(|e| std::io::Error::new(std::io::ErrorKind::NotFound, format!("SMTP_USERNAME environment variable not found: {}", e)))?;
-        let smtp_password = env::var("SMTP_PASSWORD")
+        let smtp_password = std::env::var("SMTP_PASSWORD")
             .map_err(|e| std::io::Error::new(std::io::ErrorKind::NotFound, format!("SMTP_PASSWORD environment variable not found: {}", e)))?;
 
 
@@ -146,7 +143,6 @@ fn send_calender_invite(ics_content: String, organizer_email: &str, attendee_ema
         ))
         .build();
 
-        Send the email
         mailer.send(&email)?;
 
     Ok(())
