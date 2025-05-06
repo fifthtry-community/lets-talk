@@ -108,42 +108,26 @@ fn return_ics_file(meeting_title: &str, meeting_url: &str, attendees: &str, uid:
     Ok(ics_string)
 }
 
+// async fn send_calendar_invite(ics_content: String, organizer_email: &str, attendee_email: &str, meeting_title: &str) -> std::io::Result<()> {
+//     let smtp_username = std::env::var("SMTP_USERNAME")
+//             .map_err(|e| std::io::Error::new(std::io::ErrorKind::NotFound, format!("SMTP_USERNAME environment variable not found: {}", e)))?;
+//     let smtp_password = std::env::var("SMTP_PASSWORD")
+//             .map_err(|e| std::io::Error::new(std::io::ErrorKind::NotFound, format!("SMTP_PASSWORD environment variable not found: {}", e)))?; 
+    
+//     let message = mail_builder::MessageBuilder::new()
+//         .from(("", organizer_email))
+//         .to(attendee_email)
+//         .subject("Meeting Invitation")
+//         .text_body("Please find attached the calendar invitation for our upcoming meeting.")
+//         .attachment("text/calendar", "invite.ics", ics_content.as_bytes());
 
-fn send_calender_invite(ics_content: String, organizer_email: &str, attendee_email: &str, meeting_title: &str) -> std::io::Result<()> {
-    let email = Message::builder()
-        .from(organzier_email.parse()?)
-        .to(attendee_email.parse()?)
-        .subject(meeting_title)
-        .multipart(
-            MultiPart::mixed()
-                .singlepart(
-                    SinglePart::builder()
-                        .header(header::ContentType::TEXT_PLAIN)
-                        .body(String::from("Please find attached the calendar invitation for our upcoming meeting."))
-                )
-                .singlepart(
-                    SinglePart::builder()
-                        .header(header::ContentType::parse("text/calendar; method=REQUEST").unwrap())
-                        .header(header::ContentDisposition::attachment("invite.ics"))
-                        .body(ics_content)
-                ),
-        )?;
+//     mail_send::SmtpClientBuilder::new("smtp.gmail.com", 587)
+//         .implicit_tls(false)
+//         .credentials((smtp_username, smtp_password))
+//         .connect()
+//         .await?
+//         .send(message)
+//         .await?;
 
-        // TODO: Add instructions in README file to export STMP_USERNAME and STMP_PASSWORD as env variables
-        let smtp_username = std::env::var("SMTP_USERNAME")
-            .map_err(|e| std::io::Error::new(std::io::ErrorKind::NotFound, format!("SMTP_USERNAME environment variable not found: {}", e)))?;
-        let smtp_password = std::env::var("SMTP_PASSWORD")
-            .map_err(|e| std::io::Error::new(std::io::ErrorKind::NotFound, format!("SMTP_PASSWORD environment variable not found: {}", e)))?;
-
-
-        let mailer = SmtpTransport::relay("smtp.gmail.com")? 
-        .credentials(Credentials::new(
-            smtp_username.to_string(),
-            smtp_password.to_string(),
-        ))
-        .build();
-
-        mailer.send(&email)?;
-
-    Ok(())
-}
+//     Ok(())
+// }
