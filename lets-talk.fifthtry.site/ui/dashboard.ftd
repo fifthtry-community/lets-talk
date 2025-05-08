@@ -63,11 +63,11 @@ margin: $ds.spaces.vertical-gap.zero
 			radius: curved
 			size: medium 
 
-		-- calendar.calender-range:
+		-- calendar.calendar-range:
 			start_dt: $schedule-meeting.start
 			end_dt: $schedule-meeting.end
 
-		-- ftd.integer: $schedule-meeting.start.dt
+		-- ftd.integer: $schedule-meeting.start.time
 
 		-- ds.primary-button: Schedule a meeting
 		$on-click$: $schedule-meeting.schedule()

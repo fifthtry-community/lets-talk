@@ -4,13 +4,12 @@ value: New Meeting
 -- datetime.datetime $start: $datetime.now()
 -- datetime.datetime $end: $datetime.now(diff=30)
 
--- string $hello: Hello world
 
 -- ftd.string-field $meeting-start-time: start_datetime
-value: $toString(dt=$start)
+value: someValue 
 
 -- ftd.string-field $meeting-end-time: end_datetime
-value: $toString(dt=$end)
+value: someValue
 
 -- ftd.string-field $meeting-attendees: attendees
 value: none 
@@ -24,13 +23,13 @@ string action_url: $ftd.app-url(path=/talk/schedule-meeting/)
 
 ftd.submit_form(action_url, title, start_datetime, end_datetime, attendees)
 
--- string someFunction(someText):
-string someText: 
+;; -- string someFunction(someText):
+;; string someText: 
 
-$ftd.set-string($hello, v=$text)
+;; $ftd.set-string($hello, v=$text)
 
--- string toString(dt):
-datetime.datetime dt:
-js: $assets.files.js.build.js
+;; -- string toString(dt):
+;; datetime.datetime dt:
+;; js: $assets.files.js.build.js
 
-convertToString(dt)
+;; convertToString(dt)
