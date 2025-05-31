@@ -51,24 +51,23 @@ margin: $ds.spaces.vertical-gap.zero
 		if: {show_calendar}
 		width: fill-container
 
-		-- ds.text-input:
-			$on-input$: $ftd.set-string($a=$meeting-title, v=$VALUE)		
-			placeholder: Meeting Title (optional)
-			radius: curved
-			size: medium 
+		-- ds.form-field: 
+            $field: $schedule-meeting.meeting-title
+            placeholder: Meeting Title (optional)
+            rounded: true
+            margin: $ds.spaces.vertical-gap.zero
 
-		-- ds.text-input:
-			$on-input$: $ftd.set-string($a=$attendees, v=$VALUE)		
-			placeholder: Attendees Email (seperate by comma)
-			radius: curved
-			size: medium 
+
+		-- ds.form-field: 
+            $field: $schedule-meeting.meeting-attendees
+            placeholder: Attendees Email (seperate by comma)
+            rounded: true
+            margin: $ds.spaces.vertical-gap.zero 
 
 		-- calendar.calendar-range:
 			start_dt: $schedule-meeting.start
 			end_dt: $schedule-meeting.end
-
-		-- ftd.integer: $schedule-meeting.start.time
-
+		
 		-- ds.primary-button: Schedule a meeting
 		$on-click$: $schedule-meeting.schedule()
 
@@ -201,8 +200,6 @@ align-content: left
 
 -- boolean $show_calendar: false
 
--- string $attendees: attendees
--- string $meeting-title: meeting-title 
 
 -- component create-meeting-btn:
 caption title:
@@ -228,8 +225,8 @@ color: $ds.colors.error.text
 
 -- component create-schedule-meeting-btn:
 caption title:
-string date:
-;; string attendies:
+datetime.datetime start_datetime:
+datetime.datetime end_datetime:
 optional string link:
 string icon:
 optional string error:
@@ -248,20 +245,8 @@ color: $ds.colors.error.text
 
 -- end: create-schedule-meeting-btn
 
-;; Return error when end time is before start time
-
 -- string format-date(d):
 string d:
 js: $assets.files.js.build.js
 
 UTCDateStringToFormattedString(d)
-
-
--- void onChangeFunction(start_dt, end_dt):
-datetime.datetime start_dt:
-datetime.datetime end_dt:
-
-string_start_dt = $toString(dt=$start_dt)
-string_end_dt = $toString(dt=$end_dt)
-$ftd.set-string($a=$meeting-start-time, v=string_start_dt)
-$ftd.set-string($a=$meeting-end-time, v=string_end_dt)

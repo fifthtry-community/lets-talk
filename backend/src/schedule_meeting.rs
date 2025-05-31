@@ -2,8 +2,8 @@
 
 fn schedule_meeting(
     title: ft_sdk::Required<"title">,
-    start_date: ft_sdk::Required<"start_datetime">,
-    end_date: ft_sdk::Required<"end_datetime">,
+    start_datetime: ft_sdk::Required<"start_datetime">, 
+    end_datetime: ft_sdk::Required<"end_datetime">,  
     attendees: ft_sdk::Required<"attendees">,
     user: crate::auth::RequiredUser,
     host: ft_sdk::Host,
@@ -11,12 +11,15 @@ fn schedule_meeting(
     app_url: ft_sdk::AppUrl,
     scheme: crate::HTTPSScheme,
 ) -> ft_sdk::form::Result {
+    ft_sdk::println!("Schedule Meeting Called");
     // Uncommeneted for debugging reasons
     // if !user.is_special(&config) {
     //     return Err(title
     //         .error("You are not authorized to create a meeting")
     //         .into());
     // }
+
+    ft_sdk::println!("start_datetime: {} | end_datetime: {}", start_datetime, end_datetime);
 
     let meeting = crate::dyte::create_meeting(&title)?;
 
