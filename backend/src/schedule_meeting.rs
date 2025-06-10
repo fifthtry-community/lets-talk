@@ -127,3 +127,41 @@ fn return_ics_file(meeting_title: &str, meeting_url: &str, attendees_list: Vec<S
 
 //     Ok(())
 // }
+
+
+pub fn send_confirmation_email(
+    email: String,
+    name: String,
+    conf_link: &str,
+    config: &crate::Config,
+) -> Result<(), ft_sdk::Error> {
+    let from = config.from_email();
+    ft_sdk::println!("Found email sender: {from:?}");
+
+    if let Err(e) = ft_sdk::email::send(&ft_sdk::Email {
+        from,
+        to: smallvec::smallvec![(name.clone(), email).into()],
+        reply_to: Some(smallvec::smallvec![config.reply_to()]),
+        cc: smallvec::smallvec![],
+        bcc: smallvec::smallvec![],
+        mkind: "create-account-confirmation".to_string(),
+        content: ft_sdk::EmailContent::FromMKind {
+            context: Some(
+                serde_json::json!({
+                    "link": conf_link,
+                    "first-name": get_first_name(&name),
+                })
+                .as_object()
+                .unwrap()
+                .to_owned(),
+            ),
+        },
+    }) {
+        ft_sdk::println!("auth.wasm: failed to queue email: {:?}", e);
+        return Err(e.into());
+    }
+
+    ft_sdk::println!("Email added to the queue");
+
+    Ok(())
+}
