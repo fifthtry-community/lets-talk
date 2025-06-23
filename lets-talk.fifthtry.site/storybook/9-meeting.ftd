@@ -1,0 +1,67 @@
+-- lets-talk.grid:
+self: $dummy-self
+participants: $dummy-p
+
+
+;; ----------------
+;; Dummy Data
+;; ----------------
+
+-- lets-talk.participant list dummy-p:
+
+-- lets-talk.participant:
+id    : fjklsdlfj-djfklsfjkld-fsdjfksdfjlk
+name  : John
+mute  : true
+video : true
+
+-- lets-talk.participant:
+id    : fjklsdlfj-djfklsfjkld-fsdjfksdfjlk
+name  : Nikita
+mute  : true
+video : false
+
+-- lets-talk.participant:
+id    : fjklsdlfj-djfklsfjkld-fsdjfksdfjlk
+name  : April
+mute  : false
+video : false
+
+-- lets-talk.participant:
+id    : fjklsdlfj-djfklsfjkld-fsdjfksdfjlk
+name  : Suzuki
+mute  : false
+video : true
+
+-- lets-talk.participant:
+id    : fjklsdlfj-djfklsfjkld-fsdjfksdfjlk
+name  : August
+mute  : true
+video : true
+
+-- lets-talk.participant:
+id    : fjklsdlfj-djfkldjfksdfjlk
+name  : Lebis
+mute  : false
+video : false
+
+-- lets-talk.participant:
+id    : fjklsdlfj-djfklsfjkld-fsdjfksdfjlk
+name  : Zirua
+mute  : false
+video : true
+
+-- lets-talk.participant:
+id    : fjklsdlfj-djfklsfjkld-fsdjfksdfjlk
+name  : Farki
+mute  : true
+video : true
+
+
+-- end: dummy-p
+
+-- lets-talk.participant dummy-self:
+id    : fjklsdlfj-djfklsfjkld-fsdjfksdfjlk
+name  : Siddhant
+mute  : false
+video : false

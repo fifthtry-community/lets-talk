@@ -4,3 +4,4 @@ preset-participant: $lets-talk.participant-preset-name
 require-verification: $lets-talk.require-verified-accounts
 secure-sessions: $lets-talk.use-secure-cookies
 allowed-emails: $lets-talk.who-can-create-meetings
+meeting-page-url: $lets-talk.meeting-page-url

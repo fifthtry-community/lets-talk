@@ -1,9 +1,12 @@
+#![allow(clippy::derive_partial_eq_without_eq, clippy::get_first)]
 #![deny(unused_crate_dependencies)]
+#![warn(clippy::used_underscore_binding)]
+#![forbid(unsafe_code)]
+
 extern crate self as lets_talk;
 
 mod auth;
 mod dyte;
-mod uuid;
 
 mod create_meeting;
 mod session;
@@ -17,7 +20,7 @@ fn create_session_cookie(
     host: &ft_sdk::Host,
     secure: bool,
 ) -> Result<http::HeaderValue, ft_sdk::Error> {
-    let val = format!("{}:{}", meeting_id, token);
+    let val = format!("{meeting_id}:{token}");
     let cookie = cookie::Cookie::build((TALK_TOKEN_COOKIE, val))
         .domain(host.without_port())
         // TODO: make this so that only mountpoint can access the cookie
@@ -39,6 +42,17 @@ pub(crate) struct Config {
     pub preset_participant: String,
     pub require_verification: bool,
     pub secure_sessions: bool,
+    pub meeting_page_url: Option<String>,
+}
+
+impl Config {
+    /// Use the configured meeting page URL, or, fallback to the lets-talk app's /meeting/ URL
+    fn meeting_page_url(&self, app_url: &ft_sdk::AppUrl) -> ft_sdk::Result<String> {
+        match self.meeting_page_url {
+            Some(ref url) => Ok(url.clone()),
+            None => app_url.join("meeting"),
+        }
+    }
 }
 
 impl Default for Config {
@@ -51,17 +65,15 @@ impl Default for Config {
             require_verification: false,
             secure_sessions: false,
             allowed_emails: "".to_string(),
+            meeting_page_url: None,
         }
     }
 }
 
 impl ft_sdk::FromRequest for Config {
     fn from_request(req: &http::Request<serde_json::Value>) -> Result<Self, ft_sdk::Error> {
-        let host = ft_sdk::Host::from_request(req)?;
-        let scheme = crate::HTTPSScheme::from_request(req)?;
         let app_url: ft_sdk::AppUrl = ft_sdk::AppUrl::from_request(req)?;
-        let app_url = crate::temp_fix_app_url(app_url);
-        let url = app_url.join(&scheme, &host, "config")?;
+        let url = app_url.join("config")?;
 
         let req = http::Request::builder()
             .uri(url)
@@ -70,38 +82,5 @@ impl ft_sdk::FromRequest for Config {
         let res = ft_sdk::http::send(req).unwrap();
 
         serde_json::from_slice(res.body()).map_err(|e| e.into())
-    }
-}
-
-// NOTE: remove this when https://github.com/fastn-stack/ft-sdk/pull/63 is released
-fn temp_fix_app_url(app_url: ft_sdk::AppUrl) -> ft_sdk::AppUrl {
-    if app_url.0 == Some("//".to_string()) {
-        ft_sdk::AppUrl(Some("/".to_string()))
-    } else {
-        app_url
-    }
-}
-
-/// Same as `ft_sdk::Scheme`
-/// - https only when host: 127.0.0.1
-struct HTTPSScheme(pub ft_sdk::Scheme);
-
-impl ft_sdk::FromRequest for HTTPSScheme {
-    fn from_request(req: &http::Request<serde_json::Value>) -> Result<Self, ft_sdk::Error> {
-        let host = ft_sdk::Host::from_request(req)?;
-
-        if host.without_port() == "127.0.0.1" {
-            Ok(HTTPSScheme(ft_sdk::Scheme::Http))
-        } else {
-            Ok(HTTPSScheme(ft_sdk::Scheme::Https))
-        }
-    }
-}
-
-impl std::ops::Deref for HTTPSScheme {
-    type Target = ft_sdk::Scheme;
-
-    fn deref(&self) -> &Self::Target {
-        &self.0
     }
 }

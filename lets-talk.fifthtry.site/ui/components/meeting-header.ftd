@@ -1,0 +1,37 @@
+-- import: svg-icons.fifthtry.site/phosphor
+
+-- component meeting-header:
+string meeting-title:
+integer participant-count:
+
+-- ds.row:
+spacing: $ds.spaces.horizontal-gap.space-between
+inset: $ds.spaces.inset-square.medium
+height.fixed.vh: 8
+
+-- ftd.image:
+src: $lets-talk.site-logo
+width.fixed.px: 80
+height.fixed.px: 40
+
+-- ds.copy-regular: $meeting-header.meeting-title
+
+-- ds.row:
+spacing: $ds.spaces.horizontal-gap.small
+width: hug-content
+inset: $ds.spaces.inset-wide.medium-zero
+
+-- phosphor.regular: users
+
+-- ds.copy-small: $to-string(a=$meeting-header.participant-count)
+
+-- end: ds.row
+
+-- end: ds.row
+
+-- end: meeting-header
+
+-- string to-string(a):
+integer a:
+
+a

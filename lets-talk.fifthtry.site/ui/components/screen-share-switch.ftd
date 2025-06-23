@@ -1,0 +1,80 @@
+-- import: lets-talk.fifthtry.site/state
+
+-- component screen-share-switch:
+optional state.participant active-participant:
+state.participant list participants:
+state.participant self:
+
+    -- ftd.container:
+
+    -- ftd.desktop:
+
+    -- ds.column:
+    width.fixed.vw: 6
+    min-width.fixed.px: 96
+    height: fill-container
+    inset: $ds.spaces.inset-square.zero
+    align-content: top-center
+
+    ;; Render a button for self also if it's sharing screen
+    -- participant-button: You
+    p: $screen-share-switch.self
+    active-participant: $screen-share-switch.active-participant
+    $on-click$: $state.set-active-participant(p = $screen-share-switch.self)
+
+    -- participant-button: $p.name
+    p: $p
+    active-participant: $screen-share-switch.active-participant
+    $on-click$: $state.set-active-participant(p = $p)
+    for: p in $screen-share-switch.participants
+
+    -- end: ds.column
+
+    -- end: ftd.desktop
+
+    -- ftd.mobile:
+
+    -- ds.row:
+    width: fill-container
+    inset: $ds.spaces.inset-square.zero
+    align-content: top-center
+
+    ;; Render a button for self also if it's sharing screen
+    -- participant-button: You
+    p: $screen-share-switch.self
+    active-participant: $screen-share-switch.active-participant
+    $on-click$: $state.set-active-participant(p = $screen-share-switch.self)
+
+    -- participant-button: $p.name
+    p: $p
+    active-participant: $screen-share-switch.active-participant
+    $on-click$: $state.set-active-participant(p = $p)
+    for: p in $screen-share-switch.participants
+
+    -- end: ds.row
+
+    -- end: ftd.mobile
+
+    -- end: ftd.container
+
+-- end: screen-share-switch
+
+-- component participant-button:
+caption name:
+state.participant p:
+state.participant active-participant:
+
+    -- ftd.container:
+
+    ;; TODO:
+    ;; - show nothing if I click on my screen. maybe show a button
+    -- ds.phosphor-icon-button: $participant-button.name
+    if: { participant-button.p.screen }
+    width: full
+    icon: monitor
+    icon-size: 32
+    kind if { participant-button.active-participant.id != participant-button.p.id }: secondary
+
+    -- end: ftd.container
+
+-- end: participant-button

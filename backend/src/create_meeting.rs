@@ -6,12 +6,38 @@ fn create_meeting(
     host: ft_sdk::Host,
     config: crate::Config,
     app_url: ft_sdk::AppUrl,
-    scheme: crate::HTTPSScheme,
+    lets_auth_app_url: ft_sdk::AppUrl<"lets-auth">,
 ) -> ft_sdk::form::Result {
-    if !user.is_special(&config) {
-        return Err(title
-            .error("You are not authorized to create a meeting")
-            .into());
+    if let Err(e) = user.is_special(&config, &host) {
+        use crate::auth::AuthorizationError;
+        let msg = match e {
+            AuthorizationError::Unauthorized => {
+                "You are not authorized to create a meeting. Please contact the admin.".to_string()
+            }
+            AuthorizationError::EmptyWhitelist => {
+                "`who-can-create-meetings` variable is empty. You can't create a meeting."
+                    .to_string()
+            }
+            AuthorizationError::RequiresVerification => {
+                let verification_link = lets_auth_app_url
+                    .join("/backend/resend-confirmation-email/")
+                    .map(|url| format!("{url}?email={email}", email = user.email));
+
+                let link_text = match verification_link {
+                    Ok(v) => format!(
+                        " or [click here]({}) to get a new email",
+                        v.trim_end_matches('/')
+                    ),
+                    Err(e) => {
+                        ft_sdk::println!("Error creating verification link: {e}");
+                        "".to_string()
+                    }
+                };
+                format!("Verify your email to create a meeting. Check your email{link_text}.")
+            }
+        };
+
+        return Err(title.error(msg).into());
     }
 
     let meeting = crate::dyte::create_meeting(&title)?;
@@ -22,7 +48,7 @@ fn create_meeting(
         Some(user.name.as_str())
     };
 
-    let preset = config.preset_host;
+    let preset = config.preset_host.clone();
 
     ft_sdk::println!("Using preset: {preset} to create meeting");
 
@@ -36,12 +62,10 @@ fn create_meeting(
         config.secure_sessions,
     )?;
 
-    // lets-talk.fifthtry.site/meeting.ftd
-    let app_url = crate::temp_fix_app_url(app_url);
-    let meeting_page_url = app_url.join(&scheme, &host, "meeting")?;
+    let meeting_page_url = config.meeting_page_url(&app_url)?;
 
     Ok(
-        ft_sdk::form::redirect(format!("{meeting_page_url}{}", meeting.data.id))?
+        ft_sdk::form::redirect(format!("{meeting_page_url}?meeting-id={}", meeting.data.id))?
             .with_cookie(session_cookie),
     )
 }

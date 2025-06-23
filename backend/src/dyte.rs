@@ -9,7 +9,7 @@ pub fn sessions() -> Result<DyteResponse<DyteSessions>, ft_sdk::Error> {
     )
 }
 
-/// Get all particpants of a session
+/// Get all participants of a session
 #[inline]
 pub fn participants(session_id: &str) -> Result<DyteResponse<DyteParticipants>, ft_sdk::Error> {
     let url = format!("/sessions/{session_id}/participants");
@@ -36,7 +36,7 @@ pub fn add_participant(
     }
 
     call_dyte::<DyteAddParticipant>(
-        &format!("/meetings/{}/participants", meeting_id),
+        &format!("/meetings/{meeting_id}/participants"),
         http::Method::POST,
         body,
     )
@@ -75,13 +75,13 @@ fn call_dyte<D: DyteData>(
         ft_sdk::anyhow!("DYTE_API_KEY is not set. Please set it in the environment variables")
     })?;
 
-    let key = base64::engine::general_purpose::STANDARD
-        .encode(format!("{}:{}", dyte_org_id, dyte_api_key));
+    let key =
+        base64::engine::general_purpose::STANDARD.encode(format!("{dyte_org_id}:{dyte_api_key}"));
 
-    let authorization_header = format!("Basic {}", key);
+    let authorization_header = format!("Basic {key}");
 
     let url = format!("https://api.dyte.io/v2{path}");
-    let body = bytes::Bytes::from(serde_json::to_vec(body).unwrap());
+    let body = bytes::Bytes::from(serde_json::to_vec(body)?);
 
     let client = http::Request::builder();
 
@@ -104,8 +104,8 @@ fn call_dyte<D: DyteData>(
 pub struct Username(String);
 
 impl Username {
-    pub fn new<S: AsRef<str>>(username: S, host: &ft_sdk::Host) -> Self {
-        Self(format!("{}__{}", host.without_port(), username.as_ref()))
+    pub fn new<S: std::fmt::Display>(username: S, host: &ft_sdk::Host) -> Self {
+        Self(format!("{}__{username}", host.without_port()))
     }
 
     pub fn as_str(&self) -> &str {
@@ -115,6 +115,7 @@ impl Username {
 
 #[derive(serde::Deserialize, Debug)]
 pub struct DyteResponse<T> {
+    #[expect(unused)]
     pub success: bool,
     pub data: T,
 }
@@ -124,6 +125,7 @@ pub struct DyteResponse<T> {
 /// https://docs.dyte.io/api/#/operations/create_meeting
 pub struct DyteCreateMeeting {
     pub id: String,
+    #[expect(unused)]
     pub title: String,
 }
 
@@ -131,8 +133,10 @@ pub struct DyteCreateMeeting {
 /// See [add_participant] to create instance of this type
 /// https://docs.dyte.io/api/#/operations/add_participant
 pub struct DyteAddParticipant {
+    #[expect(unused)]
     pub id: String,
     // The docs say `preset_name` but the server returns `preset_id`
+    #[expect(unused)]
     pub preset_id: String,
     pub token: String,
 }
@@ -165,8 +169,10 @@ pub struct DyteParticipants {
 /// https://docs.dyte.io/api#/operations/GetSessionParticipants
 #[derive(serde::Deserialize, Debug)]
 pub struct DyteParticipant {
+    #[expect(unused)]
     pub id: String,
     pub custom_participant_id: String,
+    #[expect(unused)]
     pub display_name: String,
     pub duration: f64,
     pub joined_at: String,

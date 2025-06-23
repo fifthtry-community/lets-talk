@@ -9,8 +9,6 @@
 fn session(
     ft_sdk::Cookie(token): ft_sdk::Cookie<{ crate::TALK_TOKEN_COOKIE }>,
     meeting_id: ft_sdk::Query<"meeting-id", String>,
-    scheme: crate::HTTPSScheme,
-    host: ft_sdk::Host,
     app_url: ft_sdk::AppUrl,
 ) -> ft_sdk::processor::Result {
     ft_sdk::println!("======= in session handler ======");
@@ -28,16 +26,14 @@ fn session(
         }
     }
 
-    // NOTE: remove this when https://github.com/fastn-stack/ft-sdk/pull/63 is released
-    let app_url = crate::temp_fix_app_url(app_url);
     // talk -> talk.wasm
-    let create_new_session_url = app_url.join(&scheme, &host, "talk/session/new")?;
-    return ft_sdk::processor::temporary_redirect(format!(
+    let create_new_session_url = app_url.join("talk/session/new")?;
+    ft_sdk::processor::temporary_redirect(format!(
         "{create_new_session_url}?meeting-id={meeting_id}"
-    ));
+    ))
 }
 
-/// Add the logged in user as participant to the meeting and create a session, or,
+/// Add the logged-in user as participant to the meeting and create a session, or,
 /// Use provided name and create guest user if not logged in
 #[ft_sdk::form]
 fn session_new(
@@ -46,26 +42,24 @@ fn session_new(
     host: ft_sdk::Host,
     config: crate::Config,
     app_url: ft_sdk::AppUrl,
-    scheme: crate::HTTPSScheme,
 ) -> ft_sdk::form::Result {
     ft_sdk::println!("======= in session new handler ======");
     let (username, name, is_guest) = if user.is_logged_in {
         ft_sdk::println!("Found user name through login");
         (user.username, Some(user.name), false)
     } else {
-        let seed: f64 = ft_sdk::env::random();
-        let uuid = crate::uuid::gen_uuid_with_xorshift(seed);
+        let uuid = ft_sdk::uuid();
         ft_sdk::println!("adding guest with id: {uuid}");
         // The frontend will ask for the name
         (uuid, None, true)
     };
 
-    let preset = config.preset_participant;
+    let preset = config.preset_participant.clone();
     let preset = if is_guest {
         // _guest presets are allowed to change their name
         format!("{preset}_guest")
     } else {
-        // Name is taken from user's account name and they're not allowed to change it
+        // Name is taken from user's account name, and they're not allowed to change it
         preset
     };
 
@@ -84,11 +78,9 @@ fn session_new(
         config.secure_sessions,
     )?;
 
-    // lets-talk.fifthtry.site/meeting.ftd
-    let app_url = crate::temp_fix_app_url(app_url);
-    let meeting_page_url = app_url.join(&scheme, &host, "meeting")?;
+    let meeting_page_url = config.meeting_page_url(&app_url)?;
     Ok(
-        ft_sdk::form::redirect(format!("{meeting_page_url}{meeting_id}/"))?
+        ft_sdk::form::redirect(format!("{meeting_page_url}?meeting-id={meeting_id}"))?
             .with_cookie(session_cookie),
     )
 }

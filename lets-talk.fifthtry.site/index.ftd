@@ -1,10 +1,40 @@
 -- import: lets-talk.fifthtry.site/ui/dashboard as _
 export: dashboard-page
 
+-- import: lets-talk.fifthtry.site/ui/dyte-meeting-page as _
+export: meeting-page
+
+-- import: lets-talk.fifthtry.site/ui/components/video-tile as _
+export: video-tile
+
+-- import: lets-talk.fifthtry.site/ui/components/screen-tile as _
+export: screen-tile
+
+-- import: lets-talk.fifthtry.site/ui/components/control-bar as _
+export: control-bar
+
+-- import: lets-talk.fifthtry.site/ui/components/context-box as _
+export: context-box, context-box-body
+
+-- import: lets-talk.fifthtry.site/ui/components/screen-share-switch as _
+export: screen-share-switch
+
+-- import: lets-talk.fifthtry.site/ui/components/self-screen-share as _
+export: self-screen-share
+
+-- import: lets-talk.fifthtry.site/ui/components/meeting-header as _
+export: meeting-header
+
 -- import: lets-talk.fifthtry.site/badge as _
 export: footer-badge
 
 -- import: lets-talk.fifthtry.site/dummy
+
+-- import: lets-talk.fifthtry.site/state as _
+export: initialize-meeting
+
+-- import: lets-talk.fifthtry.site/utils as _
+export: format-date
 
 
 -- import: fastn/processors as pr
@@ -13,9 +43,19 @@ export: footer-badge
 -- ftd.temporary-redirect: /-/auth/signin/
 if: { lets-auth.user == NULL }
 
+-- boolean mail-sent: false
+$processor$: pr.request-data
+
+-- banner:
+close-link: /
+if: { mail-sent }
+
+An email to verify your account has been sent to your registered email address.
+
 -- lets-talk.dashboard-page: Dashboard
 past-sessions: $dummy.sessions
 
+-- ftd.image-src site-logo: $ds.site-logo
 
 -- record session:
 string id:
@@ -32,14 +72,39 @@ decimal duration:
 -- string participant-preset-name: group_call_participant
 
 ;;; New account signup must be verified before they're able to create meetings
-;; `false` we need emails working to be able to verify accounts automatically
--- boolean require-verified-accounts: false
+-- boolean require-verified-accounts: true
 
 ;;; Use secure cookies (see https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#block_access_to_your_cookies)
-;; NOTE(siddhantk232): `false` for testing. Should be true in production
--- boolean use-secure-cookies: false
+-- boolean use-secure-cookies: true
 
 
 ;;; List of emails or email domains that are allowed to create new meetings
-;;; siddhant@fifthtry.com, amitu@fifthtry.com etc are allowed to create a meeting
--- string who-can-create-meetings: fifthtry.com
+;;; The host name will be picked if this value is empty
+-- string who-can-create-meetings: $ftd.empty
+
+;;; Override this variable in your website package.
+;;; If this is null, /<app-url>/meeting/ will be used
+;; $ftd.app-url does not work so we can't use it here otherwise we wouldn't need `optional` here
+-- optional string meeting-page-url:
+
+-- component banner:
+body content:
+string close-link:
+
+-- ds.column:
+background.solid: $ds.colors.background.step-1
+radius: $ds.radius.zero
+inset: $ds.spaces.inset-square.small 
+
+-- ds.row:
+spacing: $ds.spaces.horizontal-gap.small
+
+-- ds.copy-small: $banner.content
+-- ds.link: Close
+link: $banner.close-link
+
+-- end: ds.row
+
+-- end: ds.column
+
+-- end: banner

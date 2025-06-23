@@ -1,4 +1,4 @@
-/// Get past sessions of the logged in user
+/// Get past sessions of the logged-in user
 /// This call is expensive, should be done in the background
 #[ft_sdk::data]
 fn past_sessions(user: crate::auth::RequiredUser, host: ft_sdk::Host) -> ft_sdk::data::Result {
@@ -10,7 +10,7 @@ fn past_sessions(user: crate::auth::RequiredUser, host: ft_sdk::Host) -> ft_sdk:
             let participants = match crate::dyte::participants(&s.id) {
                 Ok(v) => v.data.participants,
                 Err(e) => {
-                    ft_sdk::println!("Error getting participants: {:?}", e);
+                    ft_sdk::println!("Error getting participants: {e:?}");
                     return None;
                 }
             };

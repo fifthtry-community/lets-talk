@@ -1,0 +1,56 @@
+-- import: fastn/processors as pr
+
+-- import: lets-talk.fifthtry.site/state
+-- import: lets-talk.fifthtry.site/assets
+
+-- import: lets-talk.fifthtry.site/ui/components/grid
+
+;; NOTE: If you're overriding this component then make sure to call
+;; `lets-talk.initialize-meeting` with a `meeting-id` in your component
+;; definition. Nothing will work without it! Read the state.ftd in this project
+;; root to learn more.
+-- component meeting-page:
+module state: state
+string meeting-id:
+
+-- ds.page: $meeting-page.state.meeting-title
+margin: $ds.spaces.vertical-gap.zero
+inset: $ds.spaces.inset-square.zero
+
+-- lets-talk.initialize-meeting:
+meeting-id: $meeting-page.meeting-id
+
+-- lets-talk.meeting-header:
+meeting-title: $meeting-page.state.meeting-title
+participant-count: $meeting-page.state.participant-count
+
+-- grid.simple:
+if: { meeting-page.state.self != NULL }
+height: $get-main-area-height()
+width: $get-main-area-width()
+participants: $meeting-page.state.participants
+self: $meeting-page.state.self
+
+-- ds.copy-small: Loading...
+if: { !meeting-page.state.inside-meeting }
+
+-- lets-talk.control-bar:
+if: { meeting-page.state.self != NULL }
+state: $meeting-page.state
+self: $meeting-page.state.self
+
+-- end: ds.page
+
+-- end: meeting-page
+
+
+;; FIXME: these functions do not work yet. They give hardcoded values in calc.js
+-- decimal get-main-area-width():
+js: $assets.files.assets.calc.js
+
+getMainAreaWidth()
+
+-- decimal get-main-area-height():
+js: $assets.files.assets.calc.js
+
+getMainAreaHeight()

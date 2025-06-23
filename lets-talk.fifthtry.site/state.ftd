@@ -1,0 +1,172 @@
+-- import: lets-talk.fifthtry.site/assets
+
+;;; Global meeting variables
+;;; This data is used to help you build custom UI.
+;;;
+;;; All the data is supposed to be readonly here. This should be only mutated
+;;; by the javascript file.
+;;;
+;;; `initialize-meeting` component should be called in every meeting page to
+;;; initialize the state. This component will:
+;;;
+;;; - Updating state variables in this file.
+;;; - Request a meeting token from the serve for the current user.
+;;; - Initialize global `window.meeting` so that functions like `join-meeting` can work.
+;;;
+;;; Nothing will work without it! You should call `initalized-meeting` in your meeting-page
+
+;;; Indicates if the javascript file is loaded and the `window.meeting` is available
+;;; Functions like `join-meeting` won't work if this is false
+-- boolean $meeting-initialized: false
+
+;;; Show setup screen (edit name, audio/video settings etc) when this is false
+;;; Otherwise show the main meeting screen
+-- boolean $inside-meeting: false
+
+;;; Meeting title
+;;; This is null **only** when [inside-meeting] is false
+-- optional string $meeting-title:
+
+;; TODO: differentiate pinned participants, participants and, screen sharing participants
+;;; List of participants in a meeting.
+;;; `participant.id` should be used as id for the `ftd.video` element when
+;;; you're rendering a UI based on this data otherwise you won't see the video
+;;; feed.
+-- participant list $participants:
+
+;;; Number of participants (including self!) in the meeting
+-- integer participant-count: $length(a = $participants)
+
+;;; Details about yourself in the meeting
+;;; This is null **only** when [inside-meeting] is false
+-- optional participant $self:
+
+;;; An active participant is the one who's sharing their screen
+;;; If multiple participants are sharing their screen then we show a list and
+;;; then the user can click on one of them which will set this `active-participant`
+;;; value to associated participant.
+-- optional participant $active-participant:
+
+;; TODO: support profile picture
+-- record participant:
+string id:
+string name:
+boolean mic:
+boolean video:
+boolean screen:
+
+
+;;; Set this to `true` to render `context-box` modal component on your meeting page.
+-- boolean $context-box-open: false
+
+
+;;; Read module docs to learn more
+;;; `auto-join: true` don't show waiting area. The name/video/audio config can
+;;; be set later. Set this to `false` if you want to create a waiting area view.
+-- component initialize-meeting:
+string meeting-id:
+boolean init-audio: true
+boolean auto-join: true
+
+-- ftd.row:
+
+-- talk-app:
+mid: $initialize-meeting.meeting-id
+auto-join: $initialize-meeting.auto-join
+
+-- initialize-sound:
+if: { initialize-meeting.init-audio }
+
+-- end: ftd.row
+
+-- end: initialize-meeting
+
+;; WARN: Should not be used with the default meeting-page shipped with this
+;; package. That page already handles participant's audio output
+;;; Setup sound
+-- component initialize-sound:
+
+-- dyte-participants-audio:
+
+-- end: initialize-sound
+
+
+;; WARN: Variables passed as params to this component are the only ones that'll
+;; be mutated by the javascript file. Update the component signature if you
+;; introduce a new variable in this file.
+;;; Initialize dyte sdk
+-- web-component talk-app:
+optional string mid:
+boolean $inside-meeting: $inside-meeting
+boolean $meeting-initialized: $meeting-initialized
+optional string $meeting-title: $meeting-title
+participant $self: $self
+participant list $participants: $participants
+participant list $participants: $participants
+optional participant $active-participant: $active-participant
+boolean auto-join:
+js: $assets.files.js.build.js
+
+-- web-component dyte-participants-audio:
+js: $assets.files.js.build.js
+
+;; FUNCTIONS
+
+-- void join-meeting():
+js: $assets.files.js.functions.js
+
+joinMeeting()
+
+-- void leave-meeting():
+js: $assets.files.js.functions.js
+
+leaveMeeting()
+
+-- void end-meeting():
+js: $assets.files.js.functions.js
+
+endMeeting()
+
+-- void enable-mic():
+js: $assets.files.js.functions.js
+
+enableMic()
+
+-- void disable-mic():
+js: $assets.files.js.functions.js
+
+disableMic()
+
+-- void enable-video():
+js: $assets.files.js.functions.js
+
+enableVideo()
+
+-- void disable-video():
+js: $assets.files.js.functions.js
+
+disableVideo()
+
+-- void enable-screen-share():
+js: $assets.files.js.functions.js
+
+enableScreenShare()
+
+-- void disable-screen-share():
+js: $assets.files.js.functions.js
+
+disableScreenShare()
+
+
+-- integer length(a):
+participant list a:
+
+ftd.len(a) + 1
+
+;; NOTE: the __args__ hack because active_participant is not prefixed with it
+;; in the output. `p` does have this prefix
+-- void set-active-participant(p):
+participant p:
+participant active_participant: $active-participant
+
+__args__.active_participant.set(p)

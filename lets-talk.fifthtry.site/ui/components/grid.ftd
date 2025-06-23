@@ -1,0 +1,195 @@
+-- import: lets-talk.fifthtry.site/state
+-- import: lets-talk.fifthtry.site/assets
+
+-- import: lets-talk.fifthtry.site/storybook/dummy-state
+
+;; WARN: width and height are buggy. See calc.js file for more context
+;; Don't rely on them yet
+;;; A simple grid that lays out video tiles in a single row
+;;; Every tile has a fixed size
+-- component simple:
+decimal width:
+decimal height:
+state.participant list participants:
+state.participant self:
+
+-- ds.column:
+classes: grid
+css: $assets.files.assets.styles.grid.css
+
+    -- ftd.desktop:
+
+    -- ds.row:
+    spacing: $ds.spaces.horizontal-gap.extra-small
+    width: hug-content
+
+    -- lets-talk.video-tile:
+    user: $simple.self
+
+    -- lets-talk.video-tile:
+    user: $p
+    for: p in $simple.participants
+
+    -- end: ds.row
+
+    -- end: ftd.desktop
+
+    -- ftd.mobile:
+
+    -- ds.column:
+    spacing: $ds.spaces.horizontal-gap.extra-small
+    width: hug-content
+
+    -- lets-talk.video-tile:
+    user: $simple.self
+
+    -- lets-talk.video-tile:
+    user: $p
+    for: p in $simple.participants
+
+    -- end: ds.column
+
+    -- end: ftd.mobile
+
+-- end: ds.column
+
+-- end: simple
+
+
+;;; A grid suitable for 1:1 video meetings with support for an additional
+;;; screen sharing view
+-- component one-one:
+optional state.participant active-participant:
+module state: dummy-state
+state.participant list participants:
+state.participant self:
+integer participant-count:
+
+-- ds.column:
+classes: grid
+css: $assets.files.assets.styles.grid.css
+inset: $ds.spaces.inset-wide.medium-zero
+
+    -- ftd.desktop:
+
+    -- ds.column:
+    inset: $ds.spaces.inset-square.zero
+    margin: $ds.spaces.vertical-gap.zero
+
+    -- ds.row:
+    if: { one-one.active-participant }
+    height.fixed.calc: 100vh - 32vh
+    align-content: top-center
+
+    -- lets-talk.screen-share-switch:
+    active-participant: $one-one.active-participant
+    participants: $one-one.participants
+    self: $one-one.self
+
+    -- lets-talk.screen-tile:
+    if: { one-one.active-participant.id != one-one.self.id }
+    user: $one-one.active-participant
+    width: fill-container
+    height: fill-container
+    background.solid: black
+
+    -- lets-talk.self-screen-share:
+    if: { one-one.active-participant.id == one-one.self.id }
+    state: $one-one.state
+
+    -- end: ds.row
+
+    -- ds.row:
+
+    -- lets-talk.video-tile:
+    if: { one-one.participant-count - 1 > 0 }
+    user: $one-one.participants.0
+    width: fill-container
+    height.fixed.calc if { !one-one.active-participant }: 100vh - 16vh
+    width.fixed.px if { one-one.active-participant }: 177
+    height.fixed.px if { one-one.active-participant }: 100
+    border-radius.px if { one-one.active-participant }: 12
+    background.solid: black
+
+    -- lets-talk.video-tile:
+    user: $one-one.self
+    width.fixed.px: 284
+    height.fixed.px: 160
+    width.fixed.px if { one-one.active-participant }: 177
+    height.fixed.px if { one-one.active-participant }: 100
+    anchor if { !one-one.active-participant }: parent
+    right.px if { !one-one.active-participant }: 0
+    bottom.px if { !one-one.active-participant }: 0
+    z-index if { !one-one.active-participant }: 5
+    border-radius.px: 12
+    background.solid: $inherited.colors.background.step-1
+
+    -- end: ds.row
+
+    -- end: ds.column
+
+    -- end: ftd.desktop
+
+    -- ftd.mobile:
+
+    -- ds.column:
+    inset: $ds.spaces.inset-square.zero
+    margin: $ds.spaces.vertical-gap.zero
+
+    -- ds.column:
+    if: { one-one.active-participant }
+    height.fixed.calc: 100vh - 32vh
+    align-content: top-center
+
+    -- lets-talk.screen-share-switch:
+    active-participant: $one-one.active-participant
+    participants: $one-one.participants
+    self: $one-one.self
+
+    -- lets-talk.screen-tile:
+    if: { one-one.active-participant.id != one-one.self.id }
+    user: $one-one.active-participant
+    width: fill-container
+    height: fill-container
+    background.solid: black
+
+    -- lets-talk.self-screen-share:
+    if: { one-one.active-participant.id == one-one.self.id }
+    state: $one-one.state
+
+    -- end: ds.column
+
+    -- ds.row:
+
+    -- lets-talk.video-tile:
+    if: { one-one.participant-count - 1 > 0 }
+    user: $one-one.participants.0
+    width: fill-container
+    width.fixed.px if { one-one.active-participant }: 177
+    height.fixed.px if { one-one.active-participant }: 100
+    border-radius.px if { one-one.active-participant }: 12
+    height.fixed.calc if { !one-one.active-participant }: 100vh - 16vh
+    background.solid: black
+
+    -- lets-talk.video-tile:
+    user: $one-one.self
+    width.fixed.px: 160
+    height.fixed.px: 160
+    width.fixed.px if { one-one.active-participant }: 177
+    height.fixed.px if { one-one.active-participant }: 100
+    anchor if { !one-one.active-participant }: parent
+    right.px if { !one-one.active-participant }: 0
+    bottom.px if { !one-one.active-participant }: 0
+    z-index if { !one-one.active-participant }: 5
+    border-radius.px: 12
+    background.solid: $inherited.colors.background.step-1
+
+    -- end: ds.row
+
+    -- end: ds.column
+
+    -- end: ftd.mobile
+
+-- end: ds.column
+
+-- end: one-one

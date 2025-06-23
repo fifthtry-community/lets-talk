@@ -1,0 +1,18 @@
+-- import: lets-talk.fifthtry.site/storybook/dummy-state
+
+-- component self-screen-share:
+module state: dummy-state
+
+-- ds.column:
+height: fill-container
+
+-- ds.copy-large: Your screen is being shared.
+
+-- ds.phosphor-icon-button: Stop Sharing
+icon: x-square
+kind: danger
+$on-click$: $self-screen-share.state.disable-screen-share()
+
+-- end: ds.column
+
+-- end: self-screen-share

@@ -1,0 +1,91 @@
+-- optional string $meeting-title: Weekly Planning
+
+-- boolean $inside-meeting: true
+
+-- participant list $participants:
+
+-- participant:
+id     : fjklsdlfj-djfklsfjkld-fsdjfksdfjlk
+name   : John
+mic    : true
+video  : true
+screen : false
+
+-- participant:
+id     : fjklsdlfj-djfklsfjkld-fsdjfksdfjlk
+name   : April
+mic    : false
+video  : false
+screen : false
+
+-- end: $participants
+
+-- integer participant-count: $length(a = $participants)
+
+-- optional participant $self:
+id     : fjklsdlfj-djfklsfjkld-fsdjfksdfjlk
+name   : Siddhant
+mic    : true
+video  : true
+screen : false
+
+;;; An active participant is the one who's sharing their screen
+;;; If multiple participants are sharing their screen then we show a list and
+;;; then the user can click on one of them which will set this `active-participant`
+;;; value to associated participant.
+-- optional participant $active-participant:
+
+;;; Set this to `true` to render `context-box` modal component on your meeting page.
+-- boolean $context-box-open: false
+
+-- record participant:
+string id:
+string name:
+boolean mic:
+boolean video:
+boolean screen:
+
+
+;; FUNCTIONS
+
+-- void join-meeting():
+
+console.log("join-meeting")
+
+-- void leave-meeting():
+
+console.log("leave-meeting")
+
+-- void end-meeting():
+
+console.log("end-meeting")
+
+-- void enable-mic():
+
+console.log("enable-mic")
+
+-- void disable-mic():
+
+console.log("disable-mic")
+
+-- void enable-video():
+
+console.log("enable-video")
+
+-- void disable-video():
+
+console.log("disable-video")
+
+-- void enable-screen-share():
+
+console.log("enable-screen-share")
+
+-- void disable-screen-share():
+
+console.log("disable-screen-share")
+
+
+-- integer length(a):
+participant list a:
+
+ftd.len(a)
