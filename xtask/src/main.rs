@@ -1,3 +1,3 @@
 fn main() {
-    fastn_xtask::cli();
+    fastn_xtask::main();
 }
