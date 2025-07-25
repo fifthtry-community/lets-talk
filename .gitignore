@@ -27,3 +27,5 @@ node_modules
 
 lets-talk.fifthtry.site/js/build.js
 lets-talk.fifthtry.site/js/build.js.map
+
+.DS_Store
